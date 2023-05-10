@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/08 20:23:54 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:22:55 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,23 @@
 #include<string.h>
 #include<signal.h>
 
-// typedef     s_lexer
-// {
-//     char **lexer;
-//     int token_nb;
-// }           t_lexer;
+typedef struct s_lexer
+{
+    int i;
+    int start;
+    char **lexer;
+    char **word;
+    int word_nb;
+    char *line;
+    int token_nb;
+}           t_lexer;
 
-void tokenizer(char *str);
+void tokenizer(t_lexer *lex);
 void handle_quotes(char *str);
 
+void tokenizer_error(char *str);
+
+// split token
+void split_token(t_lexer *lex);
+char **split_spaces(t_lexer *lex);
 #endif

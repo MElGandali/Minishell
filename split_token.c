@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/10 14:21:16 by maddou           ###   ########.fr       */
+/*   Created: 2023/05/09 19:06:38 by maddou            #+#    #+#             */
+/*   Updated: 2023/05/09 19:33:37 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
-int main()
+void split_token(t_lexer *lex)
 {
-    t_lexer lex;
-    while (1)
-    {
-        lex.line = readline("bash$ ");
-        tokenizer(&lex);
-    }
-    return (0);  
+    split_spaces(lex);
 }

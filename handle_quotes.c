@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:27:27 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/09 16:10:08 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:28:57 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void dquote(char *str, int *i)
     if (cnt == 0)
     {
         printf("Syntax Error: missing dquote\n");
-        rl_on_new_line();
-        //rl_replace_line("",0);
-        rl_redisplay();
         free(str);
     }
 }
@@ -55,9 +52,6 @@ void quote(char *str, int *i)
     if (cnt == 0)
     {
         printf("Syntax Error: missing squote\n");
-        rl_on_new_line();
-        //rl_replace_line("",0);
-        rl_redisplay();
         free(str);
     }
 }

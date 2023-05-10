@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokenizer_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/10 14:21:16 by maddou           ###   ########.fr       */
+/*   Created: 2023/05/09 18:29:27 by maddou            #+#    #+#             */
+/*   Updated: 2023/05/09 18:33:25 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
-int main()
+void tokenizer_error(char *str)
 {
-    t_lexer lex;
-    while (1)
-    {
-        lex.line = readline("bash$ ");
-        tokenizer(&lex);
-    }
-    return (0);  
+    handle_quotes(str);
 }
