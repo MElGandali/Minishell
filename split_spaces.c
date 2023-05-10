@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/10 14:22:15 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/10 15:46:59 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,41 @@ int word_count(char *line)
     return (word_nb);   
 }
 
+int split_quotes(char *line, int i)
+{
+    i = skip_quote(line, i);
+    if (((line[i + 1] >= 9 && line[i + 1] <= 13) || line[i + 1] == 32))
+        return (i);
+    else
+    {
+        while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
+            i++;
+    }
+    return (i);
+}
+int split(t_lexer *lex)
+{
+    if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
+    {
+        lex->i = split_quotes(lex->line, lex->i);
+        lex->end = lex->i;
+    }
+    else
+    {
+        while (lex->line[lex->i] || (!(((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || 
+            lex->line[lex->i] == 32))))
+            {
+                if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
+                    lex->i = split_quotes(lex->line, lex->i);
+                lex->i++;
+            }
+        }
+}
 char **split_spaces(t_lexer *lex)
 {
     lex->i = 0;
     if ((lex->word_nb = word_count(lex->line)) == 0)
         return 0;
-    printf("%d", lex->word_nb);
     lex->word = (char **) malloc((sizeof(char *) * lex->word_nb) + 1);
     if (!lex->word)
         return (0);
@@ -68,9 +97,11 @@ char **split_spaces(t_lexer *lex)
     {
         while(((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || 
                 lex->line[lex->i] == 32))
-            lex->start = lex->i++;
-        while(lex->line[lex->i] == ' ')
             lex->i++;
+        lex->start = lex->i;
+        
+        
     }
+    
     return (lex->word);
 }
