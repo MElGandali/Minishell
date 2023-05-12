@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/10 13:22:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/10 18:17:16 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 #include<readline/readline.h>
 #include<string.h>
 #include<signal.h>
+#include"libft/libft.h"
 
 typedef struct s_lexer
 {
     int i;
+    int j;
     int start;
+    int end;
     char **lexer;
     char **word;
     int word_nb;

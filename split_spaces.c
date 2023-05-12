@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/10 15:46:59 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:15:38 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int split_quotes(char *line, int i)
     }
     return (i);
 }
-int split(t_lexer *lex)
+
+void find_end(t_lexer *lex)
 {
     if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
     {
@@ -76,18 +77,27 @@ int split(t_lexer *lex)
     }
     else
     {
-        while (lex->line[lex->i] || (!(((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || 
-            lex->line[lex->i] == 32))))
+        while (lex->line[lex->i])
+        {
+            while (!((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || lex->line[lex->i] == 32) && lex->line[lex->i])
             {
                 if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
                     lex->i = split_quotes(lex->line, lex->i);
-                lex->i++;
+                if (((lex->line[lex->i + 1] >= 9 && lex->line[lex->i + 1] <= 13) || lex->line[lex->i + 1] == 32) || lex->line[lex->i + 1] == '\0')
+                    break;
+            lex->i++;
             }
+            if ((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || lex->line[lex->i] == 32)
+                break;
+            lex->i++;    
         }
+    lex->end = lex->i - 1;
+    }
 }
 char **split_spaces(t_lexer *lex)
 {
     lex->i = 0;
+    lex->j = 0;
     if ((lex->word_nb = word_count(lex->line)) == 0)
         return 0;
     lex->word = (char **) malloc((sizeof(char *) * lex->word_nb) + 1);
@@ -99,9 +109,16 @@ char **split_spaces(t_lexer *lex)
                 lex->line[lex->i] == 32))
             lex->i++;
         lex->start = lex->i;
-        
-        
+        find_end(lex);
+        lex->word[lex->j++] = ft_substr(lex->line, lex->start, lex->end - lex->start);
+        lex->i++;
     }
-    
+    lex->word[lex->j] = NULL;
+    int i = 0;
+    while(lex->word[i])
+    {
+        printf("%s\n", lex->word[i]);
+        i++;
+    }
     return (lex->word);
 }
