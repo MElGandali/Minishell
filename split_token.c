@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:06:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/12 16:07:47 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/12 21:13:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void split_token(t_lexer *lex)
 {
     split_spaces(lex);
-    
+    define_word_token(lex);   
 }

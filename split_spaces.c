@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/12 16:13:27 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/12 21:25:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ char **split_spaces(t_lexer *lex)
         lex->i++;
     }
     lex->word[lex->j] = NULL;
-	int i = 0;
-	while (lex->word[i])
-	{
-		printf("%s\n", lex->word[i]);
-		i++;
-	}
+    // int i = 0;
+    // while(lex->word[i] != NULL)
+    // {
+    //     printf("%d || %s\n", i , lex->word[i]);
+    //     i++;
+    // }
     return (lex->word);
 }

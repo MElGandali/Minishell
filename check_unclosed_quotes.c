@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_quotes.c                                    :+:      :+:    :+:   */
+/*   check_unclosed_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:27:27 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/12 16:46:02 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/12 19:34:26 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int dquote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("Syntax Error: missing dquote\n");
+        printf("bash : syntax Error missing dquote\n");
         free(str);
         return (-1);
     }
@@ -53,7 +53,7 @@ int quote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("Syntax Error: missing squote\n");
+        printf("bash : syntax Error missing squote\n");
         free(str);
         return (-1);
     }
@@ -63,21 +63,22 @@ int quote(char *str, int *i)
 int  check_unclosed_quotes(char *str)
 {
     int     i;
+    int     flag;
     
     i = 0;
     while (str[i])
     {
-        if (str[i] == '\"')
+        if (str[i] == 34)
 		{
 			i++;
-            return(dquote(str,&i));
+            flag = dquote(str,&i);
 		}
-        else if (str[i] == '\'')
+        else if (str[i] == 39)
 		{
 			i++;
-            return (quote(str,&i));
+            flag = quote(str,&i);
 		}
     i++;
     }
-    return (0);
+    return (flag);
 }

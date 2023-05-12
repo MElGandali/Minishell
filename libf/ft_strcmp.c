@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/06 16:38:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/12 21:19:49 by mel-gand         ###   ########.fr       */
+/*   Created: 2023/05/12 19:10:34 by mel-gand          #+#    #+#             */
+/*   Updated: 2023/05/12 19:14:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int tokenizer(t_lexer *lex)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-    if (quotes_error(lex) == -1)
-        return (-1);
-    split_token(lex);
-    if (pipe_error(lex) == -1)
-        return (-1);
-    return (0);
+	size_t	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
 }
