@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/10 18:15:38 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:13:27 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,9 @@ void find_end(t_lexer *lex)
         lex->end = lex->i;
     }
     else
-    {
-        while (lex->line[lex->i])
-        {
-            while (!((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || lex->line[lex->i] == 32) && lex->line[lex->i])
-            {
-                if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
-                    lex->i = split_quotes(lex->line, lex->i);
-                if (((lex->line[lex->i + 1] >= 9 && lex->line[lex->i + 1] <= 13) || lex->line[lex->i + 1] == 32) || lex->line[lex->i + 1] == '\0')
-                    break;
-            lex->i++;
-            }
-            if ((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || lex->line[lex->i] == 32)
-                break;
-            lex->i++;    
-        }
-    lex->end = lex->i - 1;
-    }
+        lex->end = find_end_utils(lex) - 1;
 }
+
 char **split_spaces(t_lexer *lex)
 {
     lex->i = 0;
@@ -114,11 +99,11 @@ char **split_spaces(t_lexer *lex)
         lex->i++;
     }
     lex->word[lex->j] = NULL;
-    int i = 0;
-    while(lex->word[i])
-    {
-        printf("%s\n", lex->word[i]);
-        i++;
-    }
+	int i = 0;
+	while (lex->word[i])
+	{
+		printf("%s\n", lex->word[i]);
+		i++;
+	}
     return (lex->word);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 19:27:27 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/09 18:28:57 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/12 16:46:02 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void dquote(char *str, int *i)
+int dquote(char *str, int *i)
 {
     int cnt;
     int x;
@@ -32,10 +32,12 @@ void dquote(char *str, int *i)
     {
         printf("Syntax Error: missing dquote\n");
         free(str);
+        return (-1);
     }
+    return (0);
 }
 
-void quote(char *str, int *i)
+int quote(char *str, int *i)
 {
     int cnt;
 
@@ -53,26 +55,29 @@ void quote(char *str, int *i)
     {
         printf("Syntax Error: missing squote\n");
         free(str);
+        return (-1);
     }
+    return (0);
 }
 
-void handle_quotes(char *str)
+int  check_unclosed_quotes(char *str)
 {
-    int i;
+    int     i;
     
     i = 0;
     while (str[i])
     {
-        if (str[i] == 34)
+        if (str[i] == '\"')
 		{
 			i++;
-            dquote(str,&i);
+            return(dquote(str,&i));
 		}
-        else if (str[i] == 39)
+        else if (str[i] == '\'')
 		{
 			i++;
-            quote(str,&i);
+            return (quote(str,&i));
 		}
     i++;
     }
+    return (0);
 }

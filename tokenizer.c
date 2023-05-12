@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:38:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/09 19:33:33 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/12 16:48:29 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void tokenizer(t_lexer *lex)
+int tokenizer(t_lexer *lex)
 {
-    tokenizer_error(lex->line);
+    if (tokenizer_error(lex->line) == -1)
+        return (-1);
     split_token(lex);
+    
+    return (0);
 }

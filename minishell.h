@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/10 18:17:16 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:50:33 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include<readline/readline.h>
 #include<string.h>
 #include<signal.h>
-#include"libft/libft.h"
+#include"libf/libft.h"
 
 typedef struct s_lexer
 {
@@ -36,12 +36,14 @@ typedef struct s_lexer
     int token_nb;
 }           t_lexer;
 
-void tokenizer(t_lexer *lex);
-void handle_quotes(char *str);
+int tokenizer(t_lexer *lex);
+int check_unclosed_quotes(char *str);
 
-void tokenizer_error(char *str);
+int tokenizer_error(char *str);
 
 // split token
 void split_token(t_lexer *lex);
 char **split_spaces(t_lexer *lex);
+int find_end_utils(t_lexer *lex);
+int split_quotes(char *line, int i);
 #endif
