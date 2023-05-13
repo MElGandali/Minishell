@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/13 16:50:54 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/13 19:33:54 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct  s_token
 {
     char *word;
     char *enumerate;
+    int free;
+    struct s_token *next;
     int index;    
 }   t_token;
 
@@ -36,11 +38,10 @@ typedef struct s_lexer
     int j;
     int start;
     int end;
-    char **lexer;
     char **word;
-    char **token;
-    int token_nb;
-    t_token  *tkn;
+    
+    t_token  *head;
+    t_token  *tmp;
     char **enumerate;
     int word_nb;
     char *line;
