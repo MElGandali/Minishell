@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_token.c                                      :+:      :+:    :+:   */
+/*   split_pipe_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 19:06:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/13 16:54:27 by maddou           ###   ########.fr       */
+/*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
+/*   Updated: 2023/05/13 17:56:49 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int  split_token(t_lexer *lex)
+void check_position(int *end, int *start, char *word)
 {
-    split_spaces(lex);
-    // if (pipe_error(lex) == -1)
-    //     return (-1);
-    if (redir_pipe_error(lex) == -1)
-        return(-1);
-    // split_pipe_redir(lex);
-    // define_word_token(lex);   
-    
-    return (0);
+    while(word[*end] != '\0')
+    {
+        if (word[*end] == '>' )
+        (*end)++;
+    }
 }
+
+char **split_pipe_redir(t_lexer *lex)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j  = 0;
+    while (lex->word[i] != NULL)
+    {
+        check_position (&i, &j, lex->word[i]);
+        i++;
+    }
+    // lex->token_nb = count_token(lex->word);
+    return (lex->word);
+}
+

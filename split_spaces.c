@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/12 21:25:15 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/13 11:41:17 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int skip_quote(char *line, int i)
 {
-    if (line[i] == 34)
+    if (line[i] == '\"'/*34*/)
     {
         i++;
-        while (line[i] != 34)
+        while (line[i] != '\"'/*34*/)
             i++;
     }
-    else if (line[i] == 39)
+    else if (line[i] == '\''/*39*/)
     {
         i++;
-        while (line[i] != 39)
+        while (line[i] != '\''/*39*/)
             i++;
     }
     return (i);
@@ -44,13 +44,14 @@ int word_count(char *line)
             word_nb++;
         if (line[i] == ' ' && line[i + 1] != ' ')
             word_nb++;
-        else if (line[i] == 34 || line[i] == 39)
+        else if (line[i] == '\"'/*34*/ || line[i] == '\''/*39*/)
         {
             i = skip_quote(line, i);
             if (line[i + 1] == '\0')
                 word_nb++;
         }
         i++;
+        
     }
     return (word_nb);   
 }
@@ -70,7 +71,7 @@ int split_quotes(char *line, int i)
 
 void find_end(t_lexer *lex)
 {
-    if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
+    if (lex->line[lex->i] == '\"'/*34*/ || lex->line[lex->i] == '\''/*39*/)
     {
         lex->i = split_quotes(lex->line, lex->i);
         lex->end = lex->i;

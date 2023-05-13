@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:17:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2022/10/20 17:54:31 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/13 11:58:59 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	if (c == 0)
-		return ((char *)s + ft_strlen(s));
+	// if (c == 0)
+	// 	return ((char *)s + ft_strlen(s));
 	while (s[i])
 	{
 		if ((char)c == s[i])
-			return ((char *)&s[i]);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
