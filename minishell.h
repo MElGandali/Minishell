@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/13 19:33:54 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/14 12:58:18 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 #include<signal.h>
 #include"libf/libft.h"
 
-typedef struct  s_token
-{
-    char *word;
-    char *enumerate;
-    int free;
-    struct s_token *next;
-    int index;    
-}   t_token;
+// typedef struct  s_token
+// {
+//     char *word;
+//     char *enumerate;
+//     int free;
+//     struct s_token *next;
+//     int index;    
+// }   t_token;
 
 typedef struct s_lexer
 {
@@ -39,9 +39,9 @@ typedef struct s_lexer
     int start;
     int end;
     char **word;
-    
-    t_token  *head;
-    t_token  *tmp;
+    char **token;
+    // t_token  *head;
+    // t_token  *tmp;
     char **enumerate;
     int word_nb;
     char *line;

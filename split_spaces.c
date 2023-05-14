@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/13 11:41:17 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/14 17:50:29 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void find_end(t_lexer *lex)
         lex->end = lex->i;
     }
     else
-        lex->end = find_end_utils(lex) - 1;
+        lex->end = find_end_utils(lex);
 }
 
 char **split_spaces(t_lexer *lex)
@@ -100,11 +100,5 @@ char **split_spaces(t_lexer *lex)
         lex->i++;
     }
     lex->word[lex->j] = NULL;
-    // int i = 0;
-    // while(lex->word[i] != NULL)
-    // {
-    //     printf("%d || %s\n", i , lex->word[i]);
-    //     i++;
-    // }
     return (lex->word);
 }

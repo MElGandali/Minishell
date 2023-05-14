@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/13 21:33:13 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/14 17:51:06 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libf/libft.h"
 #include "minishell.h"
 
 int check_token(t_lexer *lex)
@@ -21,47 +22,46 @@ int check_token(t_lexer *lex)
    j = 0; 
    while(lex->word[i] != NULL)
    {
-    if (ft_strnstr(lex->word[i], "<<") == 0 || ft_strnstr(lex->word[i], ">>") == 0 
-        || ft_strnstr(lex->word[i], "<<<") == 0 || ft_strnstr(lex->word[i], "<") == 0 
+    if (ft_strnstr(lex->word[i], "|") == 0 || ft_strnstr(lex->word[i], "<<") == 0 || ft_strnstr(lex->word[i], ">>") == 0 
+        || ft_strnstr(lex->word[i], "<<<") == 0 || ft_strnstr(lex->word[i], "<") == 0
         || ft_strnstr(lex->word[i], ">") == 0 || ft_strnstr(lex->word[i], ">|") == 0   
-        || ft_strnstr(lex->word[i], "|>") == 0 || ft_strnstr(lex->word[i], "|<") == 0 )
+        || ft_strnstr(lex->word[i], "|>") == 0 || ft_strnstr(lex->word[i], "|<") == 0)
         return (0);
     i++;
    }
    return (1);
 }
-void fill_node (t_lexer *lex, int i)
+void count_tokens (t_lexer *lex)
 {
+    int i;
     int j;
-    int c;
 
+    i = 0;
     j = 0;
-    c = 0;
-    while(lex->word[i][j] != '\0')
+
+    while(lex->word[i])
     {
-        if (lex->word[i][j] == '\'' || lex->word[i][j] == '\"')
-            j = skip_quote(lex->word[i], j);
-        if (lex->word[i][j] == '|' || lex->word[i][j] == '>' || lex->word[i][j] == '<')
+        if (check_token(lex) == 0)
         {
-            
+            j = 0;
+            while (lex->word[i][j])
+            {
+                if (lex->word[i][j] == '\'' || lex->word[i][j] == '\"')
+                    j = skip_quote(lex->word[i], j);
+                if ((lex->word[i][j] == '>' || lex->word[i][j] == '<' || (lex->word[i][j] == '|' && lex->word[i][j + 1] != '|')))
+                {
+                    lex->word_nb += 1;
+                    while ((lex->word[i][j] == '>' || lex->word[i][j] == '<' || lex->word[i][j] == '|') && lex->word[i][j])
+                        j++;
+                    if (!(lex->word[i][j] == '>' || lex->word[i][j] == '<' || lex->word[i][j] == '|') && lex->word[i][j])
+                        lex->word_nb += 1;
+                }
+                if ((lex->word[i][j] == '|' && lex->word[i][j + 1] == '|'))
+                    j++;
+                j++;
+            }
         }
-        j++;
-    }
-}
-void first_node(t_lexer *lex)
-{
-    lex->head = (t_token *)malloc (sizeof(t_token));
-    lex->tmp = lex->head; 
-    if (check_token(lex) == 1)
-    {
-        lex->tmp->word = lex->word[0];
-        lex->tmp->free = 0;
-        lex->tmp->next = NULL;
-    }
-    else 
-    {
-        
-        fill_node(lex);
+        i++;
     }
 }
 
@@ -69,17 +69,10 @@ char **split_pipe_redir(t_lexer *lex)
 {
     int i;
     int j;
-    t_token token;
 
     i = 0;
     j = 0;
-    first_node(lex);
-    while (lex->word[++i] != NULL)
-    {
-        if (check_token(lex) == 1)
-            
-        i++;
-    }
-    return (lex->word);
+    count_tokens (lex); 
+    return (0);
 }
 

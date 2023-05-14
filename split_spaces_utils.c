@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:58:21 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/12 16:06:27 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:46:54 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int find_end_utils(t_lexer *lex)
         {
             if (lex->line[lex->i] == 34 || lex->line[lex->i] == 39)
                 lex->i = split_quotes(lex->line, lex->i);
-            if (((lex->line[lex->i + 1] >= 9 && lex->line[lex->i + 1] <= 13) || lex->line[lex->i + 1] == 32) || lex->line[lex->i + 1] == '\0')
+            if (((lex->line[lex->i + 1] >= 9 && lex->line[lex->i + 1] <= 13) || lex->line[lex->i + 1] == 32) 
+                || lex->line[lex->i + 1] == '\0')
                 break;
             lex->i++;
         }
@@ -28,5 +29,6 @@ int find_end_utils(t_lexer *lex)
             break;
         lex->i++;    
     }
+    lex->i--;
     return (lex->i);
 }
