@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/13 19:33:54 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/15 15:43:11 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 #include<signal.h>
 #include"libf/libft.h"
 
-typedef struct  s_token
-{
-    char *word;
-    char *enumerate;
-    int free;
-    struct s_token *next;
-    int index;    
-}   t_token;
+// typedef struct  s_token
+// {
+//     char *word;
+//     char *enumerate;
+//     int free;
+//     struct s_token *next;
+//     int index;    
+// }   t_token;
 
 typedef struct s_lexer
 {
@@ -39,9 +39,9 @@ typedef struct s_lexer
     int start;
     int end;
     char **word;
-    
-    t_token  *head;
-    t_token  *tmp;
+    char **token;
+    // t_token  *head;
+    // t_token  *tmp;
     char **enumerate;
     int word_nb;
     char *line;
@@ -54,7 +54,7 @@ int skip_quote(char *line, int i);
 
 //------------split token---------//
 int  split_token(t_lexer *lex);
-char **split_spaces(t_lexer *lex);
+int split_spaces(t_lexer *lex);
 char **split_pipe_redir(t_lexer *lex);
 int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);

@@ -6,10 +6,11 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/13 11:41:17 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/15 15:44:42 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libf/libft.h"
 #include "minishell.h"
 
 int skip_quote(char *line, int i)
@@ -42,14 +43,14 @@ int word_count(char *line)
     {
         if (line[i] != ' ' && line[i + 1] == '\0')
             word_nb++;
-        if (line[i] == ' ' && line[i + 1] != ' ')
-            word_nb++;
-        else if (line[i] == '\"'/*34*/ || line[i] == '\''/*39*/)
+        if (line[i] == '\"'/*34*/ || line[i] == '\''/*39*/)
         {
             i = skip_quote(line, i);
             if (line[i + 1] == '\0')
                 word_nb++;
         }
+        else if (line[i] == ' ' && line[i + 1] != ' ')
+            word_nb++;
         i++;
         
     }
@@ -76,19 +77,23 @@ void find_end(t_lexer *lex)
         lex->i = split_quotes(lex->line, lex->i);
         lex->end = lex->i;
     }
-    else
-        lex->end = find_end_utils(lex) - 1;
+    if (lex->line[lex->i + 1] != ' ' || lex->line[lex->i + 1])
+    {
+        if (lex->line[lex->i] == '\"'/*34*/ || lex->line[lex->i] == '\''/*39*/)
+            lex->i++;
+        lex->end = find_end_utils(lex);
+    }
 }
 
-char **split_spaces(t_lexer *lex)
+int split_spaces(t_lexer *lex)
 {
     lex->i = 0;
     lex->j = 0;
     if ((lex->word_nb = word_count(lex->line)) == 0)
         return 0;
-    lex->word = (char **) malloc((sizeof(char *) * lex->word_nb) + 1);
+    lex->word = (char **) malloc(sizeof(char *) * (lex->word_nb + 2));
     if (!lex->word)
-        return (0);
+        return 0;
     while(lex->line[lex->i] != '\0')
     {
         while(((lex->line[lex->i] >= 9 && lex->line[lex->i] <= 13) || 
@@ -99,12 +104,5 @@ char **split_spaces(t_lexer *lex)
         lex->word[lex->j++] = ft_substr(lex->line, lex->start, lex->end - lex->start);
         lex->i++;
     }
-    lex->word[lex->j] = NULL;
-    // int i = 0;
-    // while(lex->word[i] != NULL)
-    // {
-    //     printf("%d || %s\n", i , lex->word[i]);
-    //     i++;
-    // }
-    return (lex->word);
+    return (1);
 }

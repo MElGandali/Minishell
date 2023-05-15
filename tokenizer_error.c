@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:29:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/13 18:25:22 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/14 14:12:36 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int redir_pipe_error(t_lexer *lex)
             || ft_strnstr(lex->word[i], ">>>") == 0 || ft_strnstr(lex->word[i], "<>") == 0   
             || ft_strnstr(lex->word[i], "<<>") == 0 || ft_strnstr(lex->word[i], ">><") == 0 
             || ft_strnstr(lex->word[i], "<<<|") == 0 || ft_strnstr(lex->word[i], "<<<>") == 0 
-            || ft_strnstr(lex->word[i], "<<<<") == 0)  
+            || ft_strnstr(lex->word[i], "<<<<") == 0 || ft_strnstr(lex->word[i], "|||") == 0
+            || ft_strnstr(lex->word[i], ">||") == 0)
         {
             //free word, readline
             printf("bash : syntax error near unexpected token\n");    
