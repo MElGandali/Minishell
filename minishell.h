@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/15 15:43:11 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/15 22:08:14 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ typedef struct s_lexer
     int end;
     char **word;
     char **token;
-    // t_token  *head;
-    // t_token  *tmp;
     char **enumerate;
     int word_nb;
+    int copie_wnb;
     char *line;
 }           t_lexer;
 
@@ -55,7 +54,7 @@ int skip_quote(char *line, int i);
 //------------split token---------//
 int  split_token(t_lexer *lex);
 int split_spaces(t_lexer *lex);
-char **split_pipe_redir(t_lexer *lex);
+int split_pipe_redir(t_lexer *lex);
 int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);
 void define_word_token(t_lexer *lex);

@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:58:21 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/15 12:34:42 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/15 22:31:35 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int find_end_utils(t_lexer *lex)
             break;
         lex->i++;    
     }
-    
     lex->i--;
     return (lex->i);
 }

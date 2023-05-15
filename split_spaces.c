@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/15 15:44:42 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/15 21:16:04 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int split_spaces(t_lexer *lex)
     lex->j = 0;
     if ((lex->word_nb = word_count(lex->line)) == 0)
         return 0;
-    lex->word = (char **) malloc(sizeof(char *) * (lex->word_nb + 2));
+    lex->word = (char **) malloc(sizeof(char *) * (lex->word_nb + 1));
     if (!lex->word)
         return 0;
     while(lex->line[lex->i] != '\0')
@@ -104,5 +104,6 @@ int split_spaces(t_lexer *lex)
         lex->word[lex->j++] = ft_substr(lex->line, lex->start, lex->end - lex->start);
         lex->i++;
     }
+    lex->word[lex->j] = NULL;
     return (1);
 }
