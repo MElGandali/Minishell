@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:07:53 by mel-gand          #+#    #+#             */
-/*   Updated: 2022/10/19 17:19:18 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/16 23:49:54 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ char	**ft_split(char const *s, char c)
 		while (s[i] != c && s[i])
 			i++;
 		if (i - start > 0)
-			newstring[j++] = ft_substr(s, start, i - start);
+			newstring[j++] = ft_substr(s, start, i - start - 1);
 	}
+	
 	newstring[j] = 0;
 	return (newstring);
 }

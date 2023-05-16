@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/15 22:08:14 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/16 23:26:56 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int skip_quote(char *line, int i);
 
 //------------split token---------//
 int  split_token(t_lexer *lex);
-int split_spaces(t_lexer *lex);
+void split_spaces(t_lexer *lex);
 int split_pipe_redir(t_lexer *lex);
 int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);
