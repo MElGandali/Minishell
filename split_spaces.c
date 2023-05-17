@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/16 23:45:53 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/17 23:38:42 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libf/libft.h"
-#include "minishell.h"
+# include "minishell.h"
 
 int skip_quote(char *line, int i)
 {
@@ -39,15 +38,33 @@ void split_spaces(t_lexer *lex)
     {
         if (lex->line[i] == '\"' || lex->line[i] == '\'')
             i = skip_quote(lex->line, i);
-        else if (lex->line[i] == ' ' && lex->line[i + 1] != ' ' && lex->line[i + 1] != '\0')
+        else if (lex->line[i] == ' ' || lex->line[i] == '\t' || lex->line[i] == '\n')
             lex->line[i] = '\n';
     i++;
     }
-    lex->word = ft_split(lex->line, '\n');
-    printf("%s", lex->word[0]);
-    printf("%s", lex->word[1]);
-    exit(0);
+     lex->word = ft_split(lex->line, '\n' , &lex->word_nb);
+    // i = 0;   
+    // while(lex->word[i] != NULL)
+    //     printf("%s--\n", lex->word[i++]);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // int word_count(char *line)
 // {
 //     int word_nb;

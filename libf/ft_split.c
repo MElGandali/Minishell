@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 18:07:53 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/16 23:49:54 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:11:29 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_word_count(char const *s, char c)
 	return (count);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, int *word_nb)
 {
 	char	**newstring;
 	int		i;
@@ -41,7 +41,8 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	j = 0;
-	newstring = malloc((ft_word_count(s, c) + 1) * sizeof(char *));
+	*word_nb = ft_word_count(s, c);
+	newstring = malloc((/*ft_word_count(s, c)*/*word_nb + 1) * sizeof(char *));
 	if (!newstring)
 		return (NULL);
 	while (s[i])
@@ -54,7 +55,6 @@ char	**ft_split(char const *s, char c)
 		if (i - start > 0)
 			newstring[j++] = ft_substr(s, start, i - start - 1);
 	}
-	
 	newstring[j] = 0;
 	return (newstring);
 }

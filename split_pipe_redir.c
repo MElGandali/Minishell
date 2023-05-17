@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/16 23:44:35 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/17 23:55:09 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "libf/libft.h"
-#include "minishell.h"
+# include "minishell.h"
 
 int check_token(t_lexer *lex, int i)
 {
@@ -30,32 +28,37 @@ void count_tokens (t_lexer *lex)
     int j;
 
     i = 0;
-    j = 0;
     while(lex->word[i])
     {
         if (check_token(lex, i) == 0)
         {
             j = 0;
-            while (lex->word[i][j])
+            if ((lex->word[i][j] == '>' 
+                || lex->word[i][j] == '<' || lex->word[i][j] == '|'))
             {
-                if (lex->word[i][j] == '\'' || lex->word[i][j] == '\"')
-                    j = skip_quote(lex->word[i], j);
-                if ((lex->word[i][j] == '>' || lex->word[i][j] == '<' || (lex->word[i][j] == '|' && lex->word[i][j + 1] != '|')))
-                {
-                    if (j != 0) // error in first index ila kan f lbadya kayzid hna wahad o3awdakin ltaht iziid wahad 
-                            lex->word_nb += 1;
-                    while ((lex->word[i][j + 1] == '>' || lex->word[i][j + 1] == '<' || lex->word[i][j + 1] == '|') && lex->word[i][j])
-                        j++;
-                }
-                else if (!(lex->word[i][j] == '>' || lex->word[i][j] == '<' || lex->word[i][j] == '|') && lex->word[i][j])
-                {
-                    while (!(lex->word[i][j + 1] == '>' && lex->word[i][j + 1] == '<' && lex->word[i][j + 1] == '|') && lex->word[i][j + 1])
-                        j++;
-                    lex->word_nb += 1;
-                }
-                if ((lex->word[i][j] == '|' && lex->word[i][j + 1] == '|'))
+                while(lex->word[i][j] != '\0' && (lex->word[i][j] == '>' 
+                    || lex->word[i][j] == '<' || lex->word[i][j] == '|'))
                     j++;
-                j++;
+            }
+            if (lex->word[i][j] != '\0')
+            {
+                j = 0;
+                while (lex->word[i][j])
+                {
+                    if (lex->word[i][j] == '\'' || lex->word[i][j] == '\"')
+                        j = skip_quote(lex->word[i], j);
+                    else if (lex->word[i][j] == '>' || lex->word[i][j] == '<' || lex->word[i][j] == '|')
+                    {
+                        while((lex->word[i][j + 1] == '>' || lex->word[i][j + 1] == '<' 
+                            || lex->word[i][j + 1] == '|') && lex->word[i][j + 1] != '\0')
+                            j++;
+                        if (j != 0 && (lex->word[i][j + 1] != '>' || lex->word[i][j + 1] != '<' 
+                            || lex->word[i][j + 1] != '|') && lex->word[i][j + 1] != '\0')
+                            lex->word_nb++;
+                        lex->word_nb++;
+                    }
+                    j++;
+                }
             }
         }
         i++;
@@ -95,7 +98,7 @@ int split_pipe_redir(t_lexer *lex)
     j = 0;
     k = 0;
     lex->copie_wnb = lex->word_nb;
-    count_tokens (lex);
+    count_tokens(lex);
     if (lex->word_nb > lex->copie_wnb)
     {
         lex->token = (char **)malloc(sizeof(char *) * (lex->word_nb + 1));
@@ -112,7 +115,7 @@ int split_pipe_redir(t_lexer *lex)
                     j = find_word(lex, i, j);
                     lex->token[k++] = ft_substr(lex->word[i], lex->start, lex->end - lex->start);
                     j++;
-                } 
+                }
             }
             else
                 lex->token[k++] = ft_substr(lex->word[i], 0, ft_strlen(lex->word[i]));
@@ -121,20 +124,22 @@ int split_pipe_redir(t_lexer *lex)
         lex->token[k] = NULL;
     }
     i = 0;
-    if (lex->copie_wnb < lex->word_nb)
-    {
-        while (lex->token[i])
-        {
+    printf("%d\n", lex->word_nb);
+    // if (lex->copie_wnb < lex->word_nb)
+    // {
+    //     while (lex->token[i])
+    //     {
             
-            printf("%s\n", lex->token[i]);
-            i++;
-        }
-    }
-    else   
-    {
-        while(lex->word[i] != NULL)
-            printf("%s==\n", lex->word[i++]);
-    }
+    //         printf("%s\n", lex->token[i]);
+    //         i++;
+    //     }
+    // }
+    // else   
+    // {
+    //     while(lex->word[i] != NULL)
+    //         printf("%s==\n", lex->word[i++]);
+    // }
+    exit (0);
     return (1);
 }
 
