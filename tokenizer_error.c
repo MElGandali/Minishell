@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:29:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/18 16:28:07 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:33:56 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int redir_pipe_error(t_lexer *lex)
     {
         if (ft_strnstr(lex->word[i], "<|") == 0 || ft_strnstr(lex->word[i], "><") == 0 
             || ft_strnstr(lex->word[i], ">>|") == 0 || ft_strnstr(lex->word[i], "<<|") == 0 
-            || ft_strnstr(lex->word[i], ">>>") == 0 || ft_strnstr(lex->word[i], "<>") == 0   
-            || ft_strnstr(lex->word[i], "<<>") == 0 || ft_strnstr(lex->word[i], ">><") == 0 
-            || ft_strnstr(lex->word[i], "<<<|") == 0 || ft_strnstr(lex->word[i], "<<<>") == 0 
-            || ft_strnstr(lex->word[i], "<<<") == 0 || ft_strnstr(lex->word[i], "||") == 0
-            || ft_strnstr(lex->word[i], ">||") == 0 || ft_strnstr(lex->word[i], "|><") == 0)
+            || ft_strnstr(lex->word[i], ">>>") == 0 || ft_strnstr(lex->word[i], "<>") == 0 
+            || ft_strnstr(lex->word[i], "<<<") == 0 || ft_strnstr(lex->word[i], "||") == 0)
         {
             printf("bash : syntax error near unexpected token\n");    
             return (-1);
