@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/17 23:38:42 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/21 18:25:51 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include "../minishell.h"
 
 int skip_quote(char *line, int i)
 {
@@ -29,7 +29,7 @@ int skip_quote(char *line, int i)
     return (i);
 }
 
-void split_spaces(t_lexer *lex)
+int split_spaces(t_lexer *lex)
 {
     int i;
 
@@ -42,9 +42,14 @@ void split_spaces(t_lexer *lex)
             lex->line[i] = '\n';
     i++;
     }
-    lex->word = ft_split(lex->line, '\n' , &lex->word_nb);
+    if (lex->line[0] == '|' || lex->line[i - 1] == '|')
+    {
+        
+        printf("bash : syntax error near unexpected token\n");
+        free(lex->line);
+        return (-1);
+    }
+    lex->word = ft_split(lex->line, '\n' , &lex->curr_wnb);
     free (lex->line);
-    // i = 0;   
-    // while(lex->word[i] != NULL)
-    //     printf("%s--\n", lex->word[i++]);
+    return (0);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/19 19:55:37 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/21 19:29:55 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include "../minishell.h"
 
 int find_end_ifnot_redir (t_lexer *lex, int i, int j)
 {
@@ -45,6 +45,29 @@ int    find_word(t_lexer *lex, int i, int j)
 	return (j);
 }
 
+void	fill_token(t_lexer *lex, int i, int j, int *k)
+{
+	while (lex->word[i] != NULL)
+	{
+		j = 0;
+		if (ft_strnstr(lex->word[i], ">") == 0
+			|| ft_strnstr(lex->word[i], "<") == 0
+			|| ft_strnstr(lex->word[i], "|") == 0)
+		{	
+			while(lex->word[i][j] != '\0')
+			{
+				lex->start = j;
+				j = find_word(lex, i, j);
+				lex->token[(*k)++] = ft_substr(lex->word[i], lex->start, lex->end - lex->start);
+				j++;
+			}
+		}
+		else
+			lex->token[(*k)++] = ft_substr(lex->word[i], 0, ft_strlen(lex->word[i]));
+		i++;
+	}
+}
+
 int split_pipe_redir(t_lexer *lex)
 {
 	int i;
@@ -54,52 +77,34 @@ int split_pipe_redir(t_lexer *lex)
 	i = 0;
 	j = 0;
 	k = 0;
-	lex->copie_wnb = lex->word_nb;
+	lex->old_wnb = lex->curr_wnb;
 	count_tokens(lex);
-	if (lex->copie_wnb < lex->word_nb)
+	if (lex->old_wnb < lex->curr_wnb)
 	{
-		lex->token = (char **)malloc(sizeof(char *) * (lex->word_nb + 1));
+		lex->token = (char **)malloc(sizeof(char *) * (lex->curr_wnb + 1));
 		if (!lex->token)
-			return (0);
-		while (lex->word[i] != NULL)
-		{
-			j = 0;
-			if (ft_strnstr(lex->word[i], ">") == 0
-				|| ft_strnstr(lex->word[i], "<") == 0
-				|| ft_strnstr(lex->word[i], "|") == 0)
-			{
-				while(lex->word[i][j] != '\0')
-				{
-					lex->start = j;
-					j = find_word(lex, i, j);
-					lex->token[k++] = ft_substr(lex->word[i], lex->start, lex->end - lex->start);
-					j++;
-				}
-			}
-			else
-				lex->token[k++] = ft_substr(lex->word[i], 0, ft_strlen(lex->word[i]));
-			i++;
-		}
+			return (-1);
+		fill_token(lex, i, j, &k);
 		lex->token[k] = NULL;
 	}
-		printf("%d\n", lex->word_nb);
-		i = 0;
-	if (lex->copie_wnb < lex->word_nb)
-	{
-		while (lex->token[i])
-		{	
-			printf("token ==> %s\n", lex->token[i]);
-			i++;
-		}
-	}
-	else  
-	{
-		while (lex->word[i])
-		{	
-			printf("word ==> %s\n", lex->word[i]);
-			i++;
-		}
-	}
+	// 	printf("%d\n", lex->curr_wnb);
+	// 	i = 0;
+	// if (lex->old_wnb < lex->curr_wnb)
+	// {
+	// 	while (lex->token[i])
+	// 	{	
+	// 		printf("token ==> %s\n", lex->token[i]);
+	// 		i++;
+	// 	}
+	// }
+	// else  
+	// {
+	// 	while (lex->word[i])
+	// 	{	
+	// 		printf("word ==> %s\n", lex->word[i]);
+	// 		i++;
+	// 	}
+	// }
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/16 23:26:56 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:12:02 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,21 @@ typedef struct s_lexer
     int end;
     char **word;
     char **token;
-    char **enumerate;
-    int word_nb;
-    int copie_wnb;
+    int curr_wnb;
+    int old_wnb;
     char *line;
+    int pipe_nb;
 }           t_lexer;
+
+typedef struct s_commands
+{
+    char **cmd;
+    int i;
+}   t_cmd;
+typedef struct s_parser
+{
+    t_cmd *cmd;
+}   t_parser;
 
 int tokenizer(t_lexer *lex);
 int check_unclosed_quotes(char *str);
@@ -53,7 +63,7 @@ int skip_quote(char *line, int i);
 
 //------------split token---------//
 int  split_token(t_lexer *lex);
-void split_spaces(t_lexer *lex);
+int split_spaces(t_lexer *lex);
 int split_pipe_redir(t_lexer *lex);
 void count_tokens (t_lexer *lex);
 // int find_end_utils(t_lexer *lex);
@@ -63,6 +73,11 @@ void define_word_token(t_lexer *lex);
 //--------------error------------//
 int quotes_error(t_lexer *lex);
 int pipe_error(t_lexer *lex);
-int redir_pipe_error(t_lexer *lex);
-int tokenizer_error(t_lexer *lex);
+int redir_pipe_error_one_arg(t_lexer *lex);
+int redir_pipe_error_mult_arg(t_lexer *lex);
+// int tokenizer_error(t_lexer *lex);
+
+
+//-----------parsing-----------//
+void parser(t_lexer *lex);
 #endif

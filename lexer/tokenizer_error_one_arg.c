@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_error.c                                  :+:      :+:    :+:   */
+/*   tokenizer_error_one_arg.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 18:29:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/19 16:33:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/21 17:14:26 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int quotes_error(t_lexer *lex)
 {
@@ -19,7 +19,7 @@ int quotes_error(t_lexer *lex)
     return (0);   
 }
 
-int redir_pipe_error(t_lexer *lex)
+int redir_pipe_error_one_arg(t_lexer *lex)
 {
     int i;
     
@@ -39,23 +39,4 @@ int redir_pipe_error(t_lexer *lex)
     return (0);  
 }
 
-// int pipe_error(t_lexer *lex)
-// {
-//     int i;
 
-//     i = 0;
-//     while (lex->enumerate[i])
-//     {
-//         if (ft_strcmp(lex->enumerate[i], "PIPE") == 0)
-//         {
-//             if (ft_strcmp(lex->enumerate[i - 1], "WORD") != 0)
-//             {
-//                 // free line free word free enumerate
-//                 printf("bash : syntax error near unexpected token `|'\n");
-//                 return (-1);
-//             }
-//         }
-//         i++;
-//     }
-//     return (0);
-//}
