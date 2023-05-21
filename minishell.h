@@ -55,7 +55,8 @@ int skip_quote(char *line, int i);
 int  split_token(t_lexer *lex);
 void split_spaces(t_lexer *lex);
 int split_pipe_redir(t_lexer *lex);
-int find_end_utils(t_lexer *lex);
+void count_tokens (t_lexer *lex);
+// int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);
 void define_word_token(t_lexer *lex);
 

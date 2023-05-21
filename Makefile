@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror -I./libf/
 LDFLAGS = -lreadline -L/Users/mel-gand/.brew/opt/readline/lib -I/Users/mel-gand/.brew/opt/readline/include
 RM = rm -rf
 SRC = minishell.c libf/ft_strcmp.c libf/ft_split.c libf/ft_strlen.c libf/ft_substr.c libf/ft_strdup.c libf/ft_strjoin.c tokenizer.c \
-		check_unclosed_quotes.c tokenizer_error.c split_token.c  split_spaces.c define_word_token.c libf/ft_strnstr.c split_pipe_redir.c 
+		check_unclosed_quotes.c tokenizer_error.c split_token.c  split_spaces.c define_word_token.c libf/ft_strnstr.c split_pipe_redir.c \
+		count_tokens.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

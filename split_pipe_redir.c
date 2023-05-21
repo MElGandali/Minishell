@@ -12,56 +12,19 @@
 
 # include "minishell.h"
 
-int check_token(t_lexer *lex, int i)
+int find_end_ifnot_redir (t_lexer *lex, int i, int j)
 {
-	if (ft_strnstr(lex->word[i], "|") == 0 ||ft_strnstr(lex->word[i], "<<") == 0
-		|| ft_strnstr(lex->word[i], ">>") == 0 || ft_strnstr(lex->word[i], "<") == 0
-		|| ft_strnstr(lex->word[i], ">") == 0 || ft_strnstr(lex->word[i], ">|") == 0   
-		|| ft_strnstr(lex->word[i], "|>") == 0 || ft_strnstr(lex->word[i], "|<") == 0)
-			return (0);
-	return (1);
-}
-
-void count_tokens (t_lexer *lex)
-{
-	int i;
-	int j;
-
-	i = 0;
-	lex->word_nb = 0;
-	while(lex->word[i])
+	while ((lex->word[i][j] != '|' && lex->word[i][j] != '>' 
+		&& lex->word[i][j] != '<') && lex->word[i][j + 1]) //"qqdwqdq'" |'|' >> '|qdqwd' "|"         'qw'     //ok|>ok this test will work if we do j + 1 here -> lex->word[i][j + 1]
 	{
-		if (check_token(lex, i) == 0)
-		{
-			j = 0;
-			while (lex->word[i][j])
-			{
-				if (!(lex->word[i][j] == '>' || lex->word[i][j] == '<' 
-				|| lex->word[i][j] == '|'))
-				{
-					while(!(lex->word[i][j] == '>' || lex->word[i][j] == '<' 
-						|| lex->word[i][j] == '|') && lex->word[i][j] != '\0')
-					{
-						if (lex->word[i][j] == '\'' || lex->word[i][j] == '\"')
-							j = skip_quote(lex->word[i], j);
-						j++;
-					}
-					lex->word_nb++;
-				}
-				if ((lex->word[i][j] == '>' || lex->word[i][j] == '<' || lex->word[i][j] == '|') 
-					&& lex->word[i][j] != '\0')
-				{
-					while((lex->word[i][j] == '>' || lex->word[i][j] == '<' 
-						|| lex->word[i][j] == '|') && lex->word[i][j] != '\0')
-						j++;
-					lex->word_nb++;
-				}
-			}
-		}
-		else
-			lex->word_nb++;
-		i++;
+		if (lex->word[i][j] == '\"' || lex->word[i][j] == '\'')
+			j = skip_quote(lex->word[i], j); 
+		if(lex->word[i][j + 1] == '|' || lex->word[i][j + 1] == '>' 
+			|| lex->word[i][j + 1] == '<') // "hello| " '|'       "\"|he;lo
+				break;
+		j++;   
 	}
+	return (j);
 }
 
 int    find_word(t_lexer *lex, int i, int j)
@@ -73,17 +36,10 @@ int    find_word(t_lexer *lex, int i, int j)
 				j++;
 		lex->end = j;
 	}
-	else if (lex->word[i][j] != '|'	&& lex->word[i][j] != '>' && lex->word[i][j] != '<')
+	else if (lex->word[i][j] != '|'	&& lex->word[i][j] != '>' 
+		&& lex->word[i][j] != '<')
 	{
-		while ((lex->word[i][j] != '|' && lex->word[i][j] != '>' 
-		&& lex->word[i][j] != '<') && lex->word[i][j + 1]) //"qqdwqdq'" |'|' >> '|qdqwd' "|"         'qw'     //ok|>ok this test will work if we do j + 1 here -> lex->word[i][j + 1]
-		{
-			if (lex->word[i][j] == '\"' || lex->word[i][j] == '\'')
-				j = skip_quote(lex->word[i], j); 
-			if(lex->word[i][j + 1] == '|' || lex->word[i][j + 1] == '>' || lex->word[i][j + 1] == '<') // "hello| " '|'       "\"|he;lo
-					break;
-			j++;   
-		}
+		j = find_end_ifnot_redir (lex, i, j);
 		lex->end = j;
 	} 	//<< qwdqd'qwdq"' q <"qwdq"qd           '      '
 	return (j);
@@ -126,24 +82,24 @@ int split_pipe_redir(t_lexer *lex)
 		}
 		lex->token[k] = NULL;
 	}
-	// 	printf("%d\n", lex->word_nb);
-	// 	i = 0;
-	// if (lex->copie_wnb < lex->word_nb)
-	// {
-	// 	while (lex->token[i])
-	// 	{	
-	// 		printf("token ==> %s\n", lex->token[i]);
-	// 		i++;
-	// 	}
-	// }
-	// else  
-	// {
-	// 	while (lex->word[i])
-	// 	{	
-	// 		printf("word ==> %s\n", lex->word[i]);
-	// 		i++;
-	// 	}
-	// }
+		printf("%d\n", lex->word_nb);
+		i = 0;
+	if (lex->copie_wnb < lex->word_nb)
+	{
+		while (lex->token[i])
+		{	
+			printf("token ==> %s\n", lex->token[i]);
+			i++;
+		}
+	}
+	else  
+	{
+		while (lex->word[i])
+		{	
+			printf("word ==> %s\n", lex->word[i]);
+			i++;
+		}
+	}
 	return (1);
 }
 

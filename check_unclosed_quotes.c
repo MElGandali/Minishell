@@ -15,8 +15,6 @@
 int dquote(char *str, int *i)
 {
     int cnt;
-    int x;
-    x = 0;
 
     cnt = 0;
     while (str[*i])
