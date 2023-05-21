@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/21 19:12:02 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:21:45 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ typedef struct s_commands
     char **cmd;
     int i;
 }   t_cmd;
+
 typedef struct s_parser
 {
     t_cmd *cmd;
 }   t_parser;
+//------------lexer---------------//
 
 int tokenizer(t_lexer *lex);
 int check_unclosed_quotes(char *str);
@@ -78,6 +80,7 @@ int redir_pipe_error_mult_arg(t_lexer *lex);
 // int tokenizer_error(t_lexer *lex);
 
 
+
 //-----------parsing-----------//
-void parser(t_lexer *lex);
+int    parser(t_lexer *lex);
 #endif

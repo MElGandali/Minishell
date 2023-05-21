@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/21 19:33:40 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:16:40 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
+
+void all_work(t_lexer *lex)
+{
+    if (tokenizer(lex) == -1)
+        return;
+    if (parser(lex) == -1)
+        return;
+}
 
 int main()
 {
@@ -19,8 +27,9 @@ int main()
     {
         lex.line = readline("bash$ ");
         add_history(lex.line);
-        tokenizer(&lex);
-        //parser(&lex);
+        all_work(&lex);
+        // tokenizer(&lex);
+        // parser(&lex);
     }
     return (0); 
 }
