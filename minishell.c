@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/22 22:51:31 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 21:12:17 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void all_work(t_lexer *lex)
         return;
     if (parser(lex) == -1)
         return;
-}
+ }
 
 int main()
 {
@@ -28,8 +28,6 @@ int main()
         lex.line = readline("bash$ ");
         add_history(lex.line);
         all_work(&lex);
-        // tokenizer(&lex);
-        // parser(&lex);
     }
     return (0); 
 }

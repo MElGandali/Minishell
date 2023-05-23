@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/23 13:09:24 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 17:14:45 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int skip_quote(char *line, int i)
 int split_spaces(t_lexer *lex)
 {
     int i;
-
+    int last_wlen;
+    
     i = 0;
     while (lex->line[i])
     {
@@ -42,21 +43,15 @@ int split_spaces(t_lexer *lex)
             lex->line[i] = '\n';
     i++;
     }
-    if (lex->line[0] == '|' || lex->line[i - 1] == '|')
-    {
-        
-        free(lex->line);
-        printf("bash : syntax error near unexpected token\n");
-        return (-1);
-    }
     lex->word = ft_split(lex->line, '\n' , &lex->curr_wnb);
-    // i = 0;
-    // while (lex->word[i] != NULL)
+    last_wlen = ft_strlen(lex->word[lex->curr_wnb - 1]) - 1;
+    // if (lex->word[0][0] == '|' || lex->word[lex->curr_wnb - 1][last_wlen] == '|')
     // {
-    //     printf("%s\n", lex->word[i]);
-    //     i++;
+    //     free (lex->line);
+    //     free_double_array(lex->word);
+    //     printf("bash : syntax error near unexpected token1\n");
+    //     return (-1);
     // }
-    // exit(0);
     free (lex->line);
     return (0);
 }

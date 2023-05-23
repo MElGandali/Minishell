@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/23 13:19:33 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 23:35:13 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int    parser(t_lexer *lex)
     if (alloc_struct_cmd(lex , &parser) == -1)
         return (-1);
     fill_command (&parser);
+    handle_data (&parser);
     return (0);
 }

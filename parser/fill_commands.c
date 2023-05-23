@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:39:18 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/23 13:26:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 23:55:03 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,19 @@ int   find_end (char **str, int i)
 char    **fill_command_utils(t_parser *parser,char **cmd, int end, int start)
 {
     int i;
-    int diff;
 
     i = 0;
-    diff = end - start;
-    cmd = (char **)malloc(sizeof(char *) * (diff + 1));
-    while (i < diff)
+    parser->comm->dt_nb = end - start;
+    cmd = (char **)malloc(sizeof(char *) * (parser->comm->dt_nb + 1));
+    while (i < parser->comm->dt_nb)
     {
         cmd[i] = ft_substr(parser->lex->token[start], 0, ft_strlen(parser->lex->token[start]));
         i++;
+        printf("index%d\n", i);
         start++;
     }
+    //  printf("dt nb cmd0%d\n", parser->comm[1].dt_nb);
+    // printf("dt nb cmd0%d\n", parser->comm[1].dt_nb);
     cmd[i] = NULL;
     return(cmd);
 }
@@ -55,20 +57,20 @@ void    fill_command (t_parser *parser)
         start = end;
         end = find_end (parser->lex->token, end);
         parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start);
+        printf("%s\n", parser->comm[c].cmd[c]);
         c++;
         end++;
     }
-    
-    int i = 0;
-    int j = 0;
-    while (i < parser->lex->pipe_nb)
-    {
-        j = 0;
-        while (parser->comm[i].cmd[j] != NULL)
-        {
-            printf("%s\n", parser->comm[i].cmd[j]);
-            j++;
-        }
-        i++;
-    }
+    // int i = 0;
+    // int j = 0;
+    // while (i < parser->lex->pipe_nb)
+    // {
+    //     j = 0;
+    //     while (parser->comm[i].cmd[j] != NULL)
+    //     {
+    //         printf("%d\n", parser->comm[i].dt_nb);
+    //         j++;
+    //     }
+    //     i++;
+    // }
 }

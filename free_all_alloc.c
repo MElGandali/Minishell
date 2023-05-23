@@ -1,12 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   free_all_alloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 13:10:04 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/23 13:10:34 by maddou           ###   ########.fr       */
+/*   Created: 2023/05/23 14:48:57 by mel-gand          #+#    #+#             */
+/*   Updated: 2023/05/23 14:50:34 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void free_double_array(char **str)
+{
+    int i;
+    
+    i = 0;
+	while(str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free (str);
+}

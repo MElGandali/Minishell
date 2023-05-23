@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/23 13:02:30 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 22:18:03 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@
 //     struct s_token *next;
 //     int index;    
 // }   t_token;
+typedef enum e_data
+{
+    WORD = 1,
+    COMMAND,
+    FLAG,
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	DREDIR_OUT,
+	ENV,
+}   t_dt;
 
 typedef struct s_lexer
 {
@@ -45,17 +56,34 @@ typedef struct s_lexer
     int pipe_nb;
 }           t_lexer;
 
+typedef struct s_define_data 
+{
+    char *name;
+    char *data;
+    int position;
+    char *name_file;
+    char *delimiter;
+}   t_data;
+
 typedef struct s_commands
 {
+    t_dt state;
     char **cmd;
+    int dt_nb;
+    t_data *dt;
     int i;
 }   t_cmd;
+
 
 typedef struct s_parser
 {
     t_cmd *comm;
     t_lexer *lex;
 }   t_parser;
+
+
+//---------free-------//
+void free_double_array(char **str);
 
 
 //------------lexer---------------//
@@ -86,4 +114,6 @@ int redir_pipe_error_mult_arg(t_lexer *lex);
 //-----------parsing-----------//
 int    parser(t_lexer *lex);
 void    fill_command (t_parser *parser);
+// void    define_data (t_parser *parser);
+void    handle_data(t_parser *parser);
 #endif
