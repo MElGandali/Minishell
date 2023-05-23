@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/21 18:25:51 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:09:24 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,18 @@ int split_spaces(t_lexer *lex)
     if (lex->line[0] == '|' || lex->line[i - 1] == '|')
     {
         
-        printf("bash : syntax error near unexpected token\n");
         free(lex->line);
+        printf("bash : syntax error near unexpected token\n");
         return (-1);
     }
     lex->word = ft_split(lex->line, '\n' , &lex->curr_wnb);
+    // i = 0;
+    // while (lex->word[i] != NULL)
+    // {
+    //     printf("%s\n", lex->word[i]);
+    //     i++;
+    // }
+    // exit(0);
     free (lex->line);
     return (0);
 }

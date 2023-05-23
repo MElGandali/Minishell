@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/21 20:21:45 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/23 13:02:30 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_lexer
     char **word;
     char **token;
     int curr_wnb;
-    int old_wnb;
     char *line;
     int pipe_nb;
 }           t_lexer;
@@ -54,8 +53,11 @@ typedef struct s_commands
 
 typedef struct s_parser
 {
-    t_cmd *cmd;
+    t_cmd *comm;
+    t_lexer *lex;
 }   t_parser;
+
+
 //------------lexer---------------//
 
 int tokenizer(t_lexer *lex);
@@ -83,4 +85,5 @@ int redir_pipe_error_mult_arg(t_lexer *lex);
 
 //-----------parsing-----------//
 int    parser(t_lexer *lex);
+void    fill_command (t_parser *parser);
 #endif
