@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:39:18 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/23 23:55:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/24 22:34:08 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ int   find_end (char **str, int i)
 {
     while (str[i] != NULL)
     {
+        printf("str%s\n", str[i]);
         if (ft_strnstr(str[i], "|") == 0 && ft_strlen(str[i]) <= 1)
             break;
         i++;
     }
     return (i);
 }
-
+//<< qwd |qwd 'qwd'"ls"| add'da' qwd"re" > fileu'qwd'
 char    **fill_command_utils(t_parser *parser,char **cmd, int end, int start, int c)
 {
     int i;
 
     i = 0;
     parser->comm[c].dt_nb = end - start;
+    printf("start : %d----end : %d\n", start, end);
     cmd = (char **)malloc(sizeof(char *) * (parser->comm->dt_nb + 1));
     while (i < parser->comm[c].dt_nb)
     {
@@ -53,6 +55,7 @@ void    fill_command (t_parser *parser)
     {
         start = end;
         end = find_end (parser->lex->token, end);
+        printf("index : %d\n", c);
         parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start, c);
         c++;
         end++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/23 22:18:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:20:22 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 //     struct s_token *next;
 //     int index;    
 // }   t_token;
+
 typedef enum e_data
 {
     WORD = 1,
@@ -41,6 +42,8 @@ typedef enum e_data
 	HERE_DOC,
 	DREDIR_OUT,
 	ENV,
+    DOC,
+    DELIMITER,
 }   t_dt;
 
 typedef struct s_lexer
@@ -58,7 +61,8 @@ typedef struct s_lexer
 
 typedef struct s_define_data 
 {
-    char *name;
+    int name;
+    t_dt state;
     char *data;
     int position;
     char *name_file;
@@ -67,7 +71,7 @@ typedef struct s_define_data
 
 typedef struct s_commands
 {
-    t_dt state;
+    
     char **cmd;
     int dt_nb;
     t_data *dt;

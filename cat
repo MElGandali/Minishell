@@ -1,0 +1,1 @@
+"< infile  command -l -g" "cmd << heredoc" "cmd | cmd" "cmd >> outfile"
