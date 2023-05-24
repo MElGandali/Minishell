@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define_data.c                                      :+:      :+:    :+:   */
+/*   handle_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,16 +15,12 @@
 void fill_data(t_cmd comm)
 {
     int i;
-    int j;
 
     i = 0;
-    j = 0;
-    
     while (i < comm.dt_nb)
     {
         
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
-        // printf("%s\n", comm.dt[i].data);
         i++;
     }
         
@@ -40,6 +36,21 @@ void    handle_data(t_parser *parser)
         fill_data(parser->comm[i]);
         i++;
     }
+
+    //----------------print data-----------------//
+    // i = 0;
+    // int j = 0;
+    // while (j < parser->lex->pipe_nb)
+    // {
+    //     i = 0;
+    //     while (i < parser->comm[j].dt_nb)
+    //     {
+    //         printf ("%s\n", parser->comm[j].dt[i].data);
+    //         i++;
+    //     }
+    //     printf ("%d\n", j);
+    //     j++;
+    // }
 }
 
 // void define_word_token(t_lexer *lex)

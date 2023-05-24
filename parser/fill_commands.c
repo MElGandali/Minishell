@@ -23,22 +23,19 @@ int   find_end (char **str, int i)
     return (i);
 }
 
-char    **fill_command_utils(t_parser *parser,char **cmd, int end, int start)
+char    **fill_command_utils(t_parser *parser,char **cmd, int end, int start, int c)
 {
     int i;
 
     i = 0;
-    parser->comm->dt_nb = end - start;
+    parser->comm[c].dt_nb = end - start;
     cmd = (char **)malloc(sizeof(char *) * (parser->comm->dt_nb + 1));
-    while (i < parser->comm->dt_nb)
+    while (i < parser->comm[c].dt_nb)
     {
         cmd[i] = ft_substr(parser->lex->token[start], 0, ft_strlen(parser->lex->token[start]));
         i++;
-        printf("index%d\n", i);
         start++;
     }
-    //  printf("dt nb cmd0%d\n", parser->comm[1].dt_nb);
-    // printf("dt nb cmd0%d\n", parser->comm[1].dt_nb);
     cmd[i] = NULL;
     return(cmd);
 }
@@ -56,8 +53,7 @@ void    fill_command (t_parser *parser)
     {
         start = end;
         end = find_end (parser->lex->token, end);
-        parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start);
-        printf("%s\n", parser->comm[c].cmd[c]);
+        parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start, c);
         c++;
         end++;
     }

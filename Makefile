@@ -17,7 +17,7 @@ LDFLAGS = -lreadline -L/Users/mel-gand/.brew/opt/readline/lib -I/Users/mel-gand/
 RM = rm -rf
 SRC = minishell.c libf/ft_strcmp.c libf/ft_split.c libf/ft_strlen.c libf/ft_substr.c libf/ft_strdup.c libf/ft_strjoin.c lexer/tokenizer.c \
 		lexer/check_unclosed_quotes.c lexer/tokenizer_error_one_arg.c lexer/split_token.c  lexer/split_spaces.c libf/ft_strnstr.c lexer/split_pipe_redir.c \
-		lexer/count_tokens.c lexer/tokenizer_error_mult_arg.c parser/parser.c parser/fill_commands.c free_all_alloc.c parser/define_data.c
+		lexer/count_tokens.c lexer/tokenizer_error_mult_arg.c parser/parser.c parser/fill_commands.c free_all_alloc.c parser/handle_data.c
 OBJ := $(SRC:.c=.o)
 OBJ := $(addprefix obj/, $(OBJ))
 

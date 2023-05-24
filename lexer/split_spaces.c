@@ -32,7 +32,6 @@ int skip_quote(char *line, int i)
 int split_spaces(t_lexer *lex)
 {
     int i;
-    int last_wlen;
     
     i = 0;
     while (lex->line[i])
@@ -44,7 +43,7 @@ int split_spaces(t_lexer *lex)
     i++;
     }
     lex->word = ft_split(lex->line, '\n' , &lex->curr_wnb);
-    last_wlen = ft_strlen(lex->word[lex->curr_wnb - 1]) - 1;
+    // last_wlen = ft_strlen(lex->word[lex->curr_wnb - 1]) - 1;
     // if (lex->word[0][0] == '|' || lex->word[lex->curr_wnb - 1][last_wlen] == '|')
     // {
     //     free (lex->line);
