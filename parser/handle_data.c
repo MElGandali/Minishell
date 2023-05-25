@@ -47,11 +47,11 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
 
 void define_data(t_cmd *comm, char *data, int pos)
 {
-    int i;
-    int j;
+    // int i;
+    // int j;
     
-    i = 0;
-    j = 0;
+    // i = 0;
+    // j = 0;
     if (pos == 0)
     {
         if (find_data_redir (&comm->dt[0].name, data) == 0)
@@ -98,14 +98,19 @@ void fill_data(t_cmd comm)
     int i;
 
     i = 0;
+    // printf ("%d\n", comm.dt_nb);
     while (i < comm.dt_nb)
     {
+        // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
+
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
         comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
-        printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
+        printf ("data %s position %d dfine %d\n", comm.dt->data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
+    i = 0;
+
 }
 
 void    handle_data(t_parser *parser)
@@ -115,25 +120,25 @@ void    handle_data(t_parser *parser)
     i = 0;
     while (i < parser->lex->pipe_nb)
     {
-        parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm->dt_nb);
+        parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm[i].dt_nb);
         fill_data(parser->comm[i]);
         i++;
     }
 
     //----------------print data-----------------//
-    i = 0;
-    int j = 0;
-    while (j < parser->lex->pipe_nb)
-    {
-        i = 0;
-        while (i < parser->comm[j].dt_nb)
-        {
-            printf ("%s\n", parser->comm[j].dt[i].data);
-            i++;
-        }
-        printf ("%d\n", j);
-        j++;
-    }
+    // i = 0;
+    // int j = 0;
+    // while (j < parser->lex->pipe_nb)
+    // {
+    //     i = 0;
+    //     while (i < parser->comm[j].dt_nb)
+    //     {
+    //         printf ("%s\n", parser->comm[j].dt[i].data);
+    //         i++;
+    //     }
+    //     printf ("%d\n", j);
+    //     j++;
+    // }
 }
 
 // void define_word_token(t_lexer *lex)

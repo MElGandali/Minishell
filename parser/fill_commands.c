@@ -12,11 +12,13 @@
 
 # include "../minishell.h"
 
+
+// hna SGV 
 int   find_end (char **str, int i)
 {
     while (str[i] != NULL)
     {
-        printf("str%s\n", str[i]);
+        // printf("str%s\n", str[i]);
         if (ft_strnstr(str[i], "|") == 0 && ft_strlen(str[i]) <= 1)
             break;
         i++;
@@ -24,15 +26,16 @@ int   find_end (char **str, int i)
     return (i);
 }
 //<< qwd |qwd 'qwd'"ls"| add'da' qwd"re" > fileu'qwd'
-char    **fill_command_utils(t_parser *parser,char **cmd, int end, int start, int c)
+char    **fill_command_utils(t_parser *parser, char **cmd, int end, int start, int c)
 {
     int i;
 
     i = 0;
     parser->comm[c].dt_nb = end - start;
-    printf("start : %d----end : %d\n", start, end);
-    cmd = (char **)malloc(sizeof(char *) * (parser->comm->dt_nb + 1));
-    while (i < parser->comm[c].dt_nb)
+    // printf("start : %d----end : %d\n", start, end);
+
+    cmd = (char **)malloc(sizeof(char *) * (parser->comm[c].dt_nb + 1));
+    while (i < parser->comm[c].dt_nb && parser->lex->token[start] != NULL)
     {
         cmd[i] = ft_substr(parser->lex->token[start], 0, ft_strlen(parser->lex->token[start]));
         i++;
@@ -55,10 +58,10 @@ void    fill_command (t_parser *parser)
     {
         start = end;
         end = find_end (parser->lex->token, end);
-        printf("index : %d\n", c);
+        // printf("index : %d\n", c);
         parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start, c);
-        c++;
         end++;
+        c++;
     }
     // int i = 0;
     // int j = 0;

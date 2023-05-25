@@ -88,13 +88,13 @@ int split_pipe_redir(t_lexer *lex)
 	fill_token(lex, i, j, &k);
 	lex->token[k] = NULL;
 	free_double_array(lex->word);
-	i = 0;
-	j = 0;
-	while (lex->token[i] != NULL)
-	{
-		printf ("%s\n", lex->token[i]);
-		i++;
-	}
+	// i = 0;
+	// j = 0;
+	// while (lex->token[i] != NULL)
+	// {
+	// 	printf ("%s\n", lex->token[i]);
+	// 	i++;
+	// }
 	// exit(1);
 	return (1);
 }
