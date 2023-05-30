@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/24 22:04:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/30 19:43:25 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int main()
     while (1)
     {
         lex.line = readline("bash$ ");
+        if (!lex.line)
+            exit(0);
         add_history(lex.line);
         all_work(&lex);
     }

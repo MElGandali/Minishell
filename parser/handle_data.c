@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/24 20:04:45 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/30 21:47:28 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,41 @@ int  find_data_redir(int *name, char *data)
     return (0);
 }
 
+int ft_check_flag (char *data)
+{
+    int i;
+
+    i = 0;
+    while (data[i] != '\0')
+    {
+        if (data[i] == '\'')
+        {
+            while (data[i] == '\'')
+                i++;
+            if (data[i] != '\"')
+              break;
+        }
+        if (data[i] == '\"')
+        {
+            while (data[i] == '\"')
+                i++;
+            if (data[i] != '\'')
+              break;
+        }
+        i++;
+    }
+    return (1);
+}
+
 void check_pos_one(t_cmd *comm, char *data, int pos)
 {
     if (comm->dt[0].name == COMMAND && pos == 1)
     {
         if (data[0] == '-')
             comm->dt[pos].name = FLAG;
-        else if (find_data_redir(&comm->dt[1].name, data) == 1)
-            comm->dt[1].name = WORD;
+        ft_check_flag (data);
+        // else if (find_data_redir(&comm->dt[1].name, data) == 1)
+        //     comm->dt[1].name = WORD;
     }
     else if (comm->dt[0].name != COMMAND && pos == 1)
     {
@@ -106,7 +133,7 @@ void fill_data(t_cmd comm)
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
         comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
-        printf ("data %s position %d dfine %d\n", comm.dt->data,comm.dt[i].position, comm.dt[i].name);
+        printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
     i = 0;
