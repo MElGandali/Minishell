@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   creat_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/31 23:08:51 by maddou           ###   ########.fr       */
+/*   Created: 2023/05/31 17:40:13 by maddou            #+#    #+#             */
+/*   Updated: 2023/05/31 22:08:58 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+# include "../minishell.h"
 
-void all_work(t_lexer *lex)
+t_env *creat_list(int nb)
 {
-    if (tokenizer(lex) == -1)
-        return;
-    if (parser(lex) == -1)
-        return;
-}
-
-int main(int ac, char **av, char **env)
-{
-    (void)ac;
-    (void)av;
-    t_lexer lex;
-    while (1)
+    t_env *head = malloc(sizeof(t_env));
+    t_env *list = head;
+    int i = 1;
+    
+    while(i < nb)
     {
-        lex.line = readline("bash$ ");
-        if (!lex.line)
-            exit(0);
-        add_history(lex.line);
-        all_work(&lex);
+        list->next = malloc(sizeof (t_env));
+        list = list->next;
+        i++;
     }
-    return (0); 
+    list->next = NULL;
+    return (head);
 }

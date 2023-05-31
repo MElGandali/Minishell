@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/30 21:47:28 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/31 15:16:27 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,41 +27,42 @@ int  find_data_redir(int *name, char *data)
     return (0);
 }
 
-int ft_check_flag (char *data)
+int ft_check_flag (char *data, int i)
 {
-    int i;
-
-    i = 0;
     while (data[i] != '\0')
     {
         if (data[i] == '\'')
         {
             while (data[i] == '\'')
                 i++;
-            if (data[i] != '\"')
+            if (data[i + 1] != '\"')
               break;
         }
         if (data[i] == '\"')
         {
             while (data[i] == '\"')
                 i++;
-            if (data[i] != '\'')
+            if (data[i + 1] != '\'')
               break;
         }
         i++;
     }
-    return (1);
+    if (data[i + 1] == '-')
+        return (1);
+    return (0);
 }
 
 void check_pos_one(t_cmd *comm, char *data, int pos)
 {
+    int i;
+    
+    i = 0;
     if (comm->dt[0].name == COMMAND && pos == 1)
     {
-        if (data[0] == '-')
+        if (ft_check_flag (data, i) == 1)
             comm->dt[pos].name = FLAG;
-        ft_check_flag (data);
-        // else if (find_data_redir(&comm->dt[1].name, data) == 1)
-        //     comm->dt[1].name = WORD;
+        else if (find_data_redir(&comm->dt[1].name, data) == 1)
+            comm->dt[1].name = WORD;
     }
     else if (comm->dt[0].name != COMMAND && pos == 1)
     {

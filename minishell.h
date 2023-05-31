@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/24 18:20:22 by maddou           ###   ########.fr       */
+/*   Updated: 2023/05/31 23:06:31 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@
 #include<signal.h>
 #include"libf/libft.h"
 
-// typedef struct  s_token
-// {
-//     char *word;
-//     char *enumerate;
-//     int free;
-//     struct s_token *next;
-//     int index;    
-// }   t_token;
+typedef struct s_env {
+    char *id;
+    char *data;
+    struct s_env *next;
+}   t_env;
+
+typedef struct  s_var
+{
+    t_env *tmp;
+    t_env *free_node;
+    t_env *prev;  
+}   t_var;
 
 typedef enum e_data
 {
@@ -71,20 +75,19 @@ typedef struct s_define_data
 
 typedef struct s_commands
 {
-    
+    t_env *env;
+    t_env *exp;
     char **cmd;
     int dt_nb;
     t_data *dt;
     int i;
 }   t_cmd;
 
-
 typedef struct s_parser
 {
     t_cmd *comm;
     t_lexer *lex;
 }   t_parser;
-
 
 //---------free-------//
 void free_double_array(char **str);
