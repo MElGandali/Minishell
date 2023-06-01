@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:09:23 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/31 22:25:01 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/01 11:33:00 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ t_env *remove_node(t_env *head, char *id)
    ft_var(&var, head);
     while (var.tmp)
     {
-        if (ft_strcmp(var.tmp->data , id) != 0)
+        if (ft_strcmp(var.tmp->key , id) != 0)
         {
             if (var.prev)
                 var.prev->next = var.tmp->next;
             else
                 head = var.tmp->next;
             var.free_node = var.tmp;
-            free(var.tmp->id);
-            free(var.tmp->data);
+            free(var.tmp->key);
+            free(var.tmp->value);
             var.tmp = var.tmp->next;
             free(var.free_node);
         }

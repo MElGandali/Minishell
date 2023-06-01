@@ -6,11 +6,12 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/31 23:08:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/01 18:12:54 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
+#include "libf/libft.h"
 
 void all_work(t_lexer *lex)
 {
@@ -24,7 +25,9 @@ int main(int ac, char **av, char **env)
 {
     (void)ac;
     (void)av;
+    (void)env;
     t_lexer lex;
+     creating_new_env(&lex, env);
     while (1)
     {
         lex.line = readline("bash$ ");

@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/31 23:06:31 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/01 16:44:37 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,36 @@
 #include<signal.h>
 #include"libf/libft.h"
 
+/*
+t_list {
+    void *content;
+    t_list *next;
+}
+t_env {
+    char *key;
+    char *value;
+}
+
+void    destroy_env(t_env *var)
+{
+    free(var->key);
+    free(var->value);
+    free(var);
+}
+
+typedef void    (*t_lstdel)(void *);
+
+env_node = malloc(sizeof(t_list));
+env_entry = malloc(sizeof(t_env));
+env_node->content = env_entry;
+
+ft_lstclear(&lst, (t_lstdel) destroy_env);
+*/
+
 typedef struct s_env {
-    char *id;
-    char *data;
+    char *all;
+    char *key;
+    char *value;
     struct s_env *next;
 }   t_env;
 
@@ -52,6 +79,8 @@ typedef enum e_data
 
 typedef struct s_lexer
 {
+    t_env *env;
+    t_env *exp;
     int i;
     int j;
     int start;
@@ -75,11 +104,10 @@ typedef struct s_define_data
 
 typedef struct s_commands
 {
-    t_env *env;
-    t_env *exp;
     char **cmd;
     int dt_nb;
     t_data *dt;
+    int ext_dollar;
     int i;
 }   t_cmd;
 
@@ -88,6 +116,18 @@ typedef struct s_parser
     t_cmd *comm;
     t_lexer *lex;
 }   t_parser;
+
+//------------------start linked--------------//
+t_env *add_node(t_env *head);
+t_env *creat_list(int nb);
+t_env *creat_node(t_env *head);
+t_env *remove_node(t_env *head, char *id);
+//-------------------end linked-------------//
+
+//------------------start command--------------//
+void creating_new_env(t_lexer *lex, char **env);
+//------------------end command--------------//
+
 
 //---------free-------//
 void free_double_array(char **str);

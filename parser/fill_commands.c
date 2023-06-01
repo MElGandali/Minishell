@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:39:18 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/24 22:34:08 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/01 16:42:02 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char    **fill_command_utils(t_parser *parser, char **cmd, int end, int start, i
 
     i = 0;
     parser->comm[c].dt_nb = end - start;
-    // printf("start : %d----end : %d\n", start, end);
 
     cmd = (char **)malloc(sizeof(char *) * (parser->comm[c].dt_nb + 1));
     while (i < parser->comm[c].dt_nb && parser->lex->token[start] != NULL)
     {
         cmd[i] = ft_substr(parser->lex->token[start], 0, ft_strlen(parser->lex->token[start]));
+        // printf ("%s\n", cmd[i]);
         i++;
         start++;
     }
@@ -58,7 +58,6 @@ void    fill_command (t_parser *parser)
     {
         start = end;
         end = find_end (parser->lex->token, end);
-        // printf("index : %d\n", c);
         parser->comm[c].cmd = fill_command_utils(parser,parser->comm[c].cmd, end, start, c);
         end++;
         c++;

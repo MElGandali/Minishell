@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/31 15:16:27 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/01 18:21:09 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int  find_data_redir(int *name, char *data)
 
 int ft_check_flag (char *data, int i)
 {
-    while (data[i] != '\0')
+    while (data[i] != '\0' && (data[i] == '\'' || data[i] == '\"'))
     {
         if (data[i] == '\'')
         {
@@ -61,6 +61,8 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
     {
         if (ft_check_flag (data, i) == 1)
             comm->dt[pos].name = FLAG;
+        else if (data[0] == '-')
+             comm->dt[pos].name = FLAG;
         else if (find_data_redir(&comm->dt[1].name, data) == 1)
             comm->dt[1].name = WORD;
     }
@@ -75,11 +77,6 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
 
 void define_data(t_cmd *comm, char *data, int pos)
 {
-    // int i;
-    // int j;
-    
-    // i = 0;
-    // j = 0;
     if (pos == 0)
     {
         if (find_data_redir (&comm->dt[0].name, data) == 0)
@@ -92,15 +89,9 @@ void define_data(t_cmd *comm, char *data, int pos)
     if (pos > 1)
     {
         if (comm->dt[pos - 1].name == FLAG && data[0] == '-')
-        {
-            printf("1\n");
            comm->dt[pos].name = FLAG;
-        }
         else if (comm->dt[pos - 1].name == DOC || comm->dt[pos - 1].name == DELIMITER)
-        {
-            printf("2\n");
             comm->dt[pos].name = COMMAND;
-        }
         else if (find_data_redir(&comm->dt[pos - 1].name, comm->dt[pos - 1].data) == 0)
         {
             if (comm->dt[pos - 1].name == HERE_DOC)
@@ -109,15 +100,9 @@ void define_data(t_cmd *comm, char *data, int pos)
                 comm->dt[pos].name = DOC;
         }
         else if (find_data_redir(&comm->dt[pos].name, data) == 0)
-        {
-            printf ("4\n");
             return ;
-        }
         else 
-        {
-            printf ("5\n");
-            comm->dt[pos].name = WORD; 
-        }
+            comm->dt[pos].name = WORD;
     }
 }
 
@@ -130,7 +115,6 @@ void fill_data(t_cmd comm)
     while (i < comm.dt_nb)
     {
         // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
-
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
         comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
