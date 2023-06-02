@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/02 22:10:46 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/02 23:49:13 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,50 @@ void define_data(t_cmd *comm, char *data, int pos)
             comm->dt[pos].name = WORD;
     }
 }
-void check_dolar(char *data)
+
+int x(char *data, char c, int j)
 {
-    
+    ++j;
+    while(data[j] != c)
+    {
+        if (data[j] == '$')
+        {
+            if (c == '\"')
+                return (1);
+        }
+        j++;
+    }
+    return (0);
+}
+
+int check_ex_dollar(char *data)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (data[i] != '\0')
+    {
+        j = i;
+        if (data[i] == '\'')
+        {
+            i++;
+            quote(data, &i);
+            if (x(data, data[j], j) == 1)
+                return (1);
+        }
+        else if (data[i] == '\"')
+        {
+            i++;
+            dquote(data, &i);
+            if (x(data, data[j], j) == 1)
+                return (1);
+        }
+        else if (data[i] == '$')
+            return (1);
+        i++;
+    }
+    return (0);
 }
 
 void fill_data(t_cmd comm)
@@ -126,10 +167,11 @@ void fill_data(t_cmd comm)
     {
         // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
-        check_dolar(comm.dt[i].data);
+        comm.dt[i].ex_dollar = check_ex_dollar(comm.dt[i].data);
+        printf ("%d\n", comm.dt[i].ex_dollar);
         comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
-        printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
+        // printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
     i = 0;

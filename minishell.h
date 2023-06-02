@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/02 18:37:27 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/02 22:38:40 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_define_data
     int position;
     char *name_file;
     char *delimiter;
+    int  ex_dollar;
 }   t_data;
 
 typedef struct s_commands
@@ -139,6 +140,8 @@ void free_double_array(char **str);
 int tokenizer(t_lexer *lex);
 int check_unclosed_quotes(char *str);
 int skip_quote(char *line, int i);
+int dquote(char *str, int *i);
+int quote(char *str, int *i);
 
 
 //------------split token---------//

@@ -76,7 +76,9 @@ int  check_unclosed_quotes(char *str)
 			i++;
             flag = quote(str,&i);
 		}
-    i++;
+        if (flag == -1)
+            return (-1);
+        i++;
     }
     return (flag);
 }
