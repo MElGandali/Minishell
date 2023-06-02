@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/01 18:21:09 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/02 22:10:46 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void define_data(t_cmd *comm, char *data, int pos)
         if (find_data_redir (&comm->dt[0].name, data) == 0)
             return ;
         else
+        {
+            comm->nb_cmd = 1;
             comm->dt[0].name = COMMAND;
+        }
     }
     else
        check_pos_one(comm, data, pos);
@@ -90,8 +93,11 @@ void define_data(t_cmd *comm, char *data, int pos)
     {
         if (comm->dt[pos - 1].name == FLAG && data[0] == '-')
            comm->dt[pos].name = FLAG;
-        else if (comm->dt[pos - 1].name == DOC || comm->dt[pos - 1].name == DELIMITER)
+        else if ((comm->dt[pos - 1].name == DOC || comm->dt[pos - 1].name == DELIMITER) && comm->nb_cmd == 0 && data[0] != '<' && data[0] != '>')
+        {
+            comm->nb_cmd = 1;
             comm->dt[pos].name = COMMAND;
+        }
         else if (find_data_redir(&comm->dt[pos - 1].name, comm->dt[pos - 1].data) == 0)
         {
             if (comm->dt[pos - 1].name == HERE_DOC)
@@ -105,6 +111,10 @@ void define_data(t_cmd *comm, char *data, int pos)
             comm->dt[pos].name = WORD;
     }
 }
+void check_dolar(char *data)
+{
+    
+}
 
 void fill_data(t_cmd comm)
 {
@@ -116,6 +126,7 @@ void fill_data(t_cmd comm)
     {
         // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
+        check_dolar(comm.dt[i].data);
         comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
         printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);

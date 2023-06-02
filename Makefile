@@ -6,7 +6,7 @@
 #    By: maddou <maddou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 17:04:58 by mel-gand          #+#    #+#              #
-#    Updated: 2023/06/01 18:12:50 by maddou           ###   ########.fr        #
+#    Updated: 2023/06/02 18:10:18 by maddou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC = minishell.c libf/ft_strcmp.c libf/ft_split.c libf/ft_strlen.c libf/ft_subs
 		lexer/check_unclosed_quotes.c lexer/tokenizer_error_one_arg.c lexer/split_token.c  lexer/split_spaces.c libf/ft_strnstr.c lexer/split_pipe_redir.c \
 		lexer/count_tokens.c lexer/tokenizer_error_mult_arg.c parser/parser.c parser/fill_commands.c free_all_alloc.c parser/handle_data.c \
 		linked_list/add_node.c linked_list/creat_node.c linked_list/remove_node.c \
-		command/env_export.c 
+		command/env/env_export.c 
 OBJ := $(SRC:.c=.o)
 OBJ := $(addprefix obj/, $(OBJ))
 

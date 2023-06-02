@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/01 18:12:54 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/02 17:49:24 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int ac, char **av, char **env)
     (void)av;
     (void)env;
     t_lexer lex;
-     creating_new_env(&lex, env);
+    creating_new_env(&lex, env);
     while (1)
     {
         lex.line = readline("bash$ ");
