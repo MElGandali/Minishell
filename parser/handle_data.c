@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/02 23:49:13 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/05 17:59:20 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,13 @@ void define_data(t_cmd *comm, char *data, int pos)
     }
 }
 
+int check_valid(char *data, int i)
+{
+    if (data[i + 1] == '_' || ft_isalnum(data[i + 1]) == 1)
+        return (1);
+    return (0);
+}
+
 int x(char *data, char c, int j)
 {
     ++j;
@@ -120,12 +127,17 @@ int x(char *data, char c, int j)
         if (data[j] == '$')
         {
             if (c == '\"')
-                return (1);
+            {
+                if (check_valid(data, j) == 1)
+                    return (1);
+            }
         }
         j++;
     }
     return (0);
 }
+
+
 
 int check_ex_dollar(char *data)
 {
@@ -151,7 +163,10 @@ int check_ex_dollar(char *data)
                 return (1);
         }
         else if (data[i] == '$')
-            return (1);
+        {
+            if (check_valid(data, i) == 1)
+                return (1);
+        }
         i++;
     }
     return (0);
@@ -174,8 +189,109 @@ void fill_data(t_cmd comm)
         // printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
-    i = 0;
+    
+}
 
+char *ft_copier(char add, char *new_data)
+{
+    int nb;
+    int i;
+    char *new;
+    
+    nb = 0;
+    i = 0;
+    if(new_data != NULL)
+        nb = ft_strlen(new_data);
+    new = malloc(sizeof(char) * (nb + 2));// EOL + char add
+    if (new_data != NULL)
+    {
+        while (new_data[i] != '\0')
+        {
+            new[i] = new_data[i];
+            i++;
+        }
+    }
+    new[i++] = add;
+    new[i] = '\0';
+    free(new_data);
+    return (new);
+}
+
+int check_exit(t_env *env, char *envmnt, char **new_data)
+{
+    t_env *tmp;
+    int i;
+
+    tmp = env;
+    i = 0;
+    while (tmp != NULL)
+    {
+        if (ft_strcmp(tmp->key, envmnt) == 0)
+        {
+            // free(envmnt); //free previous envmnt
+            while (tmp->value[i] != '\0')
+            {
+                *new_data = ft_copier(tmp->value[i], *new_data);
+                i++;
+            }
+            return (1);
+        }
+        tmp = tmp->next;
+    }
+    return (0);
+}
+
+void expand_data (t_env *env, char *data, int *j, char **new_data)
+{
+    int i;
+    int in;
+    (void)new_data;
+    (void)env;
+    char *envmnt;
+
+    in = 0;
+    i = *j + 1;
+    envmnt = NULL;
+    while (data[i] != '\0')
+    {
+        if (data[i] == '_' || ft_isalnum(data[i]) == 1)
+            envmnt = ft_copier(data[i], envmnt);
+        else
+            break;
+        i++;
+    }
+    check_exit(env, envmnt, new_data);
+    *j = --i;
+    // else  
+    //     *new_data = ft_copier('$', *new_data); 
+    free(envmnt);
+}
+
+void find_dollar(t_parser *parser, t_cmd *cmd)
+{
+    (void)parser;
+    int i;
+    int j;
+    char *new_data;
+
+    i = 0;
+    while (i < cmd->dt_nb)
+    {
+        j = 0;
+        new_data = NULL;
+        while (cmd->dt[i].data[j] != '\0')
+        {
+            if (cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
+                expand_data(parser->lex->env, cmd->dt[i].data,  &j, &new_data);
+            else
+                new_data = ft_copier(cmd->dt[i].data[j], new_data);
+            j++;
+        }
+        free(cmd->dt[i].data);
+        cmd->dt[i].data = new_data;
+        free (new_data);
+        i++;
+    }
 }
 
 void    handle_data(t_parser *parser)
@@ -187,9 +303,17 @@ void    handle_data(t_parser *parser)
     {
         parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm[i].dt_nb);
         fill_data(parser->comm[i]);
+        find_dollar(parser, &parser->comm[i]);
+        printf ("%s\n",parser->comm[i].dt[0].data);
         i++;
     }
-
+    
+    // while (parser->comm[i].cmd[j])
+    // {
+    //     free()
+    //     j++;
+    // }
+    // expaind_dollar(parser);
     //----------------print data-----------------//
     // i = 0;
     // int j = 0;
