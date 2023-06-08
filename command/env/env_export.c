@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/02 18:09:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/07 20:22:16 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2)
     int j;
 
     i = 0;
+    tmp2 = NULL;
     while (env[i] != '\0')
     {
         j = i;
@@ -38,12 +39,12 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2)
         if (env[i] == '=')
         {
             tmp1->key = ft_substr(env, j, i - j);
-            tmp2->key = ft_substr(env, j, i - j);
+            // tmp2->key = ft_substr(env, j, i - j);
         }
         if (env[i + 1] == '\0')
         {
             tmp1->value = ft_substr(env, j, (i + 1) - j);
-            tmp2->value = ft_substr(env, j, (i + 1) - j);
+            // tmp2->value = ft_substr(env, j, (i + 1) - j);
         }
         i++;
     }
@@ -77,36 +78,64 @@ char *add_dquot(char *tmp)
     return (p);
 }
 
-void fill_dt(char *env, t_env *ev, t_env *ex)
-{
-    t_env *tmp1;
-    t_env *tmp2;
+// void fill_dt(char *env, t_env *ev, t_env *ex)
+// {
+//     t_env *tmp1;
+//     t_env *tmp2;
 
-    tmp1 = ev;
-    tmp2 = ex;
-    while (tmp1->next != NULL && tmp2->next != NULL)
-    {
-        tmp1 = tmp1->next;
-        tmp2 = tmp2->next;
-    }
-    tmp1->all = ft_substr(env, 0, ft_strlen(env));
-    tmp2->all = ft_substr(env, 0, ft_strlen(env));
-    tmp2->all = add_dquot(tmp2->all);
-    tmp2->all = ft_strjoin("declare -x ", tmp2->all);
-    fill_dt_utils(env, tmp1, tmp2);
-}
+//     tmp1 = ev;
+//     tmp2 = ex;
+//     while (tmp1->next != NULL /*&& tmp2->next != NULL*/)
+//     {
+//         tmp1 = tmp1->next;
+//         // tmp2 = tmp2->next;
+//     }
+//     tmp1->all = ft_substr(env, 0, ft_strlen(env));
+    
+//     printf ("%s\n", (ev)->all);
+//     // tmp2->all = ft_substr(env, 0, ft_strlen(env));
+//     // tmp2->all = add_dquot(tmp2->all);
+//     // tmp2->all = ft_strjoin("declare -x ", tmp2->all);
+//     // fill_dt_utils(env, tmp1, tmp2);
+// }
 
 void creating_new_env(t_lexer *lex, char **env)
 {
     int i;
+    t_env *tmp1;
+    t_env *tmp2 = NULL;
+    // t_env *head;
 
+    lex->env = NULL;
+    
     i = 0;
-    lex->env = creat_node(lex->env);
-    lex->exp = creat_node(lex->exp);
+    // lex->exp = creat_node(lex->exp);
     while (env[i] != NULL)
     {
-        fill_dt(env[i], lex->env, lex->exp);
-        add_node(lex->env);
+
+        
+        tmp1 = creat_node(ft_strdup(env[i]));
+        // tmp2 = creat_node(ft_strdup(env[i]));
+        /*tmp1->key = */fill_dt_utils(env[i], tmp1, tmp2);
+        
+        add_node(tmp1,&lex->env);
+        // add_node(tmp2,&lex->exp);
+        // fill_dt(env[i], lex->env, lex->exp);
+        // printf ("%s\n", lex->env->all);
+       /* lex->env =*/ 
         i++;
     }
+    tmp1 = creat_node("x= hello world");
+    fill_dt_utils("x=hello   world", tmp1, tmp2);
+    add_node(tmp1,&lex->env);
+    // t_env *x = lex->env;
+    // printf ("%s", x->all);
+    // x = x->next;
+    // printf ("%s", x->all);
+    // while (x)
+    // {
+    //     printf ("%s %s %s\n", x->all, x->key, x->value);
+    //     x = x->next;
+    // }
+    // exit (0);
 }

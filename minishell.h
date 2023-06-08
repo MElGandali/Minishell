@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/02 22:38:40 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/08 00:47:44 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef enum e_data
 	ENV,
     DOC,
     DELIMITER,
+    WALLO,
 }   t_dt;
 
 typedef struct s_lexer
@@ -98,10 +99,14 @@ typedef struct s_define_data
     t_dt state;
     char *data;
     int position;
-    char *name_file;
-    char *delimiter;
     int  ex_dollar;
 }   t_data;
+
+typedef  struct s_red{
+    int name;
+    char *data;
+    int  ex_dollar;
+} t_red;
 
 typedef struct s_commands
 {
@@ -109,8 +114,10 @@ typedef struct s_commands
     int nb_cmd;
     int dt_nb;
     t_data *dt;
-    int ext_dollar;
-    int i;
+    char **new_cmd;
+    t_red *red;
+    // int ext_dollar;
+    // int i;
 }   t_cmd;
 
 typedef struct s_parser
@@ -120,9 +127,9 @@ typedef struct s_parser
 }   t_parser;
 
 //------------------start linked--------------//
-t_env *add_node(t_env *head);
+void add_node(t_env *node,t_env **head);
 t_env *creat_list(int nb);
-t_env *creat_node(t_env *head);
+t_env *creat_node(char *data);
 t_env *remove_node(t_env *head, char *id);
 //-------------------end linked-------------//
 
@@ -165,6 +172,9 @@ int redir_pipe_error_mult_arg(t_lexer *lex);
 //-----------parsing-----------//
 int    parser(t_lexer *lex);
 void    fill_command (t_parser *parser);
+void fill_newcmd_red(t_parser *parser);
 // void    define_data (t_parser *parser);
 void    handle_data(t_parser *parser);
+int check_valid(char *data, int i);
+char *ft_copier(char add, char *new_data);
 #endif

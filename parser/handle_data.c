@@ -6,11 +6,13 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/05 17:59:20 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/08 01:43:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <stdio.h>
+#include <string.h>
 
 int  find_data_redir(int *name, char *data)
 {
@@ -182,10 +184,13 @@ void fill_data(t_cmd comm)
     {
         // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
-        comm.dt[i].ex_dollar = check_ex_dollar(comm.dt[i].data);
-        printf ("%d\n", comm.dt[i].ex_dollar);
-        comm.dt[i].position = i;
+        // comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
+        if (i == 0 || (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) != 0))
+            comm.dt[i].ex_dollar = check_ex_dollar(comm.dt[i].data);
+        else   
+           comm.dt[i].ex_dollar = 0;
+        // printf ("%d\n", comm.dt[i].ex_dollar);
         // printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
@@ -203,6 +208,8 @@ char *ft_copier(char add, char *new_data)
     if(new_data != NULL)
         nb = ft_strlen(new_data);
     new = malloc(sizeof(char) * (nb + 2));// EOL + char add
+    if (!new)
+        return (0);
     if (new_data != NULL)
     {
         while (new_data[i] != '\0')
@@ -228,7 +235,6 @@ int check_exit(t_env *env, char *envmnt, char **new_data)
     {
         if (ft_strcmp(tmp->key, envmnt) == 0)
         {
-            // free(envmnt); //free previous envmnt
             while (tmp->value[i] != '\0')
             {
                 *new_data = ft_copier(tmp->value[i], *new_data);
@@ -236,6 +242,8 @@ int check_exit(t_env *env, char *envmnt, char **new_data)
             }
             return (1);
         }
+        // else
+        //     *new_data = ft_strdup(envmnt);
         tmp = tmp->next;
     }
     return (0);
@@ -245,8 +253,6 @@ void expand_data (t_env *env, char *data, int *j, char **new_data)
 {
     int i;
     int in;
-    (void)new_data;
-    (void)env;
     char *envmnt;
 
     in = 0;
@@ -261,15 +267,13 @@ void expand_data (t_env *env, char *data, int *j, char **new_data)
         i++;
     }
     check_exit(env, envmnt, new_data);
+        // *new_data = strdup(envmnt);
     *j = --i;
-    // else  
-    //     *new_data = ft_copier('$', *new_data); 
     free(envmnt);
 }
 
 void find_dollar(t_parser *parser, t_cmd *cmd)
 {
-    (void)parser;
     int i;
     int j;
     char *new_data;
@@ -281,14 +285,20 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
         new_data = NULL;
         while (cmd->dt[i].data[j] != '\0')
         {
-            if (cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
+            if (cmd->dt[i].ex_dollar == 1 && cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
                 expand_data(parser->lex->env, cmd->dt[i].data,  &j, &new_data);
             else
                 new_data = ft_copier(cmd->dt[i].data[j], new_data);
             j++;
         }
         free(cmd->dt[i].data);
-        cmd->dt[i].data = new_data;
+        if (new_data == NULL)
+        {
+            cmd->dt[i].name = WALLO;
+            cmd->dt[i].data = NULL;
+        }
+        else  
+            cmd->dt[i].data = ft_strdup(new_data);
         free (new_data);
         i++;
     }
@@ -304,7 +314,6 @@ void    handle_data(t_parser *parser)
         parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm[i].dt_nb);
         fill_data(parser->comm[i]);
         find_dollar(parser, &parser->comm[i]);
-        printf ("%s\n",parser->comm[i].dt[0].data);
         i++;
     }
     
@@ -329,30 +338,3 @@ void    handle_data(t_parser *parser)
     //     j++;
     // }
 }
-
-// void define_word_token(t_lexer *lex)
-// {
-//     int i;
-
-//     i = 0;
-//     lex->enumerate = (char **) malloc(sizeof (char *) * (lex->word_nb + 1));
-//     if (!lex->enumerate)
-//         return ;
-
-//     while (lex->word[i])
-//     {
-//         if (ft_strcmp(lex->word[i], "|") == 0)
-//             lex->enumerate[i++] = "PIPE";
-//         else if (ft_strcmp(lex->word[i], ">") == 0)
-//             lex->enumerate[i++] = "REDIR_OUT";
-//         else if (ft_strcmp(lex->word[i], "<") == 0)
-//             lex->enumerate[i++] = "REDIR_IN";
-//         else if (ft_strcmp(lex->word[i], ">>") == 0)
-//             lex->enumerate[i++] = "DREDIR_OUT";
-//         else if (ft_strcmp(lex->word[i], "<<") == 0)
-//             lex->enumerate[i++] = "HERE_DOC";
-//         else
-//             lex->enumerate[i++] = "WORD";
-//     }
-//     lex->enumerate[i] = NULL;
-// }
