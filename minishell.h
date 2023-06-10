@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/08 16:19:48 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/10 01:08:40 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_define_data
 	int name;
 	t_dt state;
 	char *data;
+	char *copy_data;
 	int position;
 	char *name_file;
 	char *delimiter;
@@ -109,6 +110,7 @@ typedef struct s_define_data
 typedef  struct s_red{
     int name;
     char *data;
+	char *copy_data;
     int  ex_dollar;
 } t_red;
 
@@ -187,6 +189,8 @@ void	echo_command(char **argv);
 void	cd_command(char **argv);
 void	pwd_command(char **argv);
 void	exit_command(char **argv);
+//-------command/builtins------//
+
 
 int    parser(t_lexer *lex);
 void    fill_command (t_parser *parser);
@@ -195,4 +199,5 @@ void fill_newcmd_red(t_parser *parser);
 void    handle_data(t_parser *parser);
 int check_valid(char *data, int i);
 char *ft_copier(char add, char *new_data);
+int check_quote(char *data, int i);
 #endif

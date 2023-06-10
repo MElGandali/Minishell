@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/08 01:43:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/10 01:46:29 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,34 @@ int  find_data_redir(int *name, char *data)
     return (0);
 }
 
+int check_quote(char *data, int i)
+{
+    char c;
+    
+    if (data[i] == '\'' || data[i] == '\"')
+    {
+        c = data[i];
+        while (data[i] != '\0' && data[i] == c)
+            i++;
+        if (data[i] == '\0')
+            return (0); 
+    }
+    return (1);
+}
+
 int ft_check_flag (char *data, int i)
 {
+    // while (data[i] != '\0' && (data[i] == '\'' || data[i] == '\"'))
+    // {
+    //     if (data[i] == '\'' || data[i] == '\"')
+    //         i = skip_quote(data, i);
+    //     i++;
+    // }
+    // if (data[i] == '\0')
+    //     return (0);
+    if (check_quote(data, i) == 0)
+        return 0;
+    i = 0;
     while (data[i] != '\0' && (data[i] == '\'' || data[i] == '\"'))
     {
         if (data[i] == '\'')
@@ -93,6 +119,7 @@ void define_data(t_cmd *comm, char *data, int pos)
        check_pos_one(comm, data, pos);
     if (pos > 1)
     {
+            printf ("hna\n");
         if (comm->dt[pos - 1].name == FLAG && data[0] == '-')
            comm->dt[pos].name = FLAG;
         else if ((comm->dt[pos - 1].name == DOC || comm->dt[pos - 1].name == DELIMITER) && comm->nb_cmd == 0 && data[0] != '<' && data[0] != '>')
@@ -109,14 +136,17 @@ void define_data(t_cmd *comm, char *data, int pos)
         }
         else if (find_data_redir(&comm->dt[pos].name, data) == 0)
             return ;
-        else 
+        else
+        {
             comm->dt[pos].name = WORD;
+        }
     }
 }
 
 int check_valid(char *data, int i)
 {
-    if (data[i + 1] == '_' || ft_isalnum(data[i + 1]) == 1)
+    if ((data[i + 1] == '_' || ft_isalnum(data[i + 1]) == 1 
+        || data[i + 1] == '\'' || data[i + 1] == '\"'))
         return (1);
     return (0);
 }
@@ -184,6 +214,8 @@ void fill_data(t_cmd comm)
     {
         // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
+        comm.dt[i].copy_data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
+        // printf ("%s\n", comm.dt[i].copy_data );
         // comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
         if (i == 0 || (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) != 0))
@@ -266,17 +298,62 @@ void expand_data (t_env *env, char *data, int *j, char **new_data)
             break;
         i++;
     }
-    check_exit(env, envmnt, new_data);
-        // *new_data = strdup(envmnt);
+    if (envmnt != NULL)
+        check_exit(env, envmnt, new_data);
     *j = --i;
     free(envmnt);
 }
+void check_dollar(t_parser *parser, char *dquote, char **new_data)
+{
+    int i;
+
+    i = 0;
+    while (dquote[i] != '\0')
+    {
+        if (dquote[i] == '$' && dquote[i + 1] != '?')
+        {
+            if (dquote[i + 1] == ' ')
+                *new_data = ft_copier(dquote[i], *new_data);
+            else if (dquote[i + 1] == '_' || ft_isalnum(dquote[i + 1]) == 1)
+                expand_data(parser->lex->env, dquote, &i, new_data);
+            else if (dquote[i + 1] != '\"' && !(dquote[i] == '_' || ft_isalnum(dquote[i]) == 1))  
+                i++;
+            else  
+                *new_data = ft_copier(dquote[i], *new_data);
+        }
+        else  
+            *new_data = ft_copier(dquote[i], *new_data);
+        i++;
+    }
+}
+
+void copy_quote(char *data, int *i, char **new_data)
+{
+    *new_data = ft_copier('\'', *new_data);
+    (*i)++;
+    while (data[*i] != '\'')
+    {
+        *new_data = ft_copier(data[*i], *new_data);
+        (*i)++;
+    }
+    *new_data = ft_copier('\'', *new_data);
+    // printf ("%s\n", *new_data);
+    // if (data[*i] == '\0')
+    //     (*i)--;
+}
+// char *copy_dquote (t_parser *parser, t_cmd *cmd, int i, int *j)
+// {
+//     char *new_data;
+
+   
+// }
 
 void find_dollar(t_parser *parser, t_cmd *cmd)
 {
     int i;
     int j;
     char *new_data;
+    char *dquote;
 
     i = 0;
     while (i < cmd->dt_nb)
@@ -285,23 +362,88 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
         new_data = NULL;
         while (cmd->dt[i].data[j] != '\0')
         {
-            if (cmd->dt[i].ex_dollar == 1 && cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
-                expand_data(parser->lex->env, cmd->dt[i].data,  &j, &new_data);
-            else
-                new_data = ft_copier(cmd->dt[i].data[j], new_data);
+            dquote = NULL;
+            if (cmd->dt[i].data[j] == '\'')
+                copy_quote(cmd->dt[i].data, &j, &new_data);
+            if (cmd->dt[i].data[j] == '\"')
+            {
+                dquote = ft_copier(cmd->dt[i].data[j], dquote);
+                j++; // squipe quote
+                while (cmd->dt[i].data[j] != '\"')
+                    dquote = ft_copier(cmd->dt[i].data[j++], dquote);
+                dquote = ft_copier(cmd->dt[i].data[j], dquote);
+                check_dollar(parser, dquote, &new_data);
+            }
+            else   
+            {
+                if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
+                {
+                    if (cmd->dt[i].data[j] == ' ')
+                        new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
+                    else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
+                        expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
+                    else if (!(cmd->dt[i].data[j + 1] == '_' 
+                    || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
+                    && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
+                     && cmd->dt[i].data[j + 1] != '\"')  
+                        j++;
+                    else if (cmd->dt[i].data[j + 1] != '\''
+                     && cmd->dt[i].data[j + 1] != '\"') 
+                        new_data = ft_copier(cmd->dt[i].data[j], new_data);
+                }
+                else if (cmd->dt[i].data[j] != '\''
+                     && cmd->dt[i].data[j] != '\"')
+                    new_data = ft_copier(cmd->dt[i].data[j], new_data);
+            }            
             j++;
         }
-        free(cmd->dt[i].data);
-        if (new_data == NULL)
-        {
-            cmd->dt[i].name = WALLO;
-            cmd->dt[i].data = NULL;
-        }
-        else  
-            cmd->dt[i].data = ft_strdup(new_data);
-        free (new_data);
+        printf ("%s\n", new_data);
         i++;
     }
+    // while (i < cmd->dt_nb)
+    // {
+    //     j = 0;
+    //     new_data = NULL;
+        // while (cmd->dt[i].data[j] != '\0')
+        // {
+        //     if (cmd->dt[i].ex_dollar == 1 && cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
+        //     {
+        //         expand_data(parser->lex->env, cmd->dt[i].data,  &j, &new_data);
+        //         printf ("%d\n", j);
+        //     }
+        //     else if (cmd->dt[i].data[j] == '\'')
+        //     {
+        //         j++;
+        //         copy_quote(cmd->dt[i].data, &j, &new_data);
+        //     }
+        //     else
+        //         new_data = ft_copier(cmd->dt[i].data[j], new_data);
+        //     j++;
+        // }
+        // // free(cmd->dt[i].data);
+        // if (new_data == NULL)
+        // {
+        //     printf ("x");
+        //     cmd->dt[i].name = WALLO;
+        //     cmd->dt[i].data = NULL;
+        // }
+        // else 
+        // {
+        //     // free(cmd->dt[i].data);
+        //     cmd->dt[i].data = ft_strdup(new_data);
+        // }
+        // // printf ("%s\n",cmd->dt[i].data);
+        // free (new_data);
+        // i++;
+    // }
+    i = 0;
+    // while (cmd->dt[0].data[i] != '\0')
+    // {
+    //     // if (cmd->dt[i].data != NULL)
+    //         printf ("%c", cmd->dt[0].data[i]);
+    //     i++;
+    // }
+    // printf ("\n");
 }
 
 void    handle_data(t_parser *parser)

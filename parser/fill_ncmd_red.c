@@ -120,42 +120,62 @@ int ft_check_split(char *data)
     }
     return (0);
 }
-void fill_newcmd (t_cmd *comm, int *j, char **new_cmd, int i)
+
+char *if_quote_fill(char *data, int *u, char *new_cmd)
 {
-    int u;
     char c;
     
-    u = 0;
-    (void)new_cmd;
-    comm->new_cmd[*j] = NULL;
-    while (comm->dt[i].data[u] != '\0')
+    c = data[(*u)];
+    (*u)++;
+    while (data[*u] != c)
     {
-        printf ("%d", u);
-        if (comm->dt[i].data[u] == '\'' || comm->dt[i].data[u] == '\"')
-        {
-            c = comm->dt[i].data[u++];
-            while (comm->dt[i].data[u] != '\0' && comm->dt[i].data[u] != c)
-            {
-                comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
-                u++;
-            }
-        }
-        if (comm->dt[i].data[u + 1] != '\0')
-            ft_copier(comm->dt[i].data[u + 1], comm->new_cmd[*j]);
-        printf ("%s\n", comm->new_cmd[*j]);
-        // printf ("%d", u);
-        exit(0);
-        u++;
-        // if (u == 3)
-        //     exit(0);
+        new_cmd = ft_copier(data[*u], new_cmd);
+        (*u)++;
     }
+    return (new_cmd);
+}
+
+void fill_newcmd (t_cmd *comm, int *j, int i)
+{
+    int u;
+    
+    u = 0;
+    comm->new_cmd[*j] = NULL;
+    // if (check_quote(comm->dt[i].data, u) == 0)
+    //     comm->new_cmd[*j] = ft_calloc(1, 1);
+    // else  
+    // {
+        while (comm->dt[i].data[u] != '\0')
+        {
+            if (comm->dt[i].data[u] == '\''  || comm->dt[i].data[u] == '\"')
+               comm->new_cmd[*j] = if_quote_fill(comm->dt[i].data, &u, comm->new_cmd[*j]);
+            else  
+                comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
+            u++;
+        }
+    // }
+    //         if (comm->dt[i].data[u] == '\'' || comm->dt[i].data[u] == '\"')
+    //         {
+    //             c = comm->dt[i].data[u++];
+    //             while (comm->dt[i].data[u] != '\0' && comm->dt[i].data[u] != c)
+    //             {
+    //                 comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
+    //                 u++;
+    //             }
+    //             u++;
+    //         }
+    //         if (comm->dt[i].data[u] != '\0' && comm->dt[i].data[u] != c)
+    //             comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
+    //         if (comm->dt[i].data[u] != '\0')
+    //             u++;
+        
+    printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;    
 }
 void check_and_fill_newcmd(t_cmd *comm)
 {
     int i;
     int j;
-    // int check;
 
     i = 0;
     j = 0;
@@ -168,7 +188,7 @@ void check_and_fill_newcmd(t_cmd *comm)
 
             }
             else
-                fill_newcmd(comm, &j,comm->new_cmd, i);  
+                fill_newcmd(comm, &j, i);  
         }
         i++;
     }
