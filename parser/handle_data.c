@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/10 01:46:29 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/11 15:09:52 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,53 +397,19 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
             }            
             j++;
         }
-        printf ("%s\n", new_data);
+        if (new_data == NULL)
+        {
+            cmd->dt[i].name = WALLO;
+            cmd->dt[i].data = NULL;
+        }
+        else 
+        {
+            free(cmd->dt[i].data);
+            cmd->dt[i].data = ft_strdup(new_data);
+        }
+        
         i++;
     }
-    // while (i < cmd->dt_nb)
-    // {
-    //     j = 0;
-    //     new_data = NULL;
-        // while (cmd->dt[i].data[j] != '\0')
-        // {
-        //     if (cmd->dt[i].ex_dollar == 1 && cmd->dt[i].data[j] == '$' && check_valid(cmd->dt[i].data, j) == 1)
-        //     {
-        //         expand_data(parser->lex->env, cmd->dt[i].data,  &j, &new_data);
-        //         printf ("%d\n", j);
-        //     }
-        //     else if (cmd->dt[i].data[j] == '\'')
-        //     {
-        //         j++;
-        //         copy_quote(cmd->dt[i].data, &j, &new_data);
-        //     }
-        //     else
-        //         new_data = ft_copier(cmd->dt[i].data[j], new_data);
-        //     j++;
-        // }
-        // // free(cmd->dt[i].data);
-        // if (new_data == NULL)
-        // {
-        //     printf ("x");
-        //     cmd->dt[i].name = WALLO;
-        //     cmd->dt[i].data = NULL;
-        // }
-        // else 
-        // {
-        //     // free(cmd->dt[i].data);
-        //     cmd->dt[i].data = ft_strdup(new_data);
-        // }
-        // // printf ("%s\n",cmd->dt[i].data);
-        // free (new_data);
-        // i++;
-    // }
-    i = 0;
-    // while (cmd->dt[0].data[i] != '\0')
-    // {
-    //     // if (cmd->dt[i].data != NULL)
-    //         printf ("%c", cmd->dt[0].data[i]);
-    //     i++;
-    // }
-    // printf ("\n");
 }
 
 void    handle_data(t_parser *parser)

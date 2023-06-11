@@ -34,6 +34,8 @@ void fill_red(t_cmd *comm, int nb)
 {
     int i;
     int j;
+    (void)comm;
+    (void)nb;
 
     i = 0;
     j = 0;
@@ -45,10 +47,15 @@ void fill_red(t_cmd *comm, int nb)
         {
             comm->red[j].name = comm->dt[i].name;
             comm->red[j].ex_dollar = comm->dt[i].ex_dollar;
+            comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
             comm->red[j++].data = ft_strdup(comm->dt[i++].data);
             comm->red[j].ex_dollar = comm->dt[i].ex_dollar;
             comm->red[j].name = comm->dt[i].name;
-            comm->red[j].data = comm->dt[i].data;
+            if (comm->dt[i].data != NULL)
+                comm->red[j].data = ft_strdup(comm->dt[i].data);
+            else  
+                comm->red[j].data = NULL;
+            comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
             j++;     
         }
         i++;
@@ -56,7 +63,7 @@ void fill_red(t_cmd *comm, int nb)
     // j = 0;
     // while (j < nb)
     // {
-    //     printf ("%s %d %d\n",comm->red[j].data, comm->red[j].name, comm->red[j].ex_dollar);
+    //     printf ("%s %s %d %d\n",comm->red[j].data, comm->red[j].copy_data,comm->red[j].name, comm->red[j].ex_dollar);
     //     j++;
     // }
 }
@@ -141,36 +148,55 @@ void fill_newcmd (t_cmd *comm, int *j, int i)
     
     u = 0;
     comm->new_cmd[*j] = NULL;
-    // if (check_quote(comm->dt[i].data, u) == 0)
-    //     comm->new_cmd[*j] = ft_calloc(1, 1);
-    // else  
-    // {
-        while (comm->dt[i].data[u] != '\0')
-        {
-            if (comm->dt[i].data[u] == '\''  || comm->dt[i].data[u] == '\"')
-               comm->new_cmd[*j] = if_quote_fill(comm->dt[i].data, &u, comm->new_cmd[*j]);
-            else  
-                comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
-            u++;
-        }
-    // }
-    //         if (comm->dt[i].data[u] == '\'' || comm->dt[i].data[u] == '\"')
-    //         {
-    //             c = comm->dt[i].data[u++];
-    //             while (comm->dt[i].data[u] != '\0' && comm->dt[i].data[u] != c)
-    //             {
-    //                 comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
-    //                 u++;
-    //             }
-    //             u++;
-    //         }
-    //         if (comm->dt[i].data[u] != '\0' && comm->dt[i].data[u] != c)
-    //             comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
-    //         if (comm->dt[i].data[u] != '\0')
-    //             u++;
-        
+    while (comm->dt[i].data[u] != '\0')
+    {
+        if (comm->dt[i].data[u] == '\'' || comm->dt[i].data[u] == '\"')
+           comm->new_cmd[*j] = if_quote_fill(comm->dt[i].data, &u, comm->new_cmd[*j]);
+        else  
+            comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
+        u++;
+    }
     printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;    
+}
+
+void fill_split_newcmd(t_cmd *comm, int *j, char *data)
+{
+    int u;
+
+    u = 0;
+    comm->new_cmd[*j] = NULL;
+    while (data[u] != '\0')
+    {
+        if (data[u] == '\'' || data[u] == '\"')
+           comm->new_cmd[*j] = if_quote_fill(data, &u, comm->new_cmd[*j]);
+        else  
+            comm->new_cmd[*j] = ft_copier(data[u], comm->new_cmd[*j]);
+        u++;
+    }
+    printf ("%s\n", comm->new_cmd[*j]);
+    (*j)++;
+}
+void ft_split_data(t_cmd *comm, int i, int *j)
+{
+    int word_nb;
+    char **split_data;
+    int c;
+    int k;
+
+    c = 0;
+    k = 0;
+    while (comm->dt[i].data[c] != '\0')
+    {
+        if (comm->dt[i].data[c] == '\"' || comm->dt[i].data[c] == '\'')
+            i = skip_quote(comm->dt[i].data, i);
+        else if (comm->dt[i].data[c] == ' ' || comm->dt[i].data[c] == '\t' || comm->dt[i].data[c] == '\n')
+            comm->dt[i].data[c] = '\n';
+        c++;
+    }
+    split_data = ft_split(comm->dt[i].data, '\n', &word_nb); 
+    while (split_data[k] != NULL)
+        fill_split_newcmd(comm, j, split_data[k++]);
 }
 void check_and_fill_newcmd(t_cmd *comm)
 {
@@ -183,16 +209,15 @@ void check_and_fill_newcmd(t_cmd *comm)
     {
         if (check_red(comm, i) == 0)
         {
+            
             if (ft_check_split(comm->dt[i].data) == 1)
-            {
-
-            }
+                ft_split_data(comm, i ,&j);
             else
-                fill_newcmd(comm, &j, i);  
+                fill_newcmd(comm, &j, i); 
         }
         i++;
     }
-    // printf ("%s\n", comm->new_cmd[0]);
+    comm->new_cmd[j] = NULL;
 }
 void fill_newcmd_red(t_parser *parser)
 {

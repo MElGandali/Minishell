@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/10 01:08:40 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/11 15:35:35 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,9 @@ typedef struct s_commands
 	t_data *dt;
 	int ext_dollar;
 	int i;
+	char **split_data;
     char **new_cmd;
     t_red *red;
-    // int ext_dollar;
-    // int i;
 }   t_cmd;
 
 typedef struct s_parser
