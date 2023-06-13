@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:16:16 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/08 16:10:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:42:09 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void    exit_cases(char **argv)
     i = 0;
     ch = 0;
     if (argv[1] == NULL)
+    {
+        g_exit = 1;
         exit(0);
+    }
     while (argv[1][i])
     {
         if (ft_isalpha(argv[1][i]) != 0)
@@ -30,13 +33,17 @@ void    exit_cases(char **argv)
         }
         i++;
     }
-    if (ch == 1 || (ft_atoi(argv[1]) > LONG_LONG_MAX && argv[1][0] != '-')  /*|| ft_atoi(argv[1]) < LONG_LONG_MIN*/)
+    if (ch == 1 || (ft_atoi(argv[1]) > LONG_LONG_MAX && argv[1][0] != '-'))
     {
         printf("exit\nbash: exit: %s: numeric argument required", argv[1]);
+        g_exit = 255;
         exit(255);
     }
     if (argv[2])
+    {
+        g_exit = 1;
         printf("exit\nbash: exit: too many arguments");
+    }
 }
 
 void    exit_command(char **argv)
@@ -50,6 +57,7 @@ void    exit_command(char **argv)
     
     exit_cases(argv);
     status = ft_atoi(argv[1]);
+    g_exit = status;
     exit (status);
 }
 

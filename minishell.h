@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/12 23:54:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/13 21:18:01 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ env_node->content = env_entry;
 ft_lstclear(&lst, (t_lstdel) destroy_env);
 */
 
+int extern g_exit;
 typedef struct s_env {
 	char *all;
 	char *key;
@@ -112,6 +113,7 @@ typedef  struct s_red{
     char *data;
 	char *copy_data;
     int  ex_dollar;
+	int *fd;
 } t_red;
 
 typedef struct s_commands
@@ -184,12 +186,18 @@ void	fill_command (t_parser *parser);
 void	handle_data(t_parser *parser);
 
 //-------command/builtins------//
-void	builtin_commands(char **argv);
-void	echo_command(char **argv);
-void	cd_command(char **argv);
-void	pwd_command(char **argv);
+int	builtin_commands(t_parser *parser);
+int	echo_command(char **argv);
+int	cd_command(char **argv);
+int	pwd_command(void);
 void	exit_command(char **argv);
-//-------command/builtins------//
+int special_var(char **argv);
+
+//-----------executor----------//
+void    executor(t_parser *parser);
+void	handle_cmd(t_parser *parser);
+void    handle_heredoc(t_parser *parser);
+
 
 
 int    parser(t_lexer *lex);

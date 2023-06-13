@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/07 22:07:04 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/13 18:30:03 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 #include "libf/libft.h"
+
+int g_exit;
 
 void all_work(t_lexer *lex)
 {
@@ -27,6 +29,9 @@ int main(int ac, char **av, char **env)
     (void)av;
     (void)env;
     t_lexer lex;
+    int g_exit;
+
+    g_exit = 0;
     creating_new_env(&lex, env);
     while (1)
     {

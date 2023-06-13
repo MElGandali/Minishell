@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:59:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/08 16:10:28 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:06:13 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int    detect_flag(char **argv, int i)
     }
     return (check);
 }
-void    echo_command(char **argv)
+int    echo_command(char **argv)
 {
     int i;
     
@@ -59,5 +59,6 @@ void    echo_command(char **argv)
         if (detect_flag(argv, 1) == 0)
             printf("\n");
     }
+    return (0);
 }
 

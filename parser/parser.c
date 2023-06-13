@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 00:41:48 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/13 20:06:03 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int    parser(t_lexer *lex)
     fill_command (&parser);
     handle_data (&parser);
     fill_newcmd_red(&parser);
-    free_parser(&parser);
+    executor(&parser);
+    // free_parser(&parser);
     return (0);
 }

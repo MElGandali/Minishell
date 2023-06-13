@@ -231,14 +231,14 @@ void fill_newcmd_red(t_parser *parser)
 
 
     i = 0;
-    printf ("%d\n", parser->lex->pipe_nb);
+    // printf ("%d\n", parser->lex->pipe_nb);
     while (i < parser->lex->pipe_nb)
     {
         x = 0;
         nb_newcmd = 0;
         j = 0;
         nb_red = count_red(&parser->comm[i]) * 2;
-        printf ("%d", nb_red);
+        // printf ("%d", nb_red);
         if (nb_red != 0)
             fill_red(&parser->comm[i], nb_red);
         while (j < parser->comm[i].dt_nb)
@@ -258,7 +258,7 @@ void fill_newcmd_red(t_parser *parser)
         else   
             parser->comm[i].new_cmd = NULL;
         /**************print****************/
-        printf ("khasha tamsah\n");
+        // printf ("khasha tamsah\n");
         // print(parser, nb_red, nb_newcmd, i);
         /**************print****************/
         i++;
