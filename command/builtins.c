@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:17:15 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/13 22:00:58 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int builtin_commands(t_parser *parser)
         g_exit = pwd_command();
     else if (ft_strnstr(parser->comm->new_cmd[0], "$?") == 0)
         g_exit = special_var(parser->comm->new_cmd);
-    // else if (ft_strnstr(comm->cmd[0], "export") == 0)
-    //     export_command(comm);
+    else if (ft_strcmp(parser->comm->cmd[0], "export") == 0)
+        export_command(parser, 0);
     // else if (ft_strnstr(comm->cmd[0], "unset") == 0)
     //     unset_command(comm);
     // else if (ft_strnstr(comm->cmd[0], "env") == 0)

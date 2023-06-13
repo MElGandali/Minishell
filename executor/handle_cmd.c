@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:21:12 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/13 22:08:44 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int    is_builtin(char **cmd)
     i = 0;
     if (ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "cd") == 0 
         || ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], "unset") == 0
-        || ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "pwd") == 0)
+        || ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "pwd") == 0 
+        || ft_strcmp(cmd[0], "$?") == 0 || ft_strcmp(cmd[0], "export") == 0)
         return (0);  
         
     return (1);

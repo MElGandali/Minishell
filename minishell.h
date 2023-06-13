@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:18:01 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/13 22:00:47 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int	cd_command(char **argv);
 int	pwd_command(void);
 void	exit_command(char **argv);
 int special_var(char **argv);
+void export_command(t_parser * parser, int i);
 
 //-----------executor----------//
 void    executor(t_parser *parser);

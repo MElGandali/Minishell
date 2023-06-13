@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/12 16:18:42 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/13 22:32:39 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2)
     int j;
 
     i = 0;
-    tmp2 = NULL;
     while (env[i] != '\0')
     {
         j = i;
@@ -39,12 +38,12 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2)
         if (env[i] == '=')
         {
             tmp1->key = ft_substr(env, j, i - j);
-            // tmp2->key = ft_substr(env, j, i - j);
+            tmp2->key = ft_substr(env, j, i - j);
         }
         if (env[i + 1] == '\0')
         {
             tmp1->value = ft_substr(env, j, (i + 1) - j);
-            // tmp2->value = ft_substr(env, j, (i + 1) - j);
+            tmp2->value = ft_substr(env, j, (i + 1) - j);
         }
         i++;
     }
@@ -103,26 +102,18 @@ void creating_new_env(t_lexer *lex, char **env)
 {
     int i;
     t_env *tmp1;
-    t_env *tmp2 = NULL;
-    // t_env *head;
+    t_env *tmp2;
 
     lex->env = NULL;
-    
+    lex->exp = NULL;
     i = 0;
-    // lex->exp = creat_node(lex->exp);
     while (env[i] != NULL)
     {
-
-        
         tmp1 = creat_node(ft_strdup(env[i]));
-        // tmp2 = creat_node(ft_strdup(env[i]));
-        /*tmp1->key = */fill_dt_utils(env[i], tmp1, tmp2);
-        
+        tmp2 = creat_node(ft_strdup(env[i]));
+        fill_dt_utils(env[i], tmp1, tmp2);    
         add_node(tmp1,&lex->env);
-        // add_node(tmp2,&lex->exp);
-        // fill_dt(env[i], lex->env, lex->exp);
-        // printf ("%s\n", lex->env->all);
-       /* lex->env =*/ 
+        add_node(tmp2,&lex->exp); 
         i++;
     }
     tmp1 = creat_node("x=Hello      ");
@@ -140,5 +131,5 @@ void creating_new_env(t_lexer *lex, char **env)
     //     printf ("%s %s %s\n", x->all, x->key, x->value);
     //     x = x->next;
     // }
-    // exit (0);
+    // /exit (0);
 }
