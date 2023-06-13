@@ -20,7 +20,7 @@ int count_red(t_cmd *comm)
     
     i = 0;
     nb = 0;
-
+    // printf ("x\n");
     while (i < comm->dt_nb)
     {
         if (comm->dt[i].name == 4 || comm->dt[i].name == 5
@@ -156,7 +156,7 @@ void fill_newcmd (t_cmd *comm, int *j, int i)
             comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
         u++;
     }
-    printf ("%s\n", comm->new_cmd[*j]);
+    // printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;    
 }
 
@@ -174,9 +174,10 @@ void fill_split_newcmd(t_cmd *comm, int *j, char *data)
             comm->new_cmd[*j] = ft_copier(data[u], comm->new_cmd[*j]);
         u++;
     }
-    printf ("%s\n", comm->new_cmd[*j]);
+    // printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;
 }
+
 void ft_split_data(t_cmd *comm, int i, int *j)
 {
     int word_nb;
@@ -198,6 +199,7 @@ void ft_split_data(t_cmd *comm, int i, int *j)
     while (split_data[k] != NULL)
         fill_split_newcmd(comm, j, split_data[k++]);
 }
+
 void check_and_fill_newcmd(t_cmd *comm)
 {
     int i;
@@ -222,17 +224,21 @@ void check_and_fill_newcmd(t_cmd *comm)
 void fill_newcmd_red(t_parser *parser)
 {
     int i;
+    int x;
     int j;
     int nb_red;
     int nb_newcmd;
 
 
     i = 0;
+    printf ("%d\n", parser->lex->pipe_nb);
     while (i < parser->lex->pipe_nb)
     {
+        x = 0;
         nb_newcmd = 0;
         j = 0;
         nb_red = count_red(&parser->comm[i]) * 2;
+        printf ("%d", nb_red);
         if (nb_red != 0)
             fill_red(&parser->comm[i], nb_red);
         while (j < parser->comm[i].dt_nb)
@@ -251,6 +257,10 @@ void fill_newcmd_red(t_parser *parser)
         }
         else   
             parser->comm[i].new_cmd = NULL;
+        /**************print****************/
+        printf ("khasha tamsah\n");
+        // print(parser, nb_red, nb_newcmd, i);
+        /**************print****************/
         i++;
     }
 }

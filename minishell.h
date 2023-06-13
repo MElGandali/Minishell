@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/11 15:35:35 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/12 23:54:55 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ typedef  struct s_red{
 typedef struct s_commands
 {
 	char **cmd;
-	int nb_cmd;
+	int nb_cmd; // hada 3la hsab trus false min nal9a command ndiro 1 bash mayw93lich mochkil f define data 
 	int dt_nb;
 	t_data *dt;
 	int ext_dollar;
 	int i;
-	char **split_data;
+	// char **split_data;
+	int nb_red;
     char **new_cmd;
     t_red *red;
 }   t_cmd;
@@ -167,7 +168,7 @@ void count_tokens (t_lexer *lex);
 int split_quotes(char *line, int i);
 void define_word_token(t_lexer *lex);
 
-//--------------error------------//
+//--------------error-------------//
 int quotes_error(t_lexer *lex);
 int pipe_error(t_lexer *lex);
 int redir_pipe_error_one_arg(t_lexer *lex);
@@ -199,4 +200,10 @@ void    handle_data(t_parser *parser);
 int check_valid(char *data, int i);
 char *ft_copier(char add, char *new_data);
 int check_quote(char *data, int i);
+
+
+
+void free_parser(t_parser *parser);
+
+void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
 #endif

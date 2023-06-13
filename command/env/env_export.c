@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/11 15:07:01 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/12 16:18:42 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,11 @@ void creating_new_env(t_lexer *lex, char **env)
        /* lex->env =*/ 
         i++;
     }
-    tmp1 = creat_node("x= hello world");
-    fill_dt_utils("x= hello   world", tmp1, tmp2);
+    tmp1 = creat_node("x=Hello      ");
+    fill_dt_utils("x=Hello      ", tmp1, tmp2);
+    add_node(tmp1,&lex->env);
+    tmp1 = creat_node("y=      World");
+    fill_dt_utils("y=      World", tmp1, tmp2);
     add_node(tmp1,&lex->env);
     // t_env *x = lex->env;
     // printf ("%s", x->all);

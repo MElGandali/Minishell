@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/11 15:09:52 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/12 21:52:32 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
     }
     else if (comm->dt[0].name != COMMAND && pos == 1)
     {
-            if (comm->dt[0].name == HERE_DOC)
-                comm->dt[pos].name = DELIMITER;
-            else
-                comm->dt[pos].name = DOC;      
+        if (comm->dt[0].name == HERE_DOC)
+            comm->dt[pos].name = DELIMITER;
+        else
+            comm->dt[pos].name = DOC;      
     }
 }
 
@@ -119,7 +119,6 @@ void define_data(t_cmd *comm, char *data, int pos)
        check_pos_one(comm, data, pos);
     if (pos > 1)
     {
-            printf ("hna\n");
         if (comm->dt[pos - 1].name == FLAG && data[0] == '-')
            comm->dt[pos].name = FLAG;
         else if ((comm->dt[pos - 1].name == DOC || comm->dt[pos - 1].name == DELIMITER) && comm->nb_cmd == 0 && data[0] != '<' && data[0] != '>')
@@ -137,9 +136,7 @@ void define_data(t_cmd *comm, char *data, int pos)
         else if (find_data_redir(&comm->dt[pos].name, data) == 0)
             return ;
         else
-        {
             comm->dt[pos].name = WORD;
-        }
     }
 }
 
@@ -204,6 +201,20 @@ int check_ex_dollar(char *data)
     return (0);
 }
 
+int ft_check_expand_delimiter(char *delimiter)
+{
+    int i;
+
+    i = 0;
+    while (delimiter[i] != '\0')
+    {
+        if (delimiter[i] == '\'' || delimiter[i] == '\"')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 void fill_data(t_cmd comm)
 {
     int i;
@@ -220,13 +231,28 @@ void fill_data(t_cmd comm)
         define_data(&comm ,comm.dt[i].data, i);
         if (i == 0 || (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) != 0))
             comm.dt[i].ex_dollar = check_ex_dollar(comm.dt[i].data);
+        else if (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) == 0)
+        {
+            if (ft_check_expand_delimiter(comm.dt[i].data) == 1)
+                comm.dt[i].ex_dollar = 2;
+            else  
+                comm.dt[i].ex_dollar = 0;
+        }
         else   
-           comm.dt[i].ex_dollar = 0;
+            comm.dt[i].ex_dollar = 0;
         // printf ("%d\n", comm.dt[i].ex_dollar);
         // printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
     
+    /************************PRINT CHECK_EXPAND******************/
+    // i = 0;
+    // while (i < 2)
+    // {
+    //     printf ("%s\n", comm.cmd[i]);
+    //     i++;
+    // }
+    /************************PRINT CHECK_EXPAND******************/
 }
 
 char *ft_copier(char add, char *new_data)
@@ -303,6 +329,7 @@ void expand_data (t_env *env, char *data, int *j, char **new_data)
     *j = --i;
     free(envmnt);
 }
+
 void check_dollar(t_parser *parser, char *dquote, char **new_data)
 {
     int i;
@@ -360,54 +387,58 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
     {
         j = 0;
         new_data = NULL;
-        while (cmd->dt[i].data[j] != '\0')
-        {
-            dquote = NULL;
-            if (cmd->dt[i].data[j] == '\'')
-                copy_quote(cmd->dt[i].data, &j, &new_data);
-            if (cmd->dt[i].data[j] == '\"')
+        if (cmd->dt[i].name != 10 && cmd->dt[i].name != 4
+            && cmd->dt[i].name != 5 && cmd->dt[i].name != 6
+            && cmd->dt[i].name != 7)
+        {     
+            while (cmd->dt[i].data[j] != '\0')
             {
-                dquote = ft_copier(cmd->dt[i].data[j], dquote);
-                j++; // squipe quote
-                while (cmd->dt[i].data[j] != '\"')
-                    dquote = ft_copier(cmd->dt[i].data[j++], dquote);
-                dquote = ft_copier(cmd->dt[i].data[j], dquote);
-                check_dollar(parser, dquote, &new_data);
-            }
-            else   
-            {
-                if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
+                dquote = NULL;
+                if (cmd->dt[i].data[j] == '\'')
+                    copy_quote(cmd->dt[i].data, &j, &new_data);
+                if (cmd->dt[i].data[j] == '\"')
                 {
-                    if (cmd->dt[i].data[j] == ' ')
-                        new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
-                    else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
-                        expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
-                    else if (!(cmd->dt[i].data[j + 1] == '_' 
-                    || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
-                    && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
-                     && cmd->dt[i].data[j + 1] != '\"')  
-                        j++;
-                    else if (cmd->dt[i].data[j + 1] != '\''
-                     && cmd->dt[i].data[j + 1] != '\"') 
-                        new_data = ft_copier(cmd->dt[i].data[j], new_data);
+                    dquote = ft_copier(cmd->dt[i].data[j], dquote);
+                    j++; // squipe quote
+                    while (cmd->dt[i].data[j] != '\"')
+                        dquote = ft_copier(cmd->dt[i].data[j++], dquote);
+                    dquote = ft_copier(cmd->dt[i].data[j], dquote);
+                    check_dollar(parser, dquote, &new_data);
                 }
-                else if (cmd->dt[i].data[j] != '\''
-                     && cmd->dt[i].data[j] != '\"')
-                    new_data = ft_copier(cmd->dt[i].data[j], new_data);
-            }            
-            j++;
+                else  
+                {
+                    if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
+                    {
+                        if (cmd->dt[i].data[j] == ' ')
+                            new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
+                        else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
+                            expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
+                        else if (!(cmd->dt[i].data[j + 1] == '_' 
+                        || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
+                        && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
+                         && cmd->dt[i].data[j + 1] != '\"')  
+                            j++;
+                        else if (cmd->dt[i].data[j + 1] != '\''
+                         && cmd->dt[i].data[j + 1] != '\"') 
+                            new_data = ft_copier(cmd->dt[i].data[j], new_data);
+                    }
+                    else if (cmd->dt[i].data[j] != '\''
+                        && cmd->dt[i].data[j] != '\"')
+                        new_data = ft_copier(cmd->dt[i].data[j], new_data);
+                }            
+                j++;
+            }
+            if (new_data == NULL)
+            {
+                cmd->dt[i].name = WALLO;
+                cmd->dt[i].data = NULL;
+            }
+            else 
+            {
+                free(cmd->dt[i].data);
+                cmd->dt[i].data = ft_strdup(new_data);
+            }
         }
-        if (new_data == NULL)
-        {
-            cmd->dt[i].name = WALLO;
-            cmd->dt[i].data = NULL;
-        }
-        else 
-        {
-            free(cmd->dt[i].data);
-            cmd->dt[i].data = ft_strdup(new_data);
-        }
-        
         i++;
     }
 }
