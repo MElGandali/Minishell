@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 22:08:44 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:19:12 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int    is_builtin(char **cmd)
     if (ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "cd") == 0 
         || ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], "unset") == 0
         || ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "pwd") == 0 
-        || ft_strcmp(cmd[0], "$?") == 0 || ft_strcmp(cmd[0], "export") == 0)
+        || ft_strcmp(cmd[0], "$?") == 0 || ft_strcmp(cmd[0], "export") == 0
+        || ft_strcmp(cmd[0], "env") == 0)
         return (0);  
         
     return (1);

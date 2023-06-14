@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 22:00:47 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/14 19:13:52 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ int	pwd_command(void);
 void	exit_command(char **argv);
 int special_var(char **argv);
 void export_command(t_parser * parser, int i);
-
+void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
 //-----------executor----------//
 void    executor(t_parser *parser);
 void	handle_cmd(t_parser *parser);
