@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:18:01 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:15:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void	fill_command (t_parser *parser);
 void	handle_data(t_parser *parser);
 
 //-------command/builtins------//
-int	builtin_commands(t_parser *parser);
+int	builtin_commands(t_parser *parser, int i);
 int	echo_command(char **argv);
 int	cd_command(char **argv);
 int	pwd_command(void);
@@ -194,9 +194,13 @@ void	exit_command(char **argv);
 int special_var(char **argv);
 
 //-----------executor----------//
-void    executor(t_parser *parser);
-void	handle_cmd(t_parser *parser);
-void    handle_heredoc(t_parser *parser);
+void    	executor(t_parser *parser);
+void		handle_cmd(t_parser *parser);
+void    	handle_heredoc(t_parser *parser);
+char* const	*find_execpath(t_parser *parser);
+void		exec_cmd(t_parser *parser, int i);
+int			check_redir_io(t_cmd comm);
+void		open_redir_io(t_parser *parser, int i);
 
 
 
