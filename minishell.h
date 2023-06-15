@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/14 19:13:52 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/15 18:45:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ typedef struct s_parser
 void add_node(t_env *node,t_env **head);
 t_env *creat_list(int nb);
 t_env *creat_node(char *data);
-t_env *remove_node(t_env *head, char *id);
+//t_env *remove_node(t_env *head, char *id);
+void remove_node(t_env **head, char *id);
 //-------------------end linked-------------//
 
 //------------------start command--------------//
@@ -194,6 +195,8 @@ void	exit_command(char **argv);
 int special_var(char **argv);
 void export_command(t_parser * parser, int i);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
+void env_command(t_parser *parser, int i);
+int find_ed (char *env, int i);
 //-----------executor----------//
 void    executor(t_parser *parser);
 void	handle_cmd(t_parser *parser);

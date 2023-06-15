@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/14 21:33:52 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/15 18:11:50 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,74 +37,51 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev)
     {
         j = i;
         i = find_ed(env, i);
-        // printf ("i est %d %d\n", i, j);
-        // if (env[i] == '=')
-        // {
-            // if (ev == 'e')
-            //     tmp1->key = ft_substr(env, j, i - j);
-            // tmp2->key = ft_substr(env, j, i - j);
-            // printf ("%s\n", tmp2->key);
-            if (check == 0)
-            {
-                if (ev == 'e')
-                    tmp1->key = ft_substr(env, j, i - j);
-                tmp2->key = ft_substr(env, j, i - j);
-                check++;
-            }
-            else if (check == 1)
-            {
-                if (ev == 'e')
-                    tmp1->value = ft_substr(env, j, (i + 1) - j);
-                tmp2->value = ft_substr(env, j, (i + 1) - j);
-            }
-           
-            // if ()
-        // }
-        // else  
-        // {
-        //     if (ev == 'e')
-        //         tmp1->key = ft_substr(env, j, i - j);
-        //     tmp2->key = ft_substr(env, j, i - j);
-        //     // printf ("%s\n", tmp2->key);
-        // }
-        // if (env[i] != '=')
-        // {
-        //     if (ev == 'e')
-        //         tmp1->value = ft_substr(env, j, (i + 1) - j);
-        //     tmp2->value = ft_substr(env, j, (i + 1) - j);
-        // }
+        if (check == 0)
+        {
+            if (ev == 'e')
+                tmp1->key = ft_substr(env, j, i - j); 
+            tmp2->key = ft_substr(env, j, i - j);
+            check++;
+        }
+        else if (check == 1)
+        {
+            if (ev == 'e')
+                tmp1->value = ft_substr(env, j, (i + 1) - j); 
+            tmp2->value = ft_substr(env, j, (i + 1) - j);
+        }
         if (env[i] != '\0')
             i++;
     }
 }
 
-char *add_dquot(char *tmp)
-{
-    int len;
-    char *p;
-    int i;
-    int j;
+// char *add_dquot(char *tmp)
+// {
+//     int len;
+//     char *p;
+//     int i;
+//     int j;
 
-    i = 0;
-    j = 0;
-    len = ft_strlen(tmp) + 3;
-    p = malloc(sizeof(char) * len);
-    if (!p)
-        return 0;
-    while (tmp[i] != 0)
-    {
+//     i = 0;
+//     j = 0;
+//     len = ft_strlen(tmp) + 3;
+//     p = malloc(sizeof(char) * len);
+//     if (!p)
+//         return 0;
+//     while (tmp[i] != 0)
+//     {
         
-        p[j] = tmp[i];
-        if (tmp[i] == '=')
-            p [++j] = '\"';
-        j++;
-        i++;
-    }
-    p[j++] = '\"';
-    p[j] = '\0';
-    free(tmp);
-    return (p);
-}
+//         p[j] = tmp[i];
+//         if (tmp[i] == '=')
+//             p [++j] = '\"';
+//         j++;
+//         i++;
+//     }
+//     p[j++] = '\"';
+//     p[j] = '\0';
+//     free(tmp);
+//     return (p);
+// }
 
 // void fill_dt(char *env, t_env *ev, t_env *ex)
 // {
