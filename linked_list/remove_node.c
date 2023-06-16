@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:09:23 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/15 23:17:27 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 10:18:27 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,20 @@ void remove_node(t_env **head, char *id)
                 *head = var.tmp->next;
             var.free_node = var.tmp;
             if (var.tmp->key != NULL)
+            {
                 free(var.tmp->key);
+                var.tmp->key = NULL;
+            }
             if (var.tmp->value != NULL)
+            {
                 free(var.tmp->value);
-            free(var.tmp->all);
+                var.tmp->value = NULL;
+            }
+            if (var.tmp->all != NULL)
+            {
+                free(var.tmp->all);
+                var.tmp->all = NULL;
+            }
             var.tmp = var.tmp->next;
             free(var.free_node);
         }

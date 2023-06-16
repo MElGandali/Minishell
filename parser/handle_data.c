@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/12 21:52:32 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:39:14 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ int check_exit(t_env *env, char *envmnt, char **new_data)
     {
         if (ft_strcmp(tmp->key, envmnt) == 0)
         {
-            while (tmp->value[i] != '\0')
+            while (tmp->value != NULL && tmp->value[i] != '\0') //mochkil min ikon fih null f command echo $x x= katban
             {
                 *new_data = ft_copier(tmp->value[i], *new_data);
                 i++;
