@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 11:31:25 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 20:04:18 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,33 +98,33 @@ int existing_key(t_env *exn, char *str)
 //     // tmp2->all = ft_strdup(str);
 //     // fill_dt_utils(str, tmp1, tmp2, 'v');
 // }
-void ft_fill_data(char *exn, t_env *tmp1)
-{
-    int i;
-    int j;
-    int check;
+// void ft_fill_data(char *exn, t_env *tmp1)
+// {
+//     int i;
+//     int j;
+//     int check;
 
-    i = 0;
-    j = 0;
-    check = 0;    
-    while(exn[i] != '\0')
-    {
-        j = i;
-        i = find_ed(exn, i, check);
-        printf ("%d %d\n",j, i);
-        if (check == 0)
-        {
-                tmp1->key = ft_substr(exn, j, i - j);
-            check++;
-        }
-        else if (check == 1)
-        {
-                tmp1->value = ft_substr(exn, j, (i + 1) - j);
-        }
-        if (exn[i] != '\0')
-            i++;
-    }
-}
+//     i = 0;
+//     j = 0;
+//     check = 0;    
+//     while(exn[i] != '\0')
+//     {
+//         j = i;
+//         i = find_ed(exn, i, check);
+//         printf ("%d %d\n",j, i);
+//         if (check == 0)
+//         {
+//                 tmp1->key = ft_substr(exn, j, i - j);
+//             check++;
+//         }
+//         else if (check == 1)
+//         {
+//                 tmp1->value = ft_substr(exn, j, (i + 1) - j);
+//         }
+//         if (exn[i] != '\0')
+//             i++;
+//     }
+// }
 
 void creat_add_node (t_parser *parser, int i, int j, char exv)
 {
