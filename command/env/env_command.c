@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 12:53:02 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/14 20:00:54 by maddou           ###   ########.fr       */
+/*   Created: 2023/06/15 16:58:16 by maddou            #+#    #+#             */
+/*   Updated: 2023/06/15 17:01:07 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void env_command(t_parser *parser, int i)
 {
-	size_t	i;
-	char	*sub;
+    t_env *tmp1;
 
-	sub = malloc(len + 1);
-	if (!sub || !s)
-		return (NULL);
-	i = 0;
-	while (start < (unsigned int)ft_strlen(s) && i < len)
-	{
-		sub[i++] = s[start++];
-	}
-	sub[i] = '\0';
-	return (sub);
+    tmp1 = parser->lex->env;
+    if (parser->comm[i].new_cmd[1] == NULL)
+    {
+        while (tmp1)
+        {
+            printf ("%s\n", tmp1->all);
+            tmp1 = tmp1->next;
+        }
+    }
 }

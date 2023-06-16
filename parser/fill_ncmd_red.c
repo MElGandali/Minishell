@@ -237,7 +237,7 @@ void fill_newcmd_red(t_parser *parser)
         x = 0;
         nb_newcmd = 0;
         j = 0;
-        nb_red = count_red(&parser->comm[i]) * 2;
+       nb_red = count_red(&parser->comm[i]) * 2;
         // printf ("%d", nb_red);
         if (nb_red != 0)
             fill_red(&parser->comm[i], nb_red);
