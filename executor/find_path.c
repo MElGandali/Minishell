@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:27:03 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/14 18:27:34 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:23:43 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,26 @@ int	path_count(char const *s, char c)
 	return (count);
 }
 
-char* const    *find_execpath(t_parser *parser)
+char* const    *find_execpath(t_parser *parser, int i)
 {
     char *pathenv;
     char **pathname;
     int nb;
-    int i;
+    int j;
 
     nb = 0;
-    i = 0;
+    j = 0;
     pathenv = getenv("PATH"); // get the path from the env struct
     pathname = malloc (sizeof(char *) * (path_count(pathenv, ':') + 1));
     pathname = ft_split(pathenv, ':', &nb);
-    while (pathname[i])
+    while (pathname[j])
     {
-        pathname[i] = ft_strjoin(pathname[i], "/");
-        pathname[i] = ft_strjoin(pathname[i], parser->comm->new_cmd[0]);
-        if ((access(pathname[i], 0)== 0))
+        pathname[j] = ft_strjoin(pathname[j], "/");
+        pathname[j] = ft_strjoin(pathname[j], parser->comm[i].new_cmd[0]);
+        if ((access(pathname[j], 0)== 0))
             break;
-        i++;
+        j++;
     }
     // put the return in another char * and free the cha** pathname
-    return ((char* const    *)pathname[i]);
+    return ((char* const    *)pathname[j]);
 }

@@ -6,17 +6,17 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/15 18:11:50 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:26:24 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int find_ed (char *env, int i)
+int find_ed (char *env, int i, int check)
 {
     while (env[i] != '\0')
     {
-        if (env[i] == '=')
+        if (env[i] == '=' && check == 0)
             break;
         // if (env[i + 1] == '\0')
         //     break;
@@ -36,19 +36,27 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev)
     while (env[i] != '\0')
     {
         j = i;
-        i = find_ed(env, i);
+        i = find_ed(env, i, check);
         if (check == 0)
         {
             if (ev == 'e')
                 tmp1->key = ft_substr(env, j, i - j); 
             tmp2->key = ft_substr(env, j, i - j);
-            check++;
+            if (env[i] == '\0')
+                check = 2;
+            else 
+                check++;
         }
         else if (check == 1)
         {
             if (ev == 'e')
                 tmp1->value = ft_substr(env, j, (i + 1) - j); 
             tmp2->value = ft_substr(env, j, (i + 1) - j);
+        }
+        if ((env[i] == '=' && env[i + 1] == '\0') || (env[i] == '\0' && check == 2))
+        {
+            tmp1->value = NULL;
+            tmp2->value = NULL;
         }
         if (env[i] != '\0')
             i++;

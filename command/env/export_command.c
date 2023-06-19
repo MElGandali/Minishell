@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/15 23:29:39 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:31:25 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,15 @@ void ft_fill_data(char *exn, t_env *tmp1)
     while(exn[i] != '\0')
     {
         j = i;
-        i = find_ed(exn, i);
+        i = find_ed(exn, i, check);
         printf ("%d %d\n",j, i);
         if (check == 0)
         {
-            // if (tmp1->key != NULL)
                 tmp1->key = ft_substr(exn, j, i - j);
             check++;
         }
         else if (check == 1)
         {
-            // if (tmp1->value != NULL)
                 tmp1->value = ft_substr(exn, j, (i + 1) - j);
         }
         if (exn[i] != '\0')
@@ -142,14 +140,31 @@ void creat_add_node (t_parser *parser, int i, int j, char exv)
         fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'e');
         add_node(env, &parser->lex->env);
         add_node(exp, &parser->lex->exp);
+        g_exit = 0;
     }
     else  
     {
         exp = creat_node(ft_strdup(parser->comm[i].new_cmd[j]));
         fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'x');
         add_node(exp, &parser->lex->exp);
+        g_exit = 0;
     }   
 }
+
+int check_exist_key(t_env *exn, char *key)
+{
+    t_env *tmp;
+
+    tmp = exn;
+    while (tmp)
+    {
+        if (ft_strcmp(tmp->key, key) == 0)
+            return (1);
+        tmp = tmp->next;
+    }
+    return (0);
+}
+
 void export_command(t_parser *parser, int i)
 {
     t_env *exp;
@@ -174,6 +189,7 @@ void export_command(t_parser *parser, int i)
                 printf ("declare -x %s=\"\"\n", exp->key);
             exp = exp->next;
         }
+        g_exit = 0;
     }
     else    
     {
@@ -188,57 +204,26 @@ void export_command(t_parser *parser, int i)
                     {
                         key = ft_substr(parser->comm[i].new_cmd[j], 0, find_end_key(parser->comm[i].new_cmd[j]));
                         exp = parser->lex->exp;
-                        while (exp)
-                        {
-                            if (ft_strcmp(exp->key, key) == 0)
-                                break;
-                            exp = exp->next;
-                        }
-                        while (env)
-                        {
-                            if (ft_strcmp(env->key, key) == 0)
-                                break;
-                            env = env->next;
-                        }
+                        remove_node(&parser->lex->exp, key);
+                        if (check_exist_key(parser->lex->env, key) == 1)
+                            remove_node(&parser->lex->env, key);
                         free(key);
-                        free(exp->all);
-                        exp->all = ft_strdup(parser->comm[i].new_cmd[j]);
-                        if (exp->key != NULL)
-                        {
-                            printf ("gg\n");
-                            // free(exp->key);
-                            exp->key =NULL;
-                        }
-                        if (exp->value != NULL)
-                        {
-                            printf ("gg1\n");
-                            // free(exp->value);
-                            exp->value = NULL;
-                        }
-                        ft_fill_data(parser->comm[i].new_cmd[j],exp);
-                        // remove_node(&parser->lex->exp, key);
-                        // if (check_valid_key(parser->comm[i].new_cmd[j]) == 0)
-                        // remove_node(&parser->lex->env, key);
-                        // exp = creat_node(parser->comm[i].new_cmd[j]);
-                        // fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'x');
-                        // add_node(exp, &parser->lex->exp);
-                        // creat_add_node (parser, i, j, 'x');
+                        creat_add_node (parser, i, j, 'e');
                     }
                 }
                 else   
                 {
-                    // if (check_dataenvexp(parser->comm[i].new_cmd[j]) == 1)
-                    //     creat_add_node (parser,i, j, 'e');
-                    // else 
+                    if (check_dataenvexp(parser->comm[i].new_cmd[j]) == 1)
+                        creat_add_node (parser,i, j, 'e');
+                    else 
                         creat_add_node (parser,i, j, 'x');
-                        // check += 1;
-                    // exp = creat_node(parser->comm[i].new_cmd[j]);
-                    // fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'x');
-                    // add_node(exp, &parser->lex->exp);
                 }
             }
-            else    
+            else 
+            {   
+                g_exit = 1;
                 printf ("bash: export: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
+            }
             j++;
         }
     }

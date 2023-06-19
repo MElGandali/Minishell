@@ -6,11 +6,14 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/16 18:43:24 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:24:39 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include"../minishell.h"
+#include <stdlib.h>
+#include <sys/_types/_null.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -21,9 +24,9 @@ int    is_builtin(char **cmd)
     i = 0;
     if (ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "cd") == 0
         || ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], "unset") == 0
-        || ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "pwd") == 0 
+        || ft_strcmp(cmd[0], "pwd") == 0 || ft_strcmp(cmd[0], "pwd") == 0
         || ft_strcmp(cmd[0], "$?") == 0 || ft_strcmp(cmd[0], "export") == 0
-        || ft_strcmp(cmd[0], "env") == 0)
+        || ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "unset") == 0 )
         return (0);  
         
     return (1);
@@ -32,85 +35,82 @@ int    is_builtin(char **cmd)
 void    exec_cmd(t_parser *parser, int i)
 {
     char *execpath;
-    int cid;
-    int *ret;
-    int fd[2];
-    
+    int ret;
     ret = 0;
     
-    
-    execpath = (char*)find_execpath(parser);
+    execpath = (char*)find_execpath(parser, i);
     if (is_builtin(parser->comm[i].new_cmd) == 0)
         g_exit = builtin_commands(parser, i);
     else
     {
-        cid = fork();
-        if (cid == 0)
-        {
             if (execve((char const*)execpath, parser->comm[i].new_cmd, NULL) == -1)
             {
                 free(execpath);
                 printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
                 g_exit = 127;
-                *ret = -1;
+                ret = -1;
             }
-        }
-        waitpid(cid, NULL, 0);
-        if (*ret == 0)
-        {
-            free(execpath);
-            g_exit = 0;
-        }
     }
 }
 
 void handle_cmd(t_parser *parser)
 {
-    int *fd;
+    int fd[2];
     int i;
-    int j;
-    int cid;
-    int fd_r;
+    int *cid;
+    int fd_d;
     
     i = 0;
-    j = 0;
-    fd = 0;
-    cid = 0;
-    fd_r = 0;
-    
-    if (parser->lex->pipe_nb != 1)
-    {
-        if (pipe(fd) == -1)
-        {
-            perror("pipe");
-            exit(2);
-        }
+    cid = malloc(sizeof (int) * parser->lex->pipe_nb);
+    // if (parser->lex->pipe_nb != 1)
+    // {
         while (i < parser->lex->pipe_nb)
         {
-            cid = fork();
-            if (cid == 0)
+            if (i < parser->lex->pipe_nb - 1)
             {
-                dup2(fd[1], 1);
-                if (check_redir_io(parser->comm[i]) == 0)
+                if (pipe(fd) == -1)
                 {
-                    j = 0;
-                    while (j < parser->comm[i].dt_nb)
-                    {
-                        open_redir_io(parser, i);
-                        j++;
-                    }
+                    perror("pipe");
+                    exit(2);
                 }
-                else
-                    exec_cmd(parser, i);
             }
-            waitpid(cid, NULL, 0);
-            // fd_r = fd[1];
-            dup2(fd[0], 0);
-        i++;    
+            cid[i] = fork();
+            if (cid[i] == 0)
+            {
+                if (i != 0)
+                {
+                    dup2(fd_d, 0);
+                    close(fd_d);
+                }
+                if (i != parser->lex->pipe_nb - 1)
+                {
+                    dup2(fd[1], 1);
+                    close(fd[1]);
+                }
+                exec_cmd(parser, i);
+            }
+            if (i > 0)
+                close(fd_d);
+            fd_d = fd[0];
+            close(fd[1]);
+            i++;
         }
-        close(fd[0]);
-        close(fd[1]);
+    i = 0;
+    while (i < parser->lex->pipe_nb)
+    {
+        waitpid(cid[i], &g_exit, 0);
+        i++;
     }
-    else
-        exec_cmd(parser, i);
+    //(void)parser;
+    // multiple_cmd(parser);   
+    // execute_cmd(parser);
 }
+                // if (check_redir_io(parser->comm[i]) == 0)
+                // {
+                //     j = 0;
+                //     while (j < parser->comm[i].dt_nb)
+                //     {
+                //         open_redir_io(parser, i);
+                //         j++;
+                //     }
+                // }

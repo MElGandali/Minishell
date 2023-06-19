@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:59:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:06:13 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:19:47 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int    echo_command(char **argv)
             i++;
         while (argv[i])
         {
-            printf("%s", argv[i]);
+            if (ft_strcmp(argv[i], "$?") == 0 && argv[i])
+               special_var(argv);
+            if (ft_strcmp(argv[i], "$?") != 0)
+                printf("%s", argv[i]);
             if (argv[i + 1])
                 printf(" ");
             i++;
