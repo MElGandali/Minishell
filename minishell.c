@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 22:33:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 20:08:31 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int main(int ac, char **av, char **env)
     int g_exit;
 
     g_exit = 0;
+    lex.env = NULL;
+    lex.exp= NULL;
     creating_new_env(&lex, env);
     while (1)
     {

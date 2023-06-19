@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 11:26:24 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/16 20:09:02 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev)
         }
         if ((env[i] == '=' && env[i + 1] == '\0') || (env[i] == '\0' && check == 2))
         {
-            tmp1->value = NULL;
+            if (ev == 'e')
+                tmp1->value = NULL;
             tmp2->value = NULL;
         }
         if (env[i] != '\0')
@@ -118,8 +119,8 @@ void creating_new_env(t_lexer *lex, char **env)
     t_env *tmp1;
     t_env *tmp2;
 
-    lex->env = NULL;
-    lex->exp = NULL;
+    // lex->env = NULL;
+    // lex->exp = NULL;
     i = 0;
     while (env[i] != NULL)
     {
