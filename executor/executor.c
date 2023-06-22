@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:32:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/15 23:50:16 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:03:49 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void    executor(t_parser *parser)
 {
-    // handle_heredoc(parser);
     handle_cmd(parser);
 
 }

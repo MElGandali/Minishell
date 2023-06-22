@@ -6,12 +6,38 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/19 17:52:54 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 14:32:11 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
+void    update_env(t_parser *parser, char *var, char *dir)
+{
+    t_env *env;
+    t_env *exp;
+    
+    env = parser->lex->env;
+    exp = parser->lex->exp;
+    dir = NULL;
+    var = NULL;
+    while (env)
+    {
+        if (ft_strcmp(env->key, var) == 0)
+        {
+            
+        }
+        env = env->next;
+    }
+    // while (exp)
+    // {
+    //     if (ft_strcmp(exp->key, var) == 0)
+    //     {
+            
+    //     }
+    //     exp = exp->next;
+    // }
+}
 char    *get_env(t_parser *parser, char *str)
 {
     t_env *env;

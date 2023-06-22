@@ -6,11 +6,12 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:27:03 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/19 12:23:43 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 14:27:45 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <sys/unistd.h>
 
 int	path_count(char const *s, char c)
 {
@@ -41,14 +42,16 @@ char* const    *find_execpath(t_parser *parser, int i)
 
     nb = 0;
     j = 0;
-    pathenv = getenv("PATH"); // get the path from the env struct
+    pathenv = get_env(parser, "PATH");
     pathname = malloc (sizeof(char *) * (path_count(pathenv, ':') + 1));
+    if (!pathname)
+        return (NULL);
     pathname = ft_split(pathenv, ':', &nb);
     while (pathname[j])
     {
         pathname[j] = ft_strjoin(pathname[j], "/");
         pathname[j] = ft_strjoin(pathname[j], parser->comm[i].new_cmd[0]);
-        if ((access(pathname[j], 0)== 0))
+        if ((access(pathname[j], X_OK)== 0))
             break;
         j++;
     }

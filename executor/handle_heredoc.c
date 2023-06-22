@@ -6,14 +6,14 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/12 22:40:52 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:02:54 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
        
 
-void here_doc(t_red *red)
+int here_doc(t_red *red)
 {
     int i;
     char *input;
@@ -40,28 +40,24 @@ void here_doc(t_red *red)
         }
     }
     write(red->fd[1], &save_her , ft_strlen(save_her));
-    // red->fd[2] = '\0';
-    // close(red->fd[1]);
-    // close(red->fd_her[0]);
+    close(red->fd[1]);
+    return (red->fd[0]);
 }
-void    handle_heredoc(t_parser *parser)
+int    handle_heredoc(t_parser *parser, int i)
 {
-    int i;
     int j;
+    int fd_r;
 
-    i = 0;
-    if (parser->comm->nb_red != 0)
+    fd_r = 0;
+    if (parser->comm[i].nb_red != 0)
     {
-        while (i < parser->lex->pipe_nb)
-        {
             j = 0;
             while (j < parser->comm->nb_red)
             {
                 if (parser->comm[i].red[j].name == 6)
-                    here_doc(&parser->comm[i].red[j + 1]);
+                    fd_r = here_doc(&parser->comm[i].red[j + 1]);
                 j = j + 2;
             }
-            i++;
-        }
     }
+    return (fd_r);
 }
