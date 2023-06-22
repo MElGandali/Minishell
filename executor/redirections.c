@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redurection.c                                      :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/22 15:35:25 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/22 22:11:07 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int check_multi_arg(char **redurect)
+int check_multi_arg(char **redirect)
 {
     int i;
     int j;
@@ -23,16 +23,16 @@ int check_multi_arg(char **redurect)
     i = 0;
     check_null = 0;
     check_char = 0;
-    while (redurect[i] != NULL)
+    while (redirect[i] != NULL)
     {
         j = 0;
         check_name = NULL;
-        while (redurect[i][j] != '\0')
+        while (redirect[i][j] != '\0')
         {
-            if (redurect[i][j] == '\'' || redurect[i][j] == '\"')
-                check_name = if_quote_fill(redurect[i], &j, check_name);
+            if (redirect[i][j] == '\'' || redirect[i][j] == '\"')
+                check_name = if_quote_fill(redirect[i], &j, check_name);
             else  
-                check_name = ft_copier(redurect[i][j], check_name);
+                check_name = ft_copier(redirect[i][j], check_name);
             j++;
         }
         if (check_name != NULL)
@@ -50,7 +50,7 @@ int check_multi_arg(char **redurect)
 int check_ambiguous(t_red *red)
 {
     int i;
-    char **check_redurect;
+    char **check_redirect;
     int check;
 
     i = 0;
@@ -66,11 +66,11 @@ int check_ambiguous(t_red *red)
             red->data[i] = '\n';
         i++;
     }
-    check_redurect = ft_split(red->data, '\n', &check);
+    check_redirect = ft_split(red->data, '\n', &check);
     // int j = 0;
-    // while (check_redurect[j] != NULL)
+    // while (check_redirect[j] != NULL)
     // {
-    //     printf ("%s\n", check_redurect[j]);
+    //     printf ("%s\n", check_redirect[j]);
     //     j++;
     // }
     printf ("%d", check);
@@ -78,17 +78,17 @@ int check_ambiguous(t_red *red)
         return (1);
     else if (check > 1)
     {
-        if (check_multi_arg(check_redurect) == 1)
+        if (check_multi_arg(check_redirect) == 1)
             return (1);
     }
     else if (check == 1)
     {
         i = 0;
-        while (check_redurect[0][i] != '\0')
+        while (check_redirect[0][i] != '\0')
         {
-            if (ft_isprint(check_redurect[0][i]) == 1 && check_redurect[0][i] !='\"' 
-                && check_redurect[0][i] !='\'' && check_redurect[0][i] !=' ' &&
-                check_redurect[0][i] != '\t')
+            if (ft_isprint(check_redirect[0][i]) == 1 && check_redirect[0][i] !='\"' 
+                && check_redirect[0][i] !='\'' && check_redirect[0][i] !=' ' &&
+                check_redirect[0][i] != '\t')
                 return (0);
             i++;
         }
@@ -96,9 +96,9 @@ int check_ambiguous(t_red *red)
     }
     // printf ("%d", check);
     // int j = 0;
-    // while (check_redurect[j] != NULL)
+    // while (check_redirect[j] != NULL)
     // {
-    //     printf ("%s\n", check_redurect[j]);
+    //     printf ("%s\n", check_redirect[j]);
     //     j++;
     // }
     return (0);
@@ -118,7 +118,7 @@ int redir_out(t_cmd *cmd, int i)
     // fd = open("")
 }
 
-int check_redurect(t_cmd *cmd)
+int check_redirect(t_cmd *cmd)
 {
     int i;
 

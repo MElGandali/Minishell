@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:52:25 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:12:07 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void		handle_cmd(t_parser *parser);
 int    	handle_heredoc(t_parser *parser, int i);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
-int check_redurect(t_cmd *cmd);
+int check_redirect(t_cmd *cmd);
 
 
 int    parser(t_lexer *lex);
@@ -221,6 +221,7 @@ void    fill_command (t_parser *parser);
 void fill_newcmd_red(t_parser *parser);
 // void    define_data (t_parser *parser);
 void    handle_data(t_parser *parser);
+char *find_dollar_utils(t_parser *parser, char *data, int j, char e);
 int check_valid(char *data, int i);
 char *ft_copier(char add, char *new_data);
 int check_quote(char *data, int i);
@@ -232,5 +233,6 @@ void free_parser(t_parser *parser);
 void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
 //-----------squipe quote----------//
 char *if_quote_fill(char *data, int *u, char *new_cmd);
+
 //-----------squipe quote----------//
 #endif

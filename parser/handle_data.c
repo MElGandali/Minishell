@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/16 11:39:14 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/22 22:07:52 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,16 +354,17 @@ void check_dollar(t_parser *parser, char *dquote, char **new_data)
     }
 }
 
-void copy_quote(char *data, int *i, char **new_data)
+char *copy_quote(char *data, int *i, char *new_data)
 {
-    *new_data = ft_copier('\'', *new_data);
+    new_data = ft_copier('\'', new_data);
     (*i)++;
     while (data[*i] != '\'')
     {
-        *new_data = ft_copier(data[*i], *new_data);
+        new_data = ft_copier(data[*i], new_data);
         (*i)++;
     }
-    *new_data = ft_copier('\'', *new_data);
+    new_data = ft_copier('\'', new_data);
+    return (new_data);
     // printf ("%s\n", *new_data);
     // if (data[*i] == '\0')
     //     (*i)--;
@@ -375,12 +376,61 @@ void copy_quote(char *data, int *i, char **new_data)
    
 // }
 
+char *find_dollar_utils(t_parser *parser, char *data, int j, char e)
+{
+    char *new_data;
+    char *dquote;
+    
+    new_data = NULL;
+    while (data[j] != '\0')
+    {
+        dquote = NULL;
+        if (e == 'n' && data[j] == '\'')
+            new_data = copy_quote(data, &j, new_data);
+        if (e == 'e' && data[j] == '\'')
+        {
+            dquote = copy_quote(data, &j, new_data);
+            check_dollar(parser, dquote, &new_data);
+        }
+        if (data[j] == '\"')
+        {
+            dquote = ft_copier(data[j], dquote);
+            j++; // squipe quote
+            while (data[j] != '\"')
+                dquote = ft_copier(data[j++], dquote);
+            dquote = ft_copier(data[j], dquote);
+            check_dollar(parser, dquote, &new_data);
+        }
+        else  
+        {
+            if ( data[j]== '$' && data[j + 1] != '\0' && data[j + 1] != '?')
+            {
+                if (data[j] == ' ')
+                    new_data = ft_copier(data[j + 1], new_data);
+                else if (data[j + 1] == '_' || ft_isalnum(data[j + 1]) == 1)
+                    expand_data(parser->lex->env, data, &j, &new_data);
+                else if (!(data[j + 1] == '_' 
+                || ft_isalnum(data[j + 1]) == 1) 
+                && data[j + 1] != '\0' && data[j + 1] != '\''
+                 && data[j + 1] != '\"')  
+                    j++;
+                else if (data[j + 1] != '\''
+                 && data[j + 1] != '\"') 
+                    new_data = ft_copier(data[j], new_data);
+            }
+            else if (data[j] != '\''
+                && data[j] != '\"')
+                new_data = ft_copier(data[j], new_data);
+        }            
+        j++;
+    }
+    return (new_data);
+}
 void find_dollar(t_parser *parser, t_cmd *cmd)
 {
     int i;
     int j;
     char *new_data;
-    char *dquote;
 
     i = 0;
     while (i < cmd->dt_nb)
@@ -391,43 +441,44 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
             && cmd->dt[i].name != 5 && cmd->dt[i].name != 6
             && cmd->dt[i].name != 7)
         {     
-            while (cmd->dt[i].data[j] != '\0')
-            {
-                dquote = NULL;
-                if (cmd->dt[i].data[j] == '\'')
-                    copy_quote(cmd->dt[i].data, &j, &new_data);
-                if (cmd->dt[i].data[j] == '\"')
-                {
-                    dquote = ft_copier(cmd->dt[i].data[j], dquote);
-                    j++; // squipe quote
-                    while (cmd->dt[i].data[j] != '\"')
-                        dquote = ft_copier(cmd->dt[i].data[j++], dquote);
-                    dquote = ft_copier(cmd->dt[i].data[j], dquote);
-                    check_dollar(parser, dquote, &new_data);
-                }
-                else  
-                {
-                    if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
-                    {
-                        if (cmd->dt[i].data[j] == ' ')
-                            new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
-                        else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
-                            expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
-                        else if (!(cmd->dt[i].data[j + 1] == '_' 
-                        || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
-                        && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
-                         && cmd->dt[i].data[j + 1] != '\"')  
-                            j++;
-                        else if (cmd->dt[i].data[j + 1] != '\''
-                         && cmd->dt[i].data[j + 1] != '\"') 
-                            new_data = ft_copier(cmd->dt[i].data[j], new_data);
-                    }
-                    else if (cmd->dt[i].data[j] != '\''
-                        && cmd->dt[i].data[j] != '\"')
-                        new_data = ft_copier(cmd->dt[i].data[j], new_data);
-                }            
-                j++;
-            }
+            // while (cmd->dt[i].data[j] != '\0')
+            // {
+            //     dquote = NULL;
+            //     if (cmd->dt[i].data[j] == '\'')
+            //         copy_quote(cmd->dt[i].data, &j, &new_data);
+            //     if (cmd->dt[i].data[j] == '\"')
+            //     {
+            //         dquote = ft_copier(cmd->dt[i].data[j], dquote);
+            //         j++; // squipe quote
+            //         while (cmd->dt[i].data[j] != '\"')
+            //             dquote = ft_copier(cmd->dt[i].data[j++], dquote);
+            //         dquote = ft_copier(cmd->dt[i].data[j], dquote);
+            //         check_dollar(parser, dquote, &new_data);
+            //     }
+            //     else  
+            //     {
+            //         if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
+            //         {
+            //             if (cmd->dt[i].data[j] == ' ')
+            //                 new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
+            //             else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
+            //                 expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
+            //             else if (!(cmd->dt[i].data[j + 1] == '_' 
+            //             || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
+            //             && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
+            //              && cmd->dt[i].data[j + 1] != '\"')  
+            //                 j++;
+            //             else if (cmd->dt[i].data[j + 1] != '\''
+            //              && cmd->dt[i].data[j + 1] != '\"') 
+            //                 new_data = ft_copier(cmd->dt[i].data[j], new_data);
+            //         }
+            //         else if (cmd->dt[i].data[j] != '\''
+            //             && cmd->dt[i].data[j] != '\"')
+            //             new_data = ft_copier(cmd->dt[i].data[j], new_data);
+            //     }            
+            //     j++;
+            // }
+            new_data = find_dollar_utils(parser, cmd->dt[i].data, j, 'n');
             if (new_data == NULL)
             {
                 cmd->dt[i].name = WALLO;
