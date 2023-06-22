@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/24 21:50:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/21 12:36:55 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int find_end_ifnot_redir (t_lexer *lex, int i, int j)
 
 int    find_word(t_lexer *lex, int i, int j)
 {
-	if (lex->word[i][j] == '|' || lex->word[i][j] == '>' || lex->word[i][j] == '<')
+	if (lex->word[i][j] == '|' ||  lex->word[i][j] == '>' || lex->word[i][j] == '<')
 	{
 		while ((lex->word[i][j + 1] == '|' || lex->word[i][j + 1] == '>' 
 			|| lex->word[i][j + 1] == '<') && lex->word[i][j + 1]) // if we change the || to && we will find that it split every redirection seperately even if they're next to each other
@@ -88,8 +88,8 @@ int split_pipe_redir(t_lexer *lex)
 	fill_token(lex, i, j, &k);
 	lex->token[k] = NULL;
 	free_double_array(lex->word);
-	// i = 0;
-	// j = 0;
+	i = 0;
+	j = 0;
 	// while (lex->token[i] != NULL)
 	// {
 	// 	printf ("%s\n", lex->token[i]);
@@ -97,5 +97,5 @@ int split_pipe_redir(t_lexer *lex)
 	// }
 	// exit(1);
 	return (1);
-}
+} 
 

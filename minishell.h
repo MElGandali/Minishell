@@ -6,9 +6,10 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:10:27 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:52:25 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 
@@ -26,6 +27,8 @@
 #include"libf/libft.h"
 #include <errno.h>
 #include <limits.h>
+#include <errno.h>
+#include <fcntl.h>
 
 /*
 t_list {
@@ -169,6 +172,7 @@ int quote(char *str, int *i);
 int  split_token(t_lexer *lex);
 int split_spaces(t_lexer *lex);
 int split_pipe_redir(t_lexer *lex);
+int split_pipe_heredoc(t_lexer *lex);
 void count_tokens (t_lexer *lex);
 // int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);
@@ -209,9 +213,7 @@ void		handle_cmd(t_parser *parser);
 int    	handle_heredoc(t_parser *parser, int i);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
-int			check_redir_io(t_cmd comm);
-void		open_redir_io(t_parser *parser, int i);
-
+int check_redurect(t_cmd *cmd);
 
 
 int    parser(t_lexer *lex);
@@ -228,4 +230,7 @@ int check_quote(char *data, int i);
 void free_parser(t_parser *parser);
 
 void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
+//-----------squipe quote----------//
+char *if_quote_fill(char *data, int *u, char *new_cmd);
+//-----------squipe quote----------//
 #endif

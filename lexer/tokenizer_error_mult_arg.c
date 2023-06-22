@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:48:10 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/07 22:18:11 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:50:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ int check_syntax_error (t_lexer *lex, int i)
         || ft_strnstr(lex->token[i], "<") == 0) &&
         (ft_strnstr(lex->token[i + 1], "|")  == 0
         || ft_strnstr(lex->token[i + 1], ">") == 0
-        || ft_strnstr(lex->token[i + 1], "<") == 0))
+        || (ft_strnstr(lex->token[i + 1], "<") == 0 && ft_strlen(lex->token[i + 1]) == 1)))
     {
-        printf("bash : syntax error near unexpected token2\n");
+        free_double_array(lex->token);
+        printf("bash : syntax error \n");
         return (-1);
     }
     return (0);
@@ -38,10 +39,11 @@ int redir_pipe_error_mult_arg(t_lexer *lex)
             return -1;
          if (ft_strnstr(lex->token[0], "|")  == 0 
             || ft_strnstr(lex->token[lex->curr_wnb - 1], "|") == 0
-            || ft_strnstr(lex->token[lex->curr_wnb - 1], "<") == 0
-            || ft_strnstr(lex->token[lex->curr_wnb - 1], ">") == 0)
+            || ft_strnstr(lex->token[lex->curr_wnb - 1], "<") == 0 
+            || ft_strnstr(lex->token[lex->curr_wnb - 1], ">") == 0 )
         {
-            printf("bash : syntax error near unexpected token\n"); 
+            free_double_array(lex->token);
+            printf("bash : syntax error \n"); 
             return (-1);
         }
         i++;

@@ -6,12 +6,11 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:27:03 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 14:27:45 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/22 15:49:38 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/unistd.h>
 
 int	path_count(char const *s, char c)
 {

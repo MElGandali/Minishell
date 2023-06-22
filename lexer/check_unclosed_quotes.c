@@ -29,7 +29,7 @@ int dquote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("bash : syntax Error missing dquote\n");
+        printf("bash :  unexpected EOF while looking for matching\n");
         free(str);
         return (-1);
     }
@@ -52,7 +52,7 @@ int quote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("bash : syntax Error missing squote\n");
+        printf("bash :  unexpected EOF while looking for matching\n");
         free(str);
         return (-1);
     }
