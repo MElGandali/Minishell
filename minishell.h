@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/16 15:47:08 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:35:49 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include"libf/libft.h"
 #include <errno.h>
 #include <limits.h>
+#include <errno.h>
+#include <fcntl.h>
 
 /*
 t_list {
@@ -167,6 +169,7 @@ int quote(char *str, int *i);
 int  split_token(t_lexer *lex);
 int split_spaces(t_lexer *lex);
 int split_pipe_redir(t_lexer *lex);
+int split_pipe_heredoc(t_lexer *lex);
 void count_tokens (t_lexer *lex);
 // int find_end_utils(t_lexer *lex);
 int split_quotes(char *line, int i);
@@ -203,7 +206,7 @@ void unset_command(t_parser *parser);
 void    executor(t_parser *parser);
 void	handle_cmd(t_parser *parser);
 void    handle_heredoc(t_parser *parser);
-
+int check_redurect(t_cmd *cmd);
 
 
 int    parser(t_lexer *lex);
@@ -220,4 +223,7 @@ int check_quote(char *data, int i);
 void free_parser(t_parser *parser);
 
 void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
+//-----------squipe quote----------//
+char *if_quote_fill(char *data, int *u, char *new_cmd);
+//-----------squipe quote----------//
 #endif

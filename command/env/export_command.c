@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 20:04:18 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/21 17:46:39 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int check_valid_key(char *str)
     i++;
     while (str[i] != '=' && str[i] != '\0')
     {
-        if (ft_isalnum(str[i]) == 0)
+        if (ft_isalnum(str[i]) == 0 && str[i] != '_')
             return (1);
         i++;
     }

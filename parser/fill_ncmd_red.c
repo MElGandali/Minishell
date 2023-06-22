@@ -30,6 +30,7 @@ int count_red(t_cmd *comm)
     }
     return (nb);
 }
+
 void fill_red(t_cmd *comm, int nb)
 {
     int i;
@@ -226,7 +227,7 @@ void fill_newcmd_red(t_parser *parser)
     int i;
     int x;
     int j;
-    int nb_red;
+    // int nb_red;
     int nb_newcmd;
 
 
@@ -237,10 +238,10 @@ void fill_newcmd_red(t_parser *parser)
         x = 0;
         nb_newcmd = 0;
         j = 0;
-       nb_red = count_red(&parser->comm[i]) * 2;
+        parser->comm[i].nb_red = count_red(&parser->comm[i]) * 2;
         // printf ("%d", nb_red);
-        if (nb_red != 0)
-            fill_red(&parser->comm[i], nb_red);
+        if (parser->comm[i].nb_red != 0)
+            fill_red(&parser->comm[i], parser->comm[i].nb_red);
         while (j < parser->comm[i].dt_nb)
         {
             if (check_red(&parser->comm[i], j) == 0)

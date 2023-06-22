@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/16 15:39:25 by maddou           ###   ########.fr       */
+/*   Updated: 2023/06/19 20:24:43 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int builtin_commands(t_parser *parser)
 {
+    // printf ("%s\n", parser->lex->env->all);
     if (ft_strnstr(parser->comm->new_cmd[0], "echo") == 0)
         g_exit = echo_command(parser->comm->new_cmd);
     else if (ft_strnstr(parser->comm->new_cmd[0], "cd") == 0)

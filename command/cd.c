@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 21:16:55 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:22:26 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	cd_command(char **argv) // still, i need to update $PWD and $OLDPWD
     int i;
 
     i = 0;
+    
     if (argv[1] && ft_strcmp(argv[1], "-") == 0)
     {
         homedir = getenv("OLDPWD");
