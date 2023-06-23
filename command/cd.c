@@ -6,14 +6,14 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 18:28:26 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:02:18 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include"../minishell.h"
 
-int	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD and $OLDPWD
+void	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD and $OLDPWD
 {
     char *homedir;
     int i;
@@ -29,14 +29,12 @@ int	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD an
             g_exit = 1;
         }
         chdir(homedir);
-        return (g_exit);
     }
     if (argv[1] == NULL)
     {
         homedir = get_env(parser, "HOME");
         // update_env(parser, "OLDPWD", homedir);
         chdir(homedir);
-        return (g_exit);
     }
     else
     {
@@ -44,8 +42,6 @@ int	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD an
             {
                 printf("bash: cd: %s: %s\n",argv[1], strerror(errno));
                 g_exit = 1;
-                // return (1);
             }
     }
-    return (0);
 }

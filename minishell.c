@@ -6,15 +6,14 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 18:51:28 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 21:32:09 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 #include "libf/libft.h"
 
-int g_exit;
-
+    int g_exit = 0;
 void all_work(t_lexer *lex)
 {
     if (tokenizer(lex) == -1)
@@ -31,7 +30,6 @@ int main(int ac, char **av, char **env)
     t_lexer lex;
     // int g_exit;
 
-    // g_exit = 0;
     lex.env = NULL;
     lex.exp= NULL;
     creating_new_env(&lex, env);

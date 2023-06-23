@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 18:21:19 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:04:04 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ env_node->content = env_entry;
 ft_lstclear(&lst, (t_lstdel) destroy_env);
 */
 
-int extern g_exit;
+extern int g_exit;
 
 typedef struct s_env {
 	char *all;
@@ -191,14 +191,14 @@ void	fill_command (t_parser *parser);
 void	handle_data(t_parser *parser);
 
 //-------command/builtins------//
-int	builtin_commands(t_parser *parser, int i);
+void	builtin_commands(t_parser *parser, int i);
 char    *get_env(t_parser *parser, char *str);
 void    update_env(t_parser *parser,char *var, char *dir);
-int	echo_command(char **argv);
-int	cd_command(t_parser *parser, char **argv);
-int	pwd_command(void);
+void	echo_command(char **argv);
+void	cd_command(t_parser *parser, char **argv);
+void	pwd_command(void);
 void	exit_command(char **argv);
-int special_var(char **argv);
+void	special_var(char **argv);
 void export_command(t_parser * parser, int i);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
 void env_command(t_parser *parser, int i);

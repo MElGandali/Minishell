@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:48:50 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:01:36 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,19 @@ char    *get_env(t_parser *parser, char *str)
     return (0);
 }
 
-int builtin_commands(t_parser *parser, int i)
+void    builtin_commands(t_parser *parser, int i)
 {
     if (ft_strnstr(parser->comm[i].new_cmd[0], "echo") == 0)
-        g_exit = echo_command(parser->comm[i].new_cmd);
+        echo_command(parser->comm[i].new_cmd);
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "cd") == 0)
-        g_exit = cd_command(parser, parser->comm[i].new_cmd);
+    {
+        cd_command(parser, parser->comm[i].new_cmd);
+        printf("%d\n", g_exit);
+    }
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "pwd") == 0)
-        g_exit = pwd_command();
+        pwd_command();
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "$?") == 0)
-        g_exit = special_var(parser->comm[i].new_cmd);
+        special_var(parser->comm[i].new_cmd);
     else if (ft_strcmp(parser->comm[i].cmd[0], "export") == 0)
         export_command(parser, 0);
     else if (ft_strnstr(parser->comm->cmd[0], "unset") == 0)
@@ -70,5 +73,4 @@ int builtin_commands(t_parser *parser, int i)
         env_command(parser, 0);
     else if (ft_strnstr(parser->comm->new_cmd[0], "exit") == 0)
         exit_command(parser->comm->new_cmd);
-    return (g_exit);
 }

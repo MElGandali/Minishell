@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 18:21:58 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:12:36 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void handle_cmd(t_parser *parser)
     else {
         if (parser->comm[0].new_cmd != NULL && is_builtin(parser->comm[i].new_cmd) == 0)
         {
-            printf ("yh\n");
             fd_her = handle_heredoc(parser, i);
             // close(fd_her);
             // cid[0] = fork();
@@ -122,7 +121,7 @@ void handle_cmd(t_parser *parser)
             // }
             if (parser->comm[0].nb_red > 0)
                 check_redirect(&parser->comm[0]);
-            g_exit = builtin_commands(parser, i);
+            builtin_commands(parser, i);
         }
             
         else
