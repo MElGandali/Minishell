@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:54:38 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/08 22:51:52 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:49:49 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int    special_var(char **argv)
         {
             if (ft_strnstr(argv[i], "$?") == 0)
             {
+            printf("%d\n", g_exit);
                 // free(argv[i]);
                 argv[i] = ft_itoa(g_exit);
             }

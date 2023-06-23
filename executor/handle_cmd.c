@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 23:08:29 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:30:54 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void handle_cmd(t_parser *parser)
                     dup2(fd[1], 1);
                     close(fd[1]);
                 }
+                if (parser->comm[i].nb_red > 0)
+                    check_redirect(&parser->comm[i], fd_her);
                 if (parser->comm[i].new_cmd != NULL)
                     exec_cmd(parser, i);
                 else
@@ -110,24 +112,30 @@ void handle_cmd(t_parser *parser)
     else {
         if (parser->comm[0].new_cmd != NULL && is_builtin(parser->comm[i].new_cmd) == 0)
         {
-            printf ("yh\n");
             fd_her = handle_heredoc(parser, i);
             // close(fd_her);
+            // if (parser->comm[i].nb_red > 0)
+            // {
+                
+            //     printf ("yh\n");
+            //     check_redirect(&parser->comm[i]);
+            // }
             // cid[0] = fork();
             // if (cid[0] == 0)
             // {
-            //     dup2(fd_her, 0);
-            //     close (fd_her);
+                // dup2(fd_her, 0);
+                // close (fd_her);
             //     exit (0);
             // }
             if (parser->comm[0].nb_red > 0)
-                check_redirect(&parser->comm[0]);
+                check_redirect(&parser->comm[0], fd_her);
             g_exit = builtin_commands(parser, i);
         }
             
         else
         {
             fd_her = handle_heredoc(parser, i);
+            
             // close(fd_her);
             cid[0] = fork();
             if (cid[0] == 0)
@@ -135,7 +143,7 @@ void handle_cmd(t_parser *parser)
                 dup2(fd_her, 0);
                 close (fd_her);
                 if (parser->comm[0].nb_red > 0)
-                    check_redirect(&parser->comm[0]);
+                    check_redirect(&parser->comm[0], fd_her);
                 if (parser->comm[0].new_cmd != NULL)
                     exec_cmd(parser, 0);
                 else

@@ -212,7 +212,6 @@ void check_and_fill_newcmd(t_cmd *comm)
     {
         if (check_red(comm, i) == 0)
         {
-            
             if (ft_check_split(comm->dt[i].data) == 1)
                 ft_split_data(comm, i ,&j);
             else
@@ -260,7 +259,7 @@ void fill_newcmd_red(t_parser *parser)
             parser->comm[i].new_cmd = NULL;
         /**************print****************/
         // printf ("khasha tamsah\n");
-        // print(parser, nb_red, nb_newcmd, i);
+        // print(parser, parser->comm[i].nb_red, nb_newcmd, i);
         /**************print****************/
         i++;
     }

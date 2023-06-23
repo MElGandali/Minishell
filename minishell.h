@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 22:12:07 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:30:45 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ env_node->content = env_entry;
 ft_lstclear(&lst, (t_lstdel) destroy_env);
 */
 
-int extern g_exit;
+ extern int g_exit;
+
 typedef struct s_env {
 	char *all;
 	char *key;
@@ -213,7 +214,7 @@ void		handle_cmd(t_parser *parser);
 int    	handle_heredoc(t_parser *parser, int i);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
-int check_redirect(t_cmd *cmd);
+int check_redirect(t_cmd *cmd, int fd_her);
 
 
 int    parser(t_lexer *lex);
