@@ -6,13 +6,9 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 22:12:07 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:21:19 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -57,6 +53,7 @@ ft_lstclear(&lst, (t_lstdel) destroy_env);
 */
 
 int extern g_exit;
+
 typedef struct s_env {
 	char *all;
 	char *key;

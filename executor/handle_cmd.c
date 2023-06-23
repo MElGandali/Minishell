@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 23:08:29 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:21:58 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    exec_cmd(t_parser *parser, int i)
     
     execpath = (char*)find_execpath(parser, i);
     if (is_builtin(parser->comm[i].new_cmd) == 0)
-        g_exit = builtin_commands(parser, i);
+        builtin_commands(parser, i);
     else
     {
         if (execve((char const*)execpath, parser->comm[i].new_cmd, NULL) == -1)

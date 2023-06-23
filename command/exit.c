@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:16:16 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 18:42:09 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:12:39 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ void    exit_command(char **argv)
     g_exit = status;
     exit (status);
 }
-

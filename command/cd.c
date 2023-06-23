@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:49:04 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:28:26 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD an
     if (argv[1] == NULL)
     {
         homedir = get_env(parser, "HOME");
-        update_env(parser, "OLDPWD", homedir);
+        // update_env(parser, "OLDPWD", homedir);
         chdir(homedir);
         return (g_exit);
     }
@@ -43,7 +43,8 @@ int	cd_command(t_parser *parser, char **argv) // still, i need to update $PWD an
             if (chdir(argv[1]) != 0)
             {
                 printf("bash: cd: %s: %s\n",argv[1], strerror(errno));
-                return (1);
+                g_exit = 1;
+                // return (1);
             }
     }
     return (0);
