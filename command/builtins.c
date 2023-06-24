@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 22:01:36 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:29:56 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void    builtin_commands(t_parser *parser, int i)
     if (ft_strnstr(parser->comm[i].new_cmd[0], "echo") == 0)
         echo_command(parser->comm[i].new_cmd);
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "cd") == 0)
-    {
         cd_command(parser, parser->comm[i].new_cmd);
-        printf("%d\n", g_exit);
-    }
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "pwd") == 0)
         pwd_command();
     else if (ft_strnstr(parser->comm[i].new_cmd[0], "$?") == 0)

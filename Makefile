@@ -6,7 +6,7 @@
 #    By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 17:04:58 by mel-gand          #+#    #+#              #
-#    Updated: 2023/06/22 19:38:09 by mel-gand         ###   ########.fr        #
+#    Updated: 2023/06/24 16:47:53 by mel-gand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC = minishell.c libf/ft_putstr_fd.c libf/ft_isprint.c libf/ft_strcmp.c libf/ft
 		lexer/count_tokens.c lexer/tokenizer_error_mult_arg.c parser/parser.c parser/fill_commands.c free_all_alloc.c parser/handle_data.c  parser/fill_ncmd_red.c parser/print_parser_argument.c\
 		linked_list/add_node.c linked_list/creat_node.c linked_list/remove_node.c linked_list/length_node.c \
 		command/env/env_export.c command/env/export_command.c command/builtins.c command/cd.c command/echo.c command/pwd.c command/exit.c command/special_var.c \
-		executor/executor.c executor/handle_cmd.c executor/handle_heredoc.c executor/find_path.c executor/redirections.c command/unset.c command/env/env_command.c  \
+		executor/executor.c executor/handle_cmd.c executor/handle_heredoc.c executor/find_path.c executor/redirections.c command/unset.c command/env/env_command.c executor/open_redir.c  \
 		
 		
 OBJ := $(SRC:.c=.o)

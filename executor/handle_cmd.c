@@ -6,15 +6,12 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 22:12:36 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:38:27 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include"../minishell.h"
-#include <stdio.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 int    is_builtin(char **cmd)
 {
@@ -75,7 +72,8 @@ void handle_cmd(t_parser *parser)
                     exit(2);
                 }
             }
-            fd_her = handle_heredoc(parser, i);           
+            fd_her = handle_heredoc(parser, i);
+            
             cid[i] = fork();
             if (cid[i] == 0)
             {
@@ -89,10 +87,15 @@ void handle_cmd(t_parser *parser)
                     dup2(fd[1], 1);
                     close(fd[1]);
                 }
-                if (parser->comm[i].new_cmd != NULL)
-                    exec_cmd(parser, i);
-                else
-                    exit(0);
+                if (open_redirect(parser->comm, i) == 0)
+                {
+                    if (parser->comm[i].nb_red > 0)
+                        check_redirect(&parser->comm[i], fd_her);
+                    if (parser->comm[i].new_cmd != NULL)
+                        exec_cmd(parser, i);
+                    else
+                        exit(0);
+                }
             }
             if (i > 0)
                 close(fd_d);
@@ -107,38 +110,36 @@ void handle_cmd(t_parser *parser)
             i++;
         }
     }
-    else {
+    else 
+    {
         if (parser->comm[0].new_cmd != NULL && is_builtin(parser->comm[i].new_cmd) == 0)
         {
             fd_her = handle_heredoc(parser, i);
-            // close(fd_her);
-            // cid[0] = fork();
-            // if (cid[0] == 0)
-            // {
-            //     dup2(fd_her, 0);
-            //     close (fd_her);
-            //     exit (0);
-            // }
-            if (parser->comm[0].nb_red > 0)
-                check_redirect(&parser->comm[0]);
-            builtin_commands(parser, i);
+            if (open_redirect(parser->comm, i) == 0)
+            {
+                    if (parser->comm[0].nb_red > 0)
+                        check_redirect(&parser->comm[0], fd_her);
+                    builtin_commands(parser, i);
+            }
         }
-            
         else
         {
             fd_her = handle_heredoc(parser, i);
-            // close(fd_her);
-            cid[0] = fork();
-            if (cid[0] == 0)
+            close(fd_her);
+            if (open_redirect(parser->comm, i) == 0)
             {
-                dup2(fd_her, 0);
-                close (fd_her);
-                if (parser->comm[0].nb_red > 0)
-                    check_redirect(&parser->comm[0]);
-                if (parser->comm[0].new_cmd != NULL)
-                    exec_cmd(parser, 0);
-                else
-                    exit(0);
+                cid[0] = fork();
+                if (cid[0] == 0)
+                {
+                    dup2(fd_her, 0);
+                    close (fd_her);
+                        if (parser->comm[0].nb_red > 0)
+                            check_redirect(&parser->comm[0], fd_her);
+                        if (parser->comm[0].new_cmd != NULL)
+                            exec_cmd(parser, 0);
+                        else
+                            exit(0);
+                }
             }
             waitpid(cid[0], &g_exit, 0);
         }

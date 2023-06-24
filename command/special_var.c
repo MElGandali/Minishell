@@ -6,9 +6,10 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:54:38 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 22:03:33 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 22:19:12 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -30,7 +31,6 @@ void    special_var(char **argv)
             {
                 // free(argv[i]);
                 argv[i] = ft_itoa(g_exit);
-                printf("%s\n", argv[i]);
             }
             i++;
         }

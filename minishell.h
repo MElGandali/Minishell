@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 22:04:04 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/24 21:29:42 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,9 @@ void		handle_cmd(t_parser *parser);
 int    	handle_heredoc(t_parser *parser, int i);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
-int check_redirect(t_cmd *cmd);
+int check_redirect(t_cmd *cmd, int fd_her);
+int check_ambiguous(t_red *red);
+int open_redirect(t_cmd *cmd, int fd_her);
 
 
 int    parser(t_lexer *lex);

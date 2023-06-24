@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 18:14:57 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/23 23:02:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,23 @@
 int count_heredoc(t_cmd *comm, int i)
 {
     int j;
-    int nb_her;
-
+    int pos;
     j = 0;
-    nb_her = 0;
-    while (j < comm->nb_red)
+    pos = 0;
+    while (j < comm[i].nb_red)
     {
         if (comm[i].red->name == 6)
-            nb_her++;
-        j++;
+            pos = j;
+        j = j + 2;
     }
-    return (nb_her);
+    printf("%d\n", pos);
+    return (pos);
 }
 int here_doc(t_parser *parser, t_red *red)
 {
     int i;
     char *input;
     char *save_her;
-    (void)parser;
-
 
     i = 0;
     save_her = NULL;
@@ -61,9 +59,9 @@ int here_doc(t_parser *parser, t_red *red)
     if (save_her != NULL)
         ft_putstr_fd(save_her, red->fd[1]);
     close(red->fd[1]);
-    // close(red->fd[0]);
     return (red->fd[0]);
 }
+
 int    handle_heredoc(t_parser *parser, int i)
 {
     int j;
@@ -78,8 +76,11 @@ int    handle_heredoc(t_parser *parser, int i)
         while (j < parser->comm->nb_red)
         {
             if (parser->comm[i].red[j].name == 6)
+            {
+                // if (j != count_heredoc( parser->comm, i))
+                //     close(fd_r);
                 fd_r = here_doc(parser, &parser->comm[i].red[j + 1]);
-            // if ()
+            }    
             j = j + 2;
         }
     }
