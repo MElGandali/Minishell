@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/24 21:50:12 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:01:22 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ int redir_out(t_cmd *cmd, int i)
         return (1);
         // exit (1);
     }
+    dup2(fd, 1);
+    close(fd);
     return (0);
 }
 
@@ -175,6 +177,8 @@ int dredir_out(t_cmd *cmd, int i)
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
+    dup2(fd, 1);
+    close (fd);
     return (0);
 }
 
@@ -199,6 +203,8 @@ int redir_in(t_cmd *cmd, int i)
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
+    dup2(fd, 0);
+    close (fd);
     return (0);
 }
 // char *ft_ex_name_file(char *data)

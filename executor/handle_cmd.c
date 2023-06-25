@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/24 21:38:27 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:14:30 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void    exec_cmd(t_parser *parser, int i)
             printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
             g_exit = 127;
             ret = -1;
-            exit(1);
+            exit(g_exit);
         }
     }
 }
@@ -117,15 +117,24 @@ void handle_cmd(t_parser *parser)
             fd_her = handle_heredoc(parser, i);
             if (open_redirect(parser->comm, i) == 0)
             {
+                cid[0] = fork();
+                if (cid[0] == 0)
+                {
+                    dup2(fd_her, 0);
+                    close (fd_her);
                     if (parser->comm[0].nb_red > 0)
                         check_redirect(&parser->comm[0], fd_her);
                     builtin_commands(parser, i);
+                    exit (0);
+                }
+                waitpid(cid[0], &g_exit, 0);
             }
         }
         else
         {
             fd_her = handle_heredoc(parser, i);
-            close(fd_her);
+            if (fd_her != 0)
+                close(fd_her);
             if (open_redirect(parser->comm, i) == 0)
             {
                 cid[0] = fork();
@@ -133,15 +142,15 @@ void handle_cmd(t_parser *parser)
                 {
                     dup2(fd_her, 0);
                     close (fd_her);
-                        if (parser->comm[0].nb_red > 0)
-                            check_redirect(&parser->comm[0], fd_her);
-                        if (parser->comm[0].new_cmd != NULL)
-                            exec_cmd(parser, 0);
-                        else
-                            exit(0);
+                    if (parser->comm[0].nb_red > 0)
+                        check_redirect(&parser->comm[0], fd_her);
+                    if (parser->comm[0].new_cmd != NULL)
+                        exec_cmd(parser, 0);
+                    else
+                        exit(0);
                 }
+                waitpid(cid[0], &g_exit, 0);
             }
-            waitpid(cid[0], &g_exit, 0);
         }
     }
 }
