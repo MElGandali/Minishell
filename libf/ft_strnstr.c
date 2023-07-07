@@ -52,3 +52,8 @@ int ft_strnstr(char *h, char *n)
 	}
 	return (1);
 }
+
+// int main ()
+// {
+// 	printf ("%d\n", ft_strnstr("hello", "a"));
+// }

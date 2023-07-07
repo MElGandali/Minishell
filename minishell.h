@@ -25,7 +25,7 @@
 #include <limits.h>
 #include <errno.h>
 #include <fcntl.h>
-
+# include <dirent.h>
 /*
 t_list {
 	void *content;
@@ -104,9 +104,9 @@ typedef struct s_define_data
 	t_dt state;
 	char *data;
 	char *copy_data;
-	int position;
-	char *name_file;
-	char *delimiter;
+	// int position;
+	// char *name_file;
+	// char *delimiter;
 	int  ex_dollar;
 }   t_data;
 
@@ -224,7 +224,7 @@ char *find_dollar_utils(t_parser *parser, char *data, int j, char e);
 int check_valid(char *data, int i);
 char *ft_copier(char add, char *new_data);
 int check_quote(char *data, int i);
-
+void handal_wildcard(t_parser *parser, t_cmd *cmd);
 
 
 void free_parser(t_parser *parser);

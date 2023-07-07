@@ -186,7 +186,7 @@ int open_redir_out(t_cmd *cmd, int i)
         printf (" ambiguous redirect\n");
         return (1);
     }
-    fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_TRUNC, 0777);
     if (fd < 0)
     {
         g_exit = 1;

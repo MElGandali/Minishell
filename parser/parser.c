@@ -43,6 +43,7 @@ int    parser(t_lexer *lex)
     fill_command (&parser);
     handle_data (&parser);
     fill_newcmd_red(&parser);
+    
     executor(&parser);
     // printf ("%s\n", parser.lex->env->all);
     // free_parser(&parser);

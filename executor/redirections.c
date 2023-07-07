@@ -144,7 +144,7 @@ int redir_out(t_cmd *cmd, int i)
         return(1);
         // exit (1);
     }
-    if (access(cmd->red[i + 1].data,F_OK | W_OK ) == -1)
+    if (access(cmd->red[i + 1].data, F_OK | W_OK) == -1)
     {
         g_exit = 1;
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));

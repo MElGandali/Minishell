@@ -33,7 +33,7 @@ void    exit_cases(char **argv)
         }
         i++;
     }
-    if (ch == 1 || (ft_atoi(argv[1]) > LONG_LONG_MAX && argv[1][0] != '-'))
+    if (ch == 1 || (ft_atoi(argv[1]) > LLONG_MAX && argv[1][0] != '-'))
     {
         printf("exit\nbash: exit: %s: numeric argument required", argv[1]);
         g_exit = 255;

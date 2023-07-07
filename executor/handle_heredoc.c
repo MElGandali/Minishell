@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <sys/fcntl.h>
        
 int count_heredoc(t_cmd *comm, int i)
 {

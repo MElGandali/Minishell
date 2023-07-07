@@ -504,6 +504,7 @@ void    handle_data(t_parser *parser)
         parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm[i].dt_nb);
         fill_data(parser->comm[i]);
         find_dollar(parser, &parser->comm[i]);
+        handal_wildcard(parser, &parser->comm[i]);
         i++;
     }
     
