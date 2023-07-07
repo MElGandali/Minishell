@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+         #
+#    By: maddou <maddou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 17:04:58 by mel-gand          #+#    #+#              #
-#    Updated: 2023/06/24 16:47:53 by mel-gand         ###   ########.fr        #
+#    Updated: 2023/07/07 15:23:49 by maddou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME = Minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I./libf -g -fsanitize=address
-LDFLAGS = -lreadline -L/Users/mel-gand/.brew/opt/readline/lib -I/Users/mel-gand/.brew/opt/readline/include
+# LDFLAGS = -lreadline -L/Users/mel-gand/.brew/opt/readline/lib -I/Users/mel-gand/.brew/opt/readline/include
 RM = rm -rf
 SRC = minishell.c libf/ft_putstr_fd.c libf/ft_isprint.c libf/ft_strcmp.c libf/ft_atoi.c libf/ft_isalpha.c libf/ft_itoa.c libf/ft_split.c libf/ft_strlen.c libf/ft_substr.c libf/ft_strdup.c  libf/ft_isalnum.c libf/ft_strjoin.c libf/ft_calloc.c  libf/ft_bzero.c lexer/tokenizer.c \
 		lexer/split_pipe_heredoc.c lexer/check_unclosed_quotes.c lexer/tokenizer_error_one_arg.c lexer/split_token.c  lexer/split_spaces.c libf/ft_strnstr.c lexer/split_pipe_redir.c \

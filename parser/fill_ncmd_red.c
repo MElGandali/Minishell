@@ -84,6 +84,7 @@ int count_newcmd(char *data)
             nb++;
         i++;
     }
+    printf ("%d", nb);
     return (nb);
 }
 

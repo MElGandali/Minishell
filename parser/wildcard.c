@@ -34,13 +34,14 @@ DIR *opdir(t_parser *parser)
     return (OPENFILE);
 }
 
-int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser)
+int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
 {
     t_env *env;
     struct dirent *entry;
     int i;
     int count;
     char *pwd;
+    (void)j;
 
     env = parser->lex->env;
     i = 0;
@@ -134,7 +135,7 @@ int **find_first_list_patern(t_parser *parser, int **nb_w, char **patern)
         if (check_valid_first(entry->d_name, patern[0]) == 1 && check_valid_last(entry->d_name, patern[1]) == 1 && ft_strlen(entry->d_name) >= ft_strlen(patern[0]) + ft_strlen(patern[1])) // ft_strcmp(patern_entry[0], patern[0]) == 0 && ft_strcmp(patern_entry[1], patern[1]) == 0)
         {    
             nb_w[j][0] = 1;
-            nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+            nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
         }
         else
         {
@@ -214,7 +215,7 @@ int **find_patern_one_etoile(t_parser *parser, int **nb_w, char c, char **patern
             if (check_valid_last(entry->d_name, patern[0]) == 1 /*ft_strcmp(patern_entry, patern[0]) == 0*/)
             {
                 nb_w[j][0] = 1;
-                nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+                nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
             }
             else
             {
@@ -319,7 +320,7 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
                 if (i == lenght_patern(patern) - 1)
                 {
                     nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
                 }
             }
             else
@@ -355,7 +356,7 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
                 if (i == lenght_patern(patern))
                 {
                     nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
                 }
             // printf("222 %d %d %d\n", nb_w[j], i,lenght_patern(patern) );
             }
@@ -392,7 +393,7 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
                 if (i == lenght_patern(patern) - 1)
                 {
                     nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
                 }
             }
             else
@@ -427,7 +428,7 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
             if (i == lenght_patern(patern)) // hna khasak t2akad 3lch madrtch else !!!!!!!!
             {
                 nb_w[j][0] = 1;
-                nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
+                nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
             }
             // printf ("%d %s\n", nb_w[j], entry->d_name);
         }
@@ -464,13 +465,14 @@ char **handal_quote(char **patern)
     return (patern);
 }
 
-int **check_exict_patern(t_parser *parser, char *data, int **nb_w, DIR *OPENFILE)
+int **check_exict_patern(t_parser *parser, char *data, int **nb_w, DIR *OPENFILE) //knt fiiha DIR *OPENFILE
 {
     int i;
     int j;
     int nb_arg;
     char **patern;
     char *co_data;
+    (void)OPENFILE;
 
     i = 0;
     j = 0;
@@ -519,6 +521,8 @@ int **fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
     DIR *OPENFILE;
     struct dirent *entry;
     int i;
+    (void)cmd;
+    (void)j;
     int **nb_w;
 
     i = 0;
@@ -533,7 +537,7 @@ int **fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
     nb_w = malloc(sizeof(int *) * i);
     if (!nb_w)
         exit(1); // exit status
-    nb_w = check_exict_patern(parser, data, nb_w, OPENFILE);
+    nb_w = check_exict_patern(parser, data, nb_w, OPENFILE );
     int x = 0;
     while (x < i)
     {
