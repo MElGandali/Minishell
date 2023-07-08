@@ -35,38 +35,38 @@ DIR *opdir(t_parser *parser)
     return (OPENFILE);
 }
 
-int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
-{
-    t_env *env;
-    struct dirent *entry;
-    int i;
-    int count;
-    char *pwd;
-    (void)j;
+// int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
+// {
+//     t_env *env;
+//     struct dirent *entry;
+//     int i;
+//     int count;
+//     char *pwd;
+//     (void)j;
 
-    env = parser->lex->env;
-    i = 0;
-    count = 0;
-    while (env)
-    {
-        if (strcmp("PWD", env->key) == 0)
-            break;
-        env = env->next;
-    }
-    pwd = ft_strdup(env->value);
-    pwd = ft_strjoin(pwd, "/");
-    pwd = ft_strjoin(pwd, entry_name);
-    if ((OPENFILE = opendir(pwd)) == NULL)
-        return (0);
-    while ((entry = readdir(OPENFILE)) != NULL)
-    {
-        if (ft_strcmp(entry->d_name, "..") != 0 && ft_strcmp(entry->d_name, ".") != 0 
-            && entry->d_name[0] != '.' )
-            count++;
-        i++;
-    }
-    return (count);
-}
+//     env = parser->lex->env;
+//     i = 0;
+//     count = 0;
+//     while (env)
+//     {
+//         if (strcmp("PWD", env->key) == 0)
+//             break;
+//         env = env->next;
+//     }
+//     pwd = ft_strdup(env->value);
+//     pwd = ft_strjoin(pwd, "/");
+//     pwd = ft_strjoin(pwd, entry_name);
+//     if ((OPENFILE = opendir(pwd)) == NULL)
+//         return (0);
+//     while ((entry = readdir(OPENFILE)) != NULL)
+//     {
+//         if (ft_strcmp(entry->d_name, "..") != 0 && ft_strcmp(entry->d_name, ".") != 0 
+//             && entry->d_name[0] != '.' )
+//             count++;
+//         i++;
+//     }
+//     return (count);
+// }
 
 int count_nb_newdt(int *nb_w, int i)
 {
@@ -215,9 +215,9 @@ char *find_entry_center(char *entry_name, char *patern, char *last_patern, char 
     {
         if (entry_name[i] == patern[0])
         {
-            c = i;
             j = 1;
             i++;
+            c = i;
             while (patern[j] != '\0')
             {
                 if (patern[j] == entry_name[i])
@@ -237,6 +237,7 @@ char *find_entry_center(char *entry_name, char *patern, char *last_patern, char 
         entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - ft_strlen(last_patern) - c));
     else if (patern[j] == '\0' && (k == 'f' || k == 'n'))
         entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - c));
+    free(entry_name);
     return (entry_center);
 }
 
@@ -280,12 +281,14 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'p');
+                    // free(entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'p');
                     i++;
                 }
                 if (i == lenght_patern(patern) - 1)
+                {
                     nb_w[j] = 1;
+                }
             }
             else
                 nb_w[j] = 0;
@@ -296,7 +299,8 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
             if (check_valid_first(entry->d_name, patern[0]) == 1 && ft_strlen(patern[0]) < ft_strlen(entry->d_name))
             {
                 entry_center = ft_substr(entry->d_name, ft_strlen(patern[0]), ft_strlen(entry->d_name) - ft_strlen(patern[0])); // khasni nt2akad mn lenght
-                i = 1;
+                // printf ("%s\n", entry_center);
+                i = 0;
                 while (i < lenght_patern(patern))
                 {
                     if (ft_strnstr(entry_center, patern[i]) == 1)
@@ -305,18 +309,14 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'f');
-                    // printf ("%s\n", entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'f');
                     i++;
                 }
                 if (i == lenght_patern(patern))
                     nb_w[j] = 1;
-            // printf("222 %d %d %d\n", nb_w[j], i,lenght_patern(patern) );
             }
             else
                 nb_w[j]= 0;
-            // printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         else if (check_position_etoile(data, 'm') == 3)
         {
@@ -332,9 +332,7 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'l');
-                    // printf ("%s\n", entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'l');
                     i++;
                 }
                 if (i == lenght_patern(patern) - 1)
@@ -344,11 +342,9 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
             }
             else
                 nb_w[j] = 0;
-            // printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         else if (check_position_etoile(data, 'm') == 4)
         {
-            // printf ("xxx\n");
             entry_center = ft_strdup(entry->d_name);
             i = 0;
             while (i < lenght_patern(patern))
@@ -359,9 +355,8 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
                     free(entry_center);
                     break;
                 }
-                free(entry_center);
-                entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'n');
-                // printf ("%s\n", entry_center);
+                // free(entry_center);
+                entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'n');
                 i++;
             }
             if (i == lenght_patern(patern)) // hna khasak t2akad 3lch madrtch else !!!!!!!!
@@ -607,7 +602,7 @@ void handal_wildcard(t_parser *parser, t_cmd *cmd)
                 // int x = 0;
                 // while (x < 11)
                 //     printf ("%d\n", nb_w[x++]);
-                printf("********************************************\n");
+                // printf("********************************************\n");
             }
             j++;
         }
