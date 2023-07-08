@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/25 15:43:06 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:26:08 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int open_redir_in(t_cmd *cmd, int i)
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
-    // close(fd);
+    close(fd); //
     return (0);
 }
 
@@ -174,7 +174,7 @@ int open_dredir_out(t_cmd *cmd, int i)
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
-    // close(fd);
+    close(fd); //
     return (0);
 }
 int open_redir_out(t_cmd *cmd, int i)
@@ -200,36 +200,37 @@ int open_redir_out(t_cmd *cmd, int i)
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
-    // close(fd);
+    close(fd); //
     return (0);
 }
 
-int open_redirect(t_cmd *cmd, int fd_her)
+int open_redirect(t_cmd *cmd, int i)
 {
-    int i;
-    (void)fd_her;
-    i = 0;
-    while (i < cmd->nb_red)
+    int j;
+    j = 0;
+    while (j < cmd[i].nb_red)
     {
-        if (cmd->red[i].name == 4)
+        if (cmd[i].red[j].name == 4)
         {
-            if (open_redir_in(cmd, i) == 1) 
+            if (open_redir_in(&cmd[i], j) == 1)
+            {
                 return (1);
-            i++;
+            }
+            j++;
         }
-        else if (cmd->red[i].name == 5)
+        else if (cmd[i].red[j].name == 5)
         {
-            if (open_redir_out(cmd, i) == 1)
+            if (open_redir_out(&cmd[i], j) == 1)
                 return (1);
-            i++;
+            j++;
         }
-        else if (cmd->red[i].name == 7)
+        else if (cmd[i].red[j].name == 7)
         {
-            if (open_dredir_out(cmd, i) == 1)
+            if (open_dredir_out(&cmd[i], j) == 1)
                 return (1);
-            i++;
+            j++;
         }
-        i++;
+        j++;
     }
     return (0);
 }

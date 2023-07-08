@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/24 21:29:42 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 00:40:04 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void	handle_data(t_parser *parser);
 //-------command/builtins------//
 void	builtin_commands(t_parser *parser, int i);
 char    *get_env(t_parser *parser, char *str);
-void    update_env(t_parser *parser,char *var, char *dir);
+void    update_env(t_parser *parser,char *var);
 void	echo_command(char **argv);
 void	cd_command(t_parser *parser, char **argv);
 void	pwd_command(void);

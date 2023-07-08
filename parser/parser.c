@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:02 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/07 23:46:59 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int    parser(t_lexer *lex)
     fill_command (&parser);
     handle_data (&parser);
     fill_newcmd_red(&parser);
-    
     executor(&parser);
     // printf ("%s\n", parser.lex->env->all);
     // free_parser(&parser);

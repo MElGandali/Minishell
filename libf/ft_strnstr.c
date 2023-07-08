@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:12:49 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/05/15 21:22:12 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/07 18:42:25 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,3 @@ int ft_strnstr(char *h, char *n)
 	}
 	return (1);
 }
-
-// int main ()
-// {
-// 	printf ("%d\n", ft_strnstr("hello", "a"));
-// }

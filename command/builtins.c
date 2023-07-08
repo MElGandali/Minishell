@@ -6,37 +6,50 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/24 21:29:56 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:58:09 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
+#include <unistd.h>
 
-void    update_env(t_parser *parser, char *var, char *dir)
+void    update_env(t_parser *parser, char *var)
 {
     t_env *env;
     t_env *exp;
     
     env = parser->lex->env;
     exp = parser->lex->exp;
-    dir = NULL;
-    var = NULL;
     while (env)
     {
         if (ft_strcmp(env->key, var) == 0)
         {
-            
+            free(env->value);
+            env->value = NULL;
+            env->value = getcwd(env->value , sizeof(env->value));
+            free(env->all);
+            env->all = NULL;
+            env->all = ft_strjoin(env->all, env->key);
+            env->all = ft_strjoin(env->all, "=");
+            env->all = ft_strjoin(env->all, env->value);
         }
         env = env->next;
     }
-    // while (exp)
-    // {
-    //     if (ft_strcmp(exp->key, var) == 0)
-    //     {
-            
-    //     }
-    //     exp = exp->next;
-    // }
+    while (exp)
+    {
+        if (ft_strcmp(exp->key, var) == 0)
+        {
+            free(exp->value);
+            exp->value = NULL;
+            exp->value = getcwd(exp->value , sizeof(exp->value));
+            free(exp->all);
+            exp->all = NULL;
+            exp->all = ft_strjoin(exp->all, exp->key);
+            exp->all = ft_strjoin(exp->all, "=");
+            exp->all = ft_strjoin(exp->all, exp->value); 
+        }
+        exp = exp->next;
+    }
 }
 char    *get_env(t_parser *parser, char *str)
 {

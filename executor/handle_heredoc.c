@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 23:02:15 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:34:06 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int count_heredoc(t_cmd *comm, int i)
             pos = j;
         j = j + 2;
     }
-    printf("%d\n", pos);
     return (pos);
 }
 int here_doc(t_parser *parser, t_red *red)
