@@ -21,6 +21,7 @@ int count_red(t_cmd *comm)
     i = 0;
     nb = 0;
     // printf ("x\n");
+    // printf ("zzzz %d\n",comm->dt_nb);
     while (i < comm->dt_nb)
     {
         if (comm->dt[i].name == 4 || comm->dt[i].name == 5
@@ -84,7 +85,7 @@ int count_newcmd(char *data)
             nb++;
         i++;
     }
-    printf ("%d", nb);
+    // printf ("%d", nb);
     return (nb);
 }
 
