@@ -6,9 +6,10 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/07 20:25:20 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:15:53 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 #include <string.h>
@@ -197,7 +198,7 @@ int redir_in(t_cmd *cmd, int i)
         printf("bash: %s: %s\n",cmd->red[i + 1].data, strerror(errno));
         return(1);
     }
-    if (access(cmd->red[i + 1].data,F_OK | R_OK ) == -1)
+    if (access(cmd->red[i + 1].data,F_OK | R_OK) == -1)
     {
         g_exit = 1;
         printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));

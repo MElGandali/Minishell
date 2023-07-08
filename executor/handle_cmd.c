@@ -6,22 +6,26 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 20:12:20 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:15:46 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+
 #include"../minishell.h"
+#include <errno.h>
+#include <string.h>
+#include <sys/wait.h>
 
 int    is_builtin(char **cmd)
 {
     int i;
     
     i = 0;
-    if (ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "cd") == 0
+    if (cmd[0]!= NULL &&( ft_strcmp(cmd[0], "echo") == 0 || ft_strcmp(cmd[0], "cd") == 0
         || ft_strcmp(cmd[0], "exit") == 0 || ft_strcmp(cmd[0], "pwd") == 0
         || ft_strcmp(cmd[0], "$?") == 0 || ft_strcmp(cmd[0], "export") == 0
-        || ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "unset") == 0 )
+        || ft_strcmp(cmd[0], "env") == 0 || ft_strcmp(cmd[0], "unset") == 0 ))
         return (0);  
     return (1);
 }
@@ -35,12 +39,14 @@ void    exec_cmd(t_parser *parser, int i)
         builtin_commands(parser, i);
     else
     {
-        if (execve((char const*)execpath, parser->comm[i].new_cmd, NULL) == -1)
-        {
-            free(execpath);
-            printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
-            g_exit = 127;
-        }
+        execve((char const*)execpath, parser->comm[i].new_cmd, NULL);
+        free(execpath);
+        // printf ("bash: %s:", strerror(errno));
+            //printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
+        ft_putstr_fd("bash: ", 2);
+        ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
+        ft_putstr_fd(": command not found\n", 2);
+        exit(127);
     }
 }
 
@@ -51,6 +57,7 @@ void handle_cmd(t_parser *parser)
     int *cid;
     int fd_d;
     int fd_her;
+    int e_code = 0;
     
     i = 0;
     cid = malloc(sizeof (int) * parser->lex->pipe_nb);
@@ -106,7 +113,11 @@ void handle_cmd(t_parser *parser)
         i = 0;
         while (i < parser->lex->pipe_nb)
         {
-            waitpid(cid[i], &g_exit, 0);
+            waitpid(cid[i], &e_code, 0);
+            if (WIFSIGNALED(e_code))
+                g_exit = WTERMSIG(e_code) + 128;
+            else if (WIFEXITED(e_code))
+                g_exit = WEXITSTATUS(e_code);
             i++;
         }
     }
@@ -124,6 +135,11 @@ void handle_cmd(t_parser *parser)
                 dup2(terminal_fd, 1);
                 close(terminal_fd);
                 }
+                waitpid(cid[0], &e_code, 0);
+                if (WIFSIGNALED(e_code))
+                    g_exit = WTERMSIG(e_code) + 128;
+                else if (WIFEXITED(e_code))
+                    g_exit = WEXITSTATUS(e_code);
             }
         else
         {
@@ -146,7 +162,11 @@ void handle_cmd(t_parser *parser)
                     else
                         exit(0);
                 }
-                waitpid(cid[0], &g_exit, 0);
+                waitpid(cid[0], &e_code, 0);
+                if (WIFSIGNALED(e_code))
+                    g_exit = WTERMSIG(e_code) + 128;
+                else if (WIFEXITED(e_code))
+                    g_exit = WEXITSTATUS(e_code);
             }
         }
     }

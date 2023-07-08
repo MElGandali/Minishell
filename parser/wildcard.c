@@ -1,4 +1,5 @@
 #include "../minishell.h"
+#include <dirent.h>
 
 void ft_calcule_etoile(char *data, int *i)
 {
@@ -34,57 +35,54 @@ DIR *opdir(t_parser *parser)
     return (OPENFILE);
 }
 
-int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
-{
-    t_env *env;
-    struct dirent *entry;
-    int i;
-    int count;
-    char *pwd;
-    (void)j;
-
-    env = parser->lex->env;
-    i = 0;
-    count = 0;
-    while (env)
-    {
-        if (strcmp("PWD", env->key) == 0)
-            break;
-        env = env->next;
-    }
-    pwd = ft_strdup(env->value);
-    pwd = ft_strjoin(pwd, "/");
-    pwd = ft_strjoin(pwd, entry_name);
-    if ((OPENFILE = opendir(pwd)) == NULL)
-        return (0);
-    while ((entry = readdir(OPENFILE)) != NULL)
-    {
-        if (ft_strcmp(entry->d_name, "..") != 0 && ft_strcmp(entry->d_name, ".") != 0)
-            count++;
-        i++;
-    }
-    return (count);
-}
-
-// int count_nb_newdt(int *nb_w, int i, t_parser *parser)
+// int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
 // {
-//     int j;
-//     DIR *OPENFILE;
-//     int nb;
+//     t_env *env;
+//     struct dirent *entry;
+//     int i;
+//     int count;
+//     char *pwd;
+//     (void)j;
 
-//     j = 0;
-//     while (j < i)
+//     env = parser->lex->env;
+//     i = 0;
+//     count = 0;
+//     while (env)
 //     {
-//         if (nb_w[j] == 1)
-//         {
-//             if (ft_check_derectory(j, OPENFILE, parser, 'c') == 1)
-//             {
-
-//             }
-//         }
+//         if (strcmp("PWD", env->key) == 0)
+//             break;
+//         env = env->next;
+//     }
+//     pwd = ft_strdup(env->value);
+//     pwd = ft_strjoin(pwd, "/");
+//     pwd = ft_strjoin(pwd, entry_name);
+//     if ((OPENFILE = opendir(pwd)) == NULL)
+//         return (0);
+//     while ((entry = readdir(OPENFILE)) != NULL)
+//     {
+//         if (ft_strcmp(entry->d_name, "..") != 0 && ft_strcmp(entry->d_name, ".") != 0 
+//             && entry->d_name[0] != '.' )
+//             count++;
 //         i++;
 //     }
+//     return (count);
 // }
+
+int count_nb_newdt(int *nb_w, int i)
+{
+    int j;
+    int nb;
+
+    j = 0;
+    nb = 0;
+    while (j < i)
+    {
+        if (nb_w[j] == 1)
+            nb++;
+        j++;
+    }
+    return (nb);
+}
 
 int check_valid_first(char *entry_name, char *patern)
 {
@@ -118,7 +116,7 @@ int check_valid_last(char *entry_name, char *patern)
     return (0);
 }
 
-int **find_first_list_patern(t_parser *parser, int **nb_w, char **patern)
+int *find_first_list_patern(t_parser *parser, int *nb_w, char **patern)
 {
     int j;
     DIR *OPENFILE;
@@ -129,19 +127,10 @@ int **find_first_list_patern(t_parser *parser, int **nb_w, char **patern)
         return (NULL);
     while ((entry = readdir(OPENFILE)) != NULL)
     {
-        nb_w[j] = malloc(sizeof(int) * 2);
-        if (!nb_w)
-            exit(1);
-        if (check_valid_first(entry->d_name, patern[0]) == 1 && check_valid_last(entry->d_name, patern[1]) == 1 && ft_strlen(entry->d_name) >= ft_strlen(patern[0]) + ft_strlen(patern[1])) // ft_strcmp(patern_entry[0], patern[0]) == 0 && ft_strcmp(patern_entry[1], patern[1]) == 0)
-        {    
-            nb_w[j][0] = 1;
-            nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
-        }
+        if (check_valid_first(entry->d_name, patern[0]) == 1 && check_valid_last(entry->d_name, patern[1]) == 1 && ft_strlen(entry->d_name) >= ft_strlen(patern[0]) + ft_strlen(patern[1])) // ft_strcmp(patern_entry[0], patern[0]) == 0 && ft_strcmp(patern_entry[1], patern[1]) == 0)   
+            nb_w[j] = 1;
         else
-        {
-            nb_w[j][0] = 0;
-            nb_w[j][1] = 0;
-        }
+            nb_w[j] = 0;
         // printf ("%d %s\n", nb_w[j], entry->d_name);
         j++;
     }
@@ -173,7 +162,7 @@ int check_position_etoile(char *data, char c)
     return (0);
 }
 
-int **find_patern_one_etoile(t_parser *parser, int **nb_w, char c, char **patern)
+int *find_patern_one_etoile(t_parser *parser, int *nb_w, char c, char **patern)
 {
     // char *patern_entry;
     int j;
@@ -187,19 +176,10 @@ int **find_patern_one_etoile(t_parser *parser, int **nb_w, char c, char **patern
     {
         while ((entry = readdir(OPENFILE)) != NULL)
         {
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1); // hna ndiroja !!!!!!!!
             if (check_valid_first(entry->d_name, patern[0]) == 1)
-            {
-                nb_w[j][0] = 1;
-                nb_w[j][1] = ft_check_derectory(entry->d_name, j, OPENFILE, parser);
-            }
+                nb_w[j] = 1;
             else
-            {
-                nb_w[j][0] = 0;
-                nb_w[j][1] = 0; 
-            }
+                nb_w[j] = 0;
             j++;
         }
         // free patern
@@ -208,20 +188,11 @@ int **find_patern_one_etoile(t_parser *parser, int **nb_w, char c, char **patern
     {
         while ((entry = readdir(OPENFILE)) != NULL)
         {
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1);
             // patern_entry = ft_substr(entry->d_name, ft_strlen(entry->d_name) - ft_strlen(patern[0]), ft_strlen(entry->d_name));
             if (check_valid_last(entry->d_name, patern[0]) == 1 /*ft_strcmp(patern_entry, patern[0]) == 0*/)
-            {
-                nb_w[j][0] = 1;
-                nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
-            }
+                nb_w[j] = 1;
             else
-            {
-                nb_w[j][0] = 0;
-                nb_w[j][1] = 0;
-            }
+                nb_w[j] = 0;
             j++;
             // free(patern_entry);
         }
@@ -244,9 +215,9 @@ char *find_entry_center(char *entry_name, char *patern, char *last_patern, char 
     {
         if (entry_name[i] == patern[0])
         {
-            c = i;
             j = 1;
             i++;
+            c = i;
             while (patern[j] != '\0')
             {
                 if (patern[j] == entry_name[i])
@@ -266,6 +237,7 @@ char *find_entry_center(char *entry_name, char *patern, char *last_patern, char 
         entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - ft_strlen(last_patern) - c));
     else if (patern[j] == '\0' && (k == 'f' || k == 'n'))
         entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - c));
+    free(entry_name);
     return (entry_center);
 }
 
@@ -279,7 +251,7 @@ int lenght_patern(char **patern)
     return (i);
 }
 
-int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
+int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
 {
     int j;
     int i;
@@ -296,9 +268,6 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
     {
         if (check_position_etoile(data, 'm') == 1)
         {
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1);
             if (check_valid_first(entry->d_name, patern[0]) == 1 && check_valid_last(entry->d_name, patern[lenght_patern(patern) - 1]) == 1 && ft_strlen(entry->d_name) >= ft_strlen(patern[0]) + ft_strlen(patern[lenght_patern(patern) - 1])) // ft_strcmp(patern_entry[0], patern[0]) == 0 && ft_strcmp(patern_entry[1], patern[1]) == 0)
             {
                 entry_center = ft_substr(entry->d_name, ft_strlen(patern[0]), ft_strlen(entry->d_name) - ft_strlen(patern[lenght_patern(patern) - 1]) - ft_strlen(patern[0])); // na9anh 3la hsab ftali mital minishell.c m*s*.c 11 - 2 = 9 ghadi dakhlna hta na9ta m3aha ohna mabghinahach
@@ -308,70 +277,49 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
                 {
                     if (ft_strnstr(entry_center, patern[i]) == 1)
                     {
-                        nb_w[j][0] = 0;
-                        nb_w[j][1] = 0;
+                        nb_w[j] = 0;
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'p');
+                    // free(entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'p');
                     i++;
                 }
                 if (i == lenght_patern(patern) - 1)
                 {
-                    nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
+                    nb_w[j] = 1;
                 }
             }
             else
-            {
-                nb_w[j][0] = 0;
-                nb_w[j][1] = 0;
-            }
+                nb_w[j] = 0;
             //  printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         else if (check_position_etoile(data, 'm') == 2)
         {
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1);
             if (check_valid_first(entry->d_name, patern[0]) == 1 && ft_strlen(patern[0]) < ft_strlen(entry->d_name))
             {
                 entry_center = ft_substr(entry->d_name, ft_strlen(patern[0]), ft_strlen(entry->d_name) - ft_strlen(patern[0])); // khasni nt2akad mn lenght
-                i = 1;
+                // printf ("%s\n", entry_center);
+                i = 0;
                 while (i < lenght_patern(patern))
                 {
                     if (ft_strnstr(entry_center, patern[i]) == 1)
                     {
-                        nb_w[j][0] = 0;
-                        nb_w[j][1] = 0;
+                        nb_w[j] = 0;
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'f');
-                    // printf ("%s\n", entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'f');
                     i++;
                 }
                 if (i == lenght_patern(patern))
-                {
-                    nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
-                }
-            // printf("222 %d %d %d\n", nb_w[j], i,lenght_patern(patern) );
+                    nb_w[j] = 1;
             }
             else
-            {
-                nb_w[j][0] = 0;
-                nb_w[j][1] = 0;
-            }
-            // printf ("%d %s\n", nb_w[j], entry->d_name);
+                nb_w[j]= 0;
         }
         else if (check_position_etoile(data, 'm') == 3)
         {
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1);
             if (check_valid_last(entry->d_name, patern[lenght_patern(patern) - 1]) == 1 && ft_strlen(patern[lenght_patern(patern) - 1]) < ft_strlen(entry->d_name))
             {
                 entry_center = ft_substr(entry->d_name, 0, ft_strlen(entry->d_name) - ft_strlen(patern[lenght_patern(patern) - 1]));
@@ -380,56 +328,39 @@ int **find_mult_etoile(t_parser *parser, int **nb_w, char *data, char **patern)
                 {
                     if (ft_strnstr(entry_center, patern[i]) == 1)
                     {
-                        nb_w[j][0] = 0;
-                        nb_w[j][1] = 0;
+                        nb_w[j] = 0;
                         free(entry_center);
                         break;
                     }
-                    free(entry_center);
-                    entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'l');
-                    // printf ("%s\n", entry_center);
+                    entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'l');
                     i++;
                 }
                 if (i == lenght_patern(patern) - 1)
                 {
-                    nb_w[j][0] = 1;
-                    nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
+                    nb_w[j] = 1;
                 }
             }
             else
-            {
-                nb_w[j][0] = 0;
-                nb_w[j][1] = 0;
-            }
-            // printf ("%d %s\n", nb_w[j], entry->d_name);
+                nb_w[j] = 0;
         }
         else if (check_position_etoile(data, 'm') == 4)
         {
-            // printf ("xxx\n");
-            nb_w[j] = malloc(sizeof(int) * 2);
-            if (!nb_w)
-                exit(1);
             entry_center = ft_strdup(entry->d_name);
             i = 0;
             while (i < lenght_patern(patern))
             {
                 if (ft_strnstr(entry_center, patern[i]) == 1)
                 {
-                    nb_w[j][0] = 0;
-                    nb_w[j][1] = 0;
+                    nb_w[j] = 0;
                     free(entry_center);
                     break;
                 }
-                free(entry_center);
-                entry_center = find_entry_center(entry->d_name, patern[i], patern[lenght_patern(patern) - 1], 'n');
-                // printf ("%s\n", entry_center);
+                // free(entry_center);
+                entry_center = find_entry_center(entry_center, patern[i], patern[lenght_patern(patern) - 1], 'n');
                 i++;
             }
             if (i == lenght_patern(patern)) // hna khasak t2akad 3lch madrtch else !!!!!!!!
-            {
-                nb_w[j][0] = 1;
-                nb_w[j][1] = ft_check_derectory(entry->d_name,j , OPENFILE, parser);
-            }
+                nb_w[j] = 1;
             // printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         j++;
@@ -465,7 +396,30 @@ char **handal_quote(char **patern)
     return (patern);
 }
 
-int **check_exict_patern(t_parser *parser, char *data, int **nb_w, DIR *OPENFILE) //knt fiiha DIR *OPENFILE
+int *ft_tout_file(int *nb_w, DIR *OPENFILE, t_parser *parser)
+{
+    struct dirent *entry;
+    int j;
+
+    j = 0;
+    if ((OPENFILE = opdir(parser)) == NULL)
+        return (NULL);
+    else   
+    {
+        while ((entry = readdir(OPENFILE)) != NULL)
+        {
+            if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0 
+                || entry->d_name[0] == '.')
+                nb_w[j] = 0;
+            else
+                nb_w[j] = 1;
+            j++;
+        }
+    }
+    return (nb_w);
+}
+
+int *check_exict_patern(t_parser *parser, char *data, int *nb_w, DIR *OPENFILE) //knt fiiha DIR *OPENFILE
 {
     int i;
     int j;
@@ -497,10 +451,11 @@ int **check_exict_patern(t_parser *parser, char *data, int **nb_w, DIR *OPENFILE
                 nb_w = find_patern_one_etoile(parser, nb_w, 'l', patern);
             else if (check_position_etoile(data, 'o') == 0)
                 nb_w = find_patern_one_etoile(parser, nb_w, 'f', patern);
-    // exit(0);
         }
         else if (nb_arg == 2)
             nb_w = find_first_list_patern(parser, nb_w, patern);
+        else
+            nb_w = ft_tout_file(nb_w, OPENFILE, parser);
     }
     else
         nb_w = find_mult_etoile(parser, nb_w, data, patern);
@@ -508,22 +463,90 @@ int **check_exict_patern(t_parser *parser, char *data, int **nb_w, DIR *OPENFILE
     return (nb_w);
 }
 
+t_data *cop_current_dt(t_cmd *cmd, int j, int *nb_w, int i)
+{
+    int nb;
+    t_data *new_dt;
+    int k;
 
-// void fill_newdt(t_parser *parser, int j, int *nb_w, int i)
-// {
-//     int j;
-//     int nb;
+    nb = count_nb_newdt(nb_w, i);
+    k = 0;
+    new_dt = NULL;
+    if (nb >= 1)
+    {
+        new_dt = malloc(sizeof(t_data) * (cmd->dt_nb + nb - 1));
+        if (!new_dt)
+            exit(1);
+        while (k < cmd->dt_nb)
+        {
+            if (k != j)
+            {
+                new_dt[k].data = ft_strdup(cmd->dt[k].data);
+                free(cmd->dt[k].data);
+                new_dt[k].copy_data = ft_strdup(cmd->dt[k].copy_data);
+                free(cmd->dt[k].copy_data);
+                new_dt[k].ex_dollar = cmd->dt[k].ex_dollar;
+                new_dt[k].name = cmd->dt[k].name;
+            }
+            k++;
+        }
+        free(cmd->dt[j].data);
+        free(cmd->dt[j].copy_data);
+    }
+    else if (nb == 0)
+        return (cmd->dt);
+    return (new_dt);
+}
 
-//     nb = count_nb_newdt(nb_w, i, parser);
-// }
-int **fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
+
+t_data *fill_wildcard_data(t_parser *parser, t_cmd *cmd, int j, int *nb_w)
 {
     DIR *OPENFILE;
     struct dirent *entry;
     int i;
-    (void)cmd;
-    (void)j;
-    int **nb_w;
+    int check;
+    int x;
+
+    i = 0;
+    check = 0;
+    if ((OPENFILE = opdir(parser)) == NULL)
+        exit(1);
+    else  
+    {
+        x = cmd->dt_nb - 1;
+        while ((entry = readdir(OPENFILE)) != NULL)
+        {
+            if (nb_w[i] == 1)
+            {
+                if (check == 0)
+                {
+                    check++;
+                    cmd->dt[j].data = ft_strdup(entry->d_name);
+                    cmd->dt[j].copy_data =  ft_strdup(entry->d_name);
+                    cmd->dt[j].ex_dollar = 0;
+                    cmd->dt[j].name = 1;
+                }
+                else 
+                {
+                    cmd->dt[x].data = ft_strdup(entry->d_name);
+                    cmd->dt[x].copy_data =  ft_strdup(entry->d_name);
+                    cmd->dt[x].ex_dollar = 0;
+                    cmd->dt[x].name = 1;
+                } 
+                x++;
+            }
+            i++;
+        }
+    }
+    return (cmd->dt);
+}
+
+t_data *fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
+{
+    DIR *OPENFILE;
+    struct dirent *entry;
+    int i;
+    int *nb_w;
 
     i = 0;
     if ((OPENFILE = opdir(parser)) == NULL)
@@ -537,46 +560,52 @@ int **fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
     nb_w = malloc(sizeof(int *) * i);
     if (!nb_w)
         exit(1); // exit status
-    nb_w = check_exict_patern(parser, data, nb_w, OPENFILE );
-    int x = 0;
-    while (x < i)
+    nb_w = check_exict_patern(parser, data, nb_w, OPENFILE);
+    // int y = 0;
+    // while (y < i)
+    // {
+    //     printf("%d\n", nb_w[y]);
+    //     y++;
+    // }
+    cmd->dt = cop_current_dt(cmd, j, nb_w, i);
+    if (count_nb_newdt(nb_w, i) != 0)
     {
-        printf("%d %d\n", nb_w[x][0], nb_w[x][1]);
-        x++;
+        cmd->dt = fill_wildcard_data(parser, cmd, j, nb_w);// x = (cmd->dt_nb  - 1); //hna hnaya nb dt badi mn wahd oana baghi rad x l zero 3lach dart -2 omachi ghi wahad
+        cmd->dt_nb += count_nb_newdt(nb_w, i) - 1;
     }
-    // fill_newdt(parser, j, nb_w, i);
-    return (nb_w);
+    return (cmd->dt);
 }
-
 void handal_wildcard(t_parser *parser, t_cmd *cmd)
 {
     int j;
     int i;
-    int **nb_w;
+    // int *nb_w;
 
     j = 0;
     i = 0;
-    while (j < cmd->dt_nb)
-    {
-        i = 0;
-        while (cmd->dt[j].data[i] != '\0')
+    // printf (" xxxx %d\n", current_nb_dt);
+        while (j < cmd->dt_nb)
         {
-            if (cmd->dt[j].data[i] == '\'' || cmd->dt[j].data[i] == '\"')
-                i = skip_quote(cmd->dt[j].data, i);
-            if (cmd->dt[j].data[i] == '*')
-                break;
-            i++;
+            i = 0;
+
+            while (cmd->dt[j].data != NULL && cmd->dt[j].data[i] != '\0')
+            {
+                if (cmd->dt[j].data[i] == '\'' || cmd->dt[j].data[i] == '\"')
+                    i = skip_quote(cmd->dt[j].data, i);
+                if (cmd->dt[j].data[i] == '*')
+                    break;
+                i++;
+            }
+            if ( cmd->dt[j].data != NULL &&cmd->dt[j].data[i] == '*')
+            {
+                cmd->dt = fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, j); // freeeeeeeeeeeee nb_w 3ndek tansah yajadk hhhh
+                // int x = 0;
+                // while (x < 11)
+                //     printf ("%d\n", nb_w[x++]);
+                // printf("********************************************\n");
+            }
+            j++;
         }
-        if (cmd->dt[j].data[i] == '*')
-        {
-            nb_w = fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, j); // freeeeeeeeeeeee nb_w 3ndek tansah yajadk hhhh
-            // int x = 0;
-            // while (x < 11)
-            //     printf ("%d\n", nb_w[x++]);
-            printf("********************************************\n");
-        }
-        j++;
-    }
     // if (j < cmd->dt_nb)
     // {
     //     nb_w = fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, i);
