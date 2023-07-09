@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/21 17:46:39 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 17:59:38 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int existing_key(t_env *exn, char *str)
 //     {
 //         if (ft_strcmp(tmp2->key, id) == 0)
 //             break;
-//     // printf ("%s %s\n", id, tmp2->key);
+//     // ft_printf ("%s %s\n", id, tmp2->key);
 //         tmp2 = tmp2->next;
 //     }
-//     // printf ("%s", tmp2->key);
+//     // ft_printf ("%s", tmp2->key);
 //     // free(id);
 //     // (void)str;
 //     // free(tmp2->value);
@@ -111,7 +111,7 @@ int existing_key(t_env *exn, char *str)
 //     {
 //         j = i;
 //         i = find_ed(exn, i, check);
-//         printf ("%d %d\n",j, i);
+//         ft_printf ("%d %d\n",j, i);
 //         if (check == 0)
 //         {
 //                 tmp1->key = ft_substr(exn, j, i - j);
@@ -148,7 +148,7 @@ void creat_add_node (t_parser *parser, int i, int j, char exv)
         fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'x');
         add_node(exp, &parser->lex->exp);
         g_exit = 0;
-    }   
+    }
 }
 
 int check_exist_key(t_env *exn, char *key)
@@ -182,11 +182,11 @@ void export_command(t_parser *parser, int i)
         while (exp)
         {
             if (check_dataenvexp(exp->all) == 0)
-                printf ("declare -x %s\n", exp->all);
+                ft_printf ("declare -x %s\n", exp->all);
             else if (check_dataenvexp(exp->all) == 1 && exp->value != NULL)
-                printf ("declare -x %s=\"%s\"\n", exp->key, exp->value);
+                ft_printf ("declare -x %s=\"%s\"\n", exp->key, exp->value);
             else if (check_dataenvexp(exp->all) == 1 && exp->value == NULL)
-                printf ("declare -x %s=\"\"\n", exp->key);
+                ft_printf ("declare -x %s=\"\"\n", exp->key);
             exp = exp->next;
         }
         g_exit = 0;
@@ -199,7 +199,6 @@ void export_command(t_parser *parser, int i)
             {
                 if (existing_key(parser->lex->exp, parser->comm[i].new_cmd[j]) == 1)
                 {
-                    
                     if (check_dataenvexp(parser->comm[i].new_cmd[j]) == 1)
                     {
                         key = ft_substr(parser->comm[i].new_cmd[j], 0, find_end_key(parser->comm[i].new_cmd[j]));
@@ -218,11 +217,14 @@ void export_command(t_parser *parser, int i)
                     else 
                         creat_add_node (parser,i, j, 'x');
                 }
+                free_double_array(parser->lex->ar_env);
+                ft_tran_env(parser->lex);
+                g_exit = 0;
             }
             else 
             {   
                 g_exit = 1;
-                printf ("bash: export: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
+                ft_printf ("bash: export: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
             }
             j++;
         }
@@ -231,7 +233,7 @@ void export_command(t_parser *parser, int i)
     // exp = parser->lex->exp;
     // while (exp)
     // {
-    //     printf ("%s\n", )
+    //     ft_printf ("%s\n", )
     //     exp = exp->next;
     // }
 }

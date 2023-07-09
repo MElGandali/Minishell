@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 13:36:57 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 16:32:46 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 //             check_char++;
 //         // else   
 //         //     check_char++;
-//         // printf ("%d \n", check_char);
+//         // ft_printf ("%d \n", check_char);
 //         free(check_name);
 //         i++;
 //     }
@@ -134,21 +134,21 @@ int redir_out(t_cmd *cmd, int i)
     
     if (check_ambiguous(&cmd->red[i + 1]) == 1)
     {
-        printf (" ambiguous redirect\n");
+        ft_printf (" ambiguous redirect\n");
         return (1);
     }
     fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd < 0)
     {
         g_exit = 1;
-        printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return(1);
         // exit (1);
     }
     if (access(cmd->red[i + 1].data, F_OK | W_OK) == -1)
     {
         g_exit = 1;
-        printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
         // exit (1);
     }
@@ -162,20 +162,20 @@ int dredir_out(t_cmd *cmd, int i)
     int fd;
     if (check_ambiguous(&cmd->red[i + 1]) == 1)
     {
-        printf (" ambiguous redirect\n");
+        ft_printf (" ambiguous redirect\n");
         return (1);
     }
     fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (fd < 0)
     {
         g_exit = 1;
-        printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return(1);
     }
     if (access(cmd->red[i + 1].data,F_OK | W_OK ) == -1)
     {
         g_exit = 1;
-        printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
     dup2(fd, 1);
@@ -188,20 +188,20 @@ int redir_in(t_cmd *cmd, int i)
     int fd;
     if (check_ambiguous(&cmd->red[i + 1]) == 1)
     {
-        printf (" ambiguous redirect\n");
+        ft_printf (" ambiguous redirect\n");
         return (1);
     }
     fd = open(cmd->red[i + 1].data, O_RDONLY , 0644);
     if (fd < 0)
     {
         g_exit = 1;
-        printf("bash: %s: %s\n",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s\n",cmd->red[i + 1].data, strerror(errno));
         return(1);
     }
     if (access(cmd->red[i + 1].data,F_OK | R_OK) == -1)
     {
         g_exit = 1;
-        printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
     dup2(fd, 0);

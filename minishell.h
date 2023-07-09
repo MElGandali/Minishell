@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 00:40:04 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:13:31 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include<string.h>
 #include<signal.h>
 #include"libf/libft.h"
+#include"ft_printf/ft_printf.h"
 #include <errno.h>
 #include <limits.h>
 #include <errno.h>
@@ -87,6 +88,7 @@ typedef struct s_lexer
 {
 	t_env *env;
 	t_env *exp;
+	char **ar_env;
 	int i;
 	int j;
 	int start;
@@ -200,8 +202,10 @@ void	pwd_command(void);
 void	exit_command(char **argv);
 void	special_var(char **argv);
 void export_command(t_parser * parser, int i);
+void ft_tran_env(t_lexer *lex);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
 void env_command(t_parser *parser, int i);
+int check_valid_key(char *str);
 int find_ed (char *env, int i, int check);
 void unset_command(t_parser *parser);
 //-----------executor----------//

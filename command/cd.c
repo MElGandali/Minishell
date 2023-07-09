@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 20:22:20 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cd_command(t_parser *parser, char **argv)
         update_env(parser, "OLDPWD");
         if (homedir == NULL)
         {
-            printf("bash: cd: OLDPWD not set\n");
+            ft_printf("bash: cd: OLDPWD not set\n");
             g_exit = 1;
         }
         chdir(homedir);
@@ -44,7 +44,9 @@ void	cd_command(t_parser *parser, char **argv)
         update_env(parser, "OLDPWD");
         if (chdir(argv[1]) != 0)
         {
-            printf("bash: cd: %s: %s\n",argv[1], strerror(errno));
+            ft_putstr_fd("bash: ", 2);
+            ft_putstr_fd(argv[1], 2);
+            ft_putstr_fd(": No such file or directory\n", 2);
             g_exit = 1;
         }
         else

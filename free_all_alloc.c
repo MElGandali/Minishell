@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_alloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:57 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/13 00:43:17 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void free_parser(t_parser *parser)
     // while (i < parser->lex->pipe_nb)
     // {
     //     j = 0;
-    //     // printf("%d\n", parser->comm[i].dt_nb);
+    //     // ft_printf("%d\n", parser->comm[i].dt_nb);
     //     while (parser->comm[i].cmd[j] != NULL)
     //     {
-    //         printf ("%s\n", parser->comm[i].cmd[j]);
+    //         ft_printf ("%s\n", parser->comm[i].cmd[j]);
     //         j++;
     //     }
     //     i++;

@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   ft_printuint.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/02 18:11:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Created: 2022/10/26 00:03:43 by mel-gand          #+#    #+#             */
+/*   Updated: 2023/07/09 15:32:32 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../minishell.h"
+#include "ft_printf.h"
 
-// int valide_identification(char c)
-// {
-//     if (!(ft_isalpha(c) && c !='_'))
-//         return (1);
-//     return (0);
-// }
-
-void add_new_export(t_lexer *lex, char **exp)
+int	ft_printuint(unsigned int nb)
 {
-    if (!(ft_isalpha(exp[1][0]) && exp[1][0] != '_'))
-    {
-        
-    }
-    else    
-        ft_printf ("bash: export:  `%s': not a valid identifier\n",exp[1]);
+	int	cnt;
+
+	cnt = 0;
+	if (nb < 0)
+	{
+		cnt += ft_printchar('-');
+		(nb *= -1);
+	}
+	if (nb >= 0 && nb <= 9)
+		cnt += ft_printchar(nb + '0');
+	if (nb > 9)
+	{
+		cnt += ft_printuint(nb / 10);
+		cnt += ft_printuint(nb % 10);
+	}
+	return (cnt);
 }

@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 23:17:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,13 @@ void fill_data(t_cmd comm)
     int i;
 
     i = 0;
-    // printf ("%d\n", comm.dt_nb);
+    // ft_printf ("%d\n", comm.dt_nb);
     while (i < comm.dt_nb)
     {
-        // printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
+        // ft_printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
         comm.dt[i].copy_data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
-        // printf ("%s\n", comm.dt[i].copy_data );
+        // ft_printf ("%s\n", comm.dt[i].copy_data );
         // comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
         if (i == 0 || (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) != 0))
@@ -240,8 +240,8 @@ void fill_data(t_cmd comm)
         }
         else   
             comm.dt[i].ex_dollar = 0;
-        // printf ("%d\n", comm.dt[i].ex_dollar);
-        // printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
+        // ft_printf ("%d\n", comm.dt[i].ex_dollar);
+        // ft_printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
     
@@ -249,7 +249,7 @@ void fill_data(t_cmd comm)
     // i = 0;
     // while (i < 2)
     // {
-    //     printf ("%s\n", comm.cmd[i]);
+    //     ft_printf ("%s\n", comm.cmd[i]);
     //     i++;
     // }
     /************************PRINT CHECK_EXPAND******************/
@@ -365,7 +365,7 @@ char *copy_quote(char *data, int *i, char *new_data)
     }
     new_data = ft_copier('\'', new_data);
     return (new_data);
-    // printf ("%s\n", *new_data);
+    // ft_printf ("%s\n", *new_data);
     // if (data[*i] == '\0')
     //     (*i)--;
 }
@@ -382,6 +382,8 @@ char *find_dollar_utils(t_parser *parser, char *data, int j, char e)
     char *dquote;
     
     new_data = NULL;
+    if (data == NULL)
+        return (data);
     while (data[j] != '\0')
     {
         dquote = NULL;
@@ -522,10 +524,10 @@ void    handle_data(t_parser *parser)
     //     i = 0;
     //     while (i < parser->comm[j].dt_nb)
     //     {
-    //         printf ("%s\n", parser->comm[j].dt[i].data);
+    //         ft_printf ("%s\n", parser->comm[j].dt[i].data);
     //         i++;
     //     }
-    //     printf ("%d\n", j);
+    //     ft_printf ("%d\n", j);
     //     j++;
     // }
 }

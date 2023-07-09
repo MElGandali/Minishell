@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 15:34:06 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:40:25 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int here_doc(t_parser *parser, t_red *red)
     while (1)
     {
         input = readline("> ");
-        if (ft_strcmp(input, red->data) == 0)
+        if (input != NULL || ft_strcmp(input, red->data) == 0)
             break;
         else
         {

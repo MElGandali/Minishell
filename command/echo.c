@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:59:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/07 18:42:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void   echo_command(char **argv)
     
     i = 1;
     if (argv[1] == NULL)
-        printf("\n");
+        ft_printf("\n");
     else   
     {
         while (argv[i] && detect_flag(argv, i) == 1)
@@ -54,14 +54,14 @@ void   echo_command(char **argv)
             if (ft_strcmp(argv[i], "$?") == 0 && argv[i])
                special_var(argv);
             if (ft_strcmp(argv[i], "$?") != 0)
-                printf("%s", argv[i]);
+                ft_printf("%s", argv[i]);
             if (argv[i + 1])
-                printf(" ");
+                ft_printf(" ");
             i++;
         }
         g_exit = 0;
         if (detect_flag(argv, 1) == 0)
-            printf("\n");
+            ft_printf("\n");
     }
 }
 

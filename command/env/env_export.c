@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 20:09:02 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 18:07:32 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,42 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev)
 //     }
 //     tmp1->all = ft_substr(env, 0, ft_strlen(env));
     
-//     printf ("%s\n", (ev)->all);
+//     ft_printf ("%s\n", (ev)->all);
 //     // tmp2->all = ft_substr(env, 0, ft_strlen(env));
 //     // tmp2->all = add_dquot(tmp2->all);
 //     // tmp2->all = ft_strjoin("declare -x ", tmp2->all);
 //     // fill_dt_utils(env, tmp1, tmp2);
 // }
+
+void ft_tran_env(t_lexer *lex)
+{
+    t_env *env;
+    int i;
+    int j;
+
+    env = lex->env;
+    j = 0;
+    i = 0;
+    lex->ar_env = NULL;
+    if (env != NULL)
+    {
+        while (env)
+        {
+            i++;
+            env = env->next;
+        }  
+        env = lex->env;
+        lex->ar_env = malloc (sizeof(char *) * (i + 1));
+        if (!lex->ar_env)
+            exit (1);
+        while (env)
+        {
+            lex->ar_env[j++] = ft_strdup(env->all);
+            env = env->next;
+        }
+        lex->ar_env[j] = NULL;
+    }
+}
 
 void creating_new_env(t_lexer *lex, char **env)
 {
@@ -131,6 +161,7 @@ void creating_new_env(t_lexer *lex, char **env)
         add_node(tmp2,&lex->exp); 
         i++;
     }
+    ft_tran_env(lex);
     // tmp1 = creat_node("x=");
     // fill_dt_utils("x=", tmp1, tmp2, 'e');
     // add_node(tmp1,&lex->env);
@@ -141,12 +172,12 @@ void creating_new_env(t_lexer *lex, char **env)
     // fill_dt_utils("y=      World", tmp1, tmp2, 'e');
     // add_node(tmp1,&lex->env);
     //  t_env *x = lex->exp;
-    // printf ("%s", x->all);
+    // ft_printf ("%s", x->all);
     // x = x->next;
-    // printf ("%s", x->all);
+    // ft_printf ("%s", x->all);
     // while (x)
     // {
-    //     printf ("declare -x  %s=\"%s\"\n", x->key ,x->value);
+    //     ft_printf ("declare -x  %s=\"%s\"\n", x->key ,x->value);
     //     x = x->next;
     // }
     //  exit (0);

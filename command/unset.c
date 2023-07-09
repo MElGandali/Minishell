@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:36:48 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 20:07:06 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 18:14:52 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,23 @@ void unset_command(t_parser *parser)
         j = length(parser->lex->exp);
         u = 0;
         v = 1;
-        while (parser->comm[u].new_cmd[v] != NULL)
+        if (check_valid_key(parser->comm[i].new_cmd[j]) == 0)
         {
-            if (i != 0)
-                remove_node(&parser->lex->env, parser->comm[u].new_cmd[v]);
-            if (j != 0)
-                remove_node(&parser->lex->exp, parser->comm[u].new_cmd[v]);
-            g_exit = 0;
-            v++;
+            while (parser->comm[u].new_cmd[v] != NULL)
+            {
+                if (i != 0)
+                    remove_node(&parser->lex->env, parser->comm[u].new_cmd[v]);
+                if (j != 0)
+                    remove_node(&parser->lex->exp, parser->comm[u].new_cmd[v]);
+                g_exit = 0;
+                v++;
+            }
         }
+        // else  
+        // {
+        //     g_exit = 1;
+        //         ft_printf ("bash: unset: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
+        // }
     }
     
 }

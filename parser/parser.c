@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/07 23:46:59 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int    parser(t_lexer *lex)
     handle_data (&parser);
     fill_newcmd_red(&parser);
     executor(&parser);
-    // printf ("%s\n", parser.lex->env->all);
+    // ft_printf ("%s\n", parser.lex->env->all);
     // free_parser(&parser);
     return (0);
 }

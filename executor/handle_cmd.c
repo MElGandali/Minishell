@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 23:15:46 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:08:00 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,34 @@ int    is_builtin(char **cmd)
         return (0);  
     return (1);
 }
+int check_path(char *command)
+{
+    int i;
+
+    i = 0;
+    while (command[i] != '\0')
+    {
+        if (command[i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
 
 void    exec_cmd(t_parser *parser, int i)
 {
     char *execpath;
     
-    execpath = (char*)find_execpath(parser, i);
+    if (check_path(parser->comm[i].new_cmd[0]) == 0)
+        execpath = (char*)find_execpath(parser, i);
+    else  
+        execpath = ft_strdup(parser->comm[i].new_cmd[0]);
     if (is_builtin(parser->comm[i].new_cmd) == 0)
         builtin_commands(parser, i);
     else
     {
-        execve((char const*)execpath, parser->comm[i].new_cmd, NULL);
+        execve((char const*)execpath, parser->comm[i].new_cmd, parser->lex->ar_env);
         free(execpath);
-        // printf ("bash: %s:", strerror(errno));
-            //printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
         ft_putstr_fd(": command not found\n", 2);
@@ -134,13 +148,8 @@ void handle_cmd(t_parser *parser)
                 int terminal_fd = open("/dev/tty", O_WRONLY);
                 dup2(terminal_fd, 1);
                 close(terminal_fd);
-                }
-                waitpid(cid[0], &e_code, 0);
-                if (WIFSIGNALED(e_code))
-                    g_exit = WTERMSIG(e_code) + 128;
-                else if (WIFEXITED(e_code))
-                    g_exit = WEXITSTATUS(e_code);
             }
+        }
         else
         {
             fd_her = handle_heredoc(parser, i);
