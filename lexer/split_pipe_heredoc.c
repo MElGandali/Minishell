@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe_heredoc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:14:32 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/19 19:46:56 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int split_pipe_heredoc(t_lexer *lex)
     // j = 0;
     // while (new_token[i] != NULL)
     // {
-    //     printf ("%s\n", new_token[i]);
+    //     ft_printf ("%s\n", new_token[i]);
     //     i++;
     // }
     }

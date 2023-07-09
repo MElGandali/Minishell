@@ -20,8 +20,8 @@ int count_red(t_cmd *comm)
     
     i = 0;
     nb = 0;
-    // printf ("x\n");
-    // printf ("zzzz %d\n",comm->dt_nb);
+    // ft_printf ("x\n");
+    // ft_printf ("zzzz %d\n",comm->dt_nb);
     while (i < comm->dt_nb)
     {
         if (comm->dt[i].name == 4 || comm->dt[i].name == 5
@@ -65,7 +65,7 @@ void fill_red(t_cmd *comm, int nb)
     // j = 0;
     // while (j < nb)
     // {
-    //     printf ("%s %s %d %d\n",comm->red[j].data, comm->red[j].copy_data,comm->red[j].name, comm->red[j].ex_dollar);
+    //     ft_printf ("%s %s %d %d\n",comm->red[j].data, comm->red[j].copy_data,comm->red[j].name, comm->red[j].ex_dollar);
     //     j++;
     // }
 }
@@ -85,8 +85,8 @@ int count_newcmd(char *data)
             nb++;
         i++;
     }
-    // printf ("ooo");
-    // printf ("%d", nb);
+    // ft_printf ("ooo");
+    // ft_printf ("%d", nb);
     return (nb);
 }
 
@@ -160,7 +160,7 @@ void fill_newcmd (t_cmd *comm, int *j, int i)
             comm->new_cmd[*j] = ft_copier(comm->dt[i].data[u], comm->new_cmd[*j]);
         u++;
     }
-    // printf ("%s\n", comm->new_cmd[*j]);
+    // ft_printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;    
 }
 
@@ -178,7 +178,7 @@ void fill_split_newcmd(t_cmd *comm, int *j, char *data)
             comm->new_cmd[*j] = ft_copier(data[u], comm->new_cmd[*j]);
         u++;
     }
-    // printf ("%s\n", comm->new_cmd[*j]);
+    // ft_printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;
 }
 
@@ -234,14 +234,14 @@ void fill_newcmd_red(t_parser *parser)
 
 
     i = 0;
-    // printf ("%d\n", parser->lex->pipe_nb);
+    // ft_printf ("%d\n", parser->lex->pipe_nb);
     while (i < parser->lex->pipe_nb)
     {
         x = 0;
         nb_newcmd = 0;
         j = 0;
         parser->comm[i].nb_red = count_red(&parser->comm[i]) * 2;
-        // printf ("%d", nb_red);
+        // ft_printf ("%d", nb_red);
         if (parser->comm[i].nb_red != 0)
             fill_red(&parser->comm[i], parser->comm[i].nb_red);
         while (j < parser->comm[i].dt_nb)
@@ -250,9 +250,9 @@ void fill_newcmd_red(t_parser *parser)
                 nb_newcmd += count_newcmd(parser->comm[i].dt[j].data);
             j++;
         }
-        // printf ("comand est %d\n", nb_newcmd);
-        // printf ("redurection %d\n", nb_red);
-        // printf ("*******************\n");
+        // ft_printf ("comand est %d\n", nb_newcmd);
+        // ft_printf ("redurection %d\n", nb_red);
+        // ft_printf ("*******************\n");
         if (nb_newcmd  != 0)
         {
             parser->comm[i].new_cmd = malloc(sizeof(char *) * (nb_newcmd + 1));
@@ -261,7 +261,7 @@ void fill_newcmd_red(t_parser *parser)
         else   
             parser->comm[i].new_cmd = NULL;
         /**************print****************/
-        // printf ("khasha tamsah\n");
+        // ft_printf ("khasha tamsah\n");
         // print(parser, parser->comm[i].nb_red, nb_newcmd, i);
         /**************print****************/
         i++;

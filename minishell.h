@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 00:40:04 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:34 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include<string.h>
 #include<signal.h>
 #include"libf/libft.h"
+#include"ft_printf/ft_printf.h"
 #include <errno.h>
 #include <limits.h>
 #include <errno.h>

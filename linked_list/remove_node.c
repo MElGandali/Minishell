@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:09:23 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 10:18:27 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void remove_node(t_env **head, char *id)
             var.tmp = var.tmp->next;
         }
     }
-    // printf ("%s", head->all);
+    // ft_printf ("%s", head->all);
     // return (*head);
 }

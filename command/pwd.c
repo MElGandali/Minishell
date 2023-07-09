@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:48:38 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/23 22:30:33 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	pwd_command(void)
 	char *curdir;
 	curdir = NULL;
 	curdir = getcwd(curdir,sizeof(curdir));
-	printf("%s\n", curdir);
+	ft_printf("%s\n", curdir);
 	g_exit = 0;
 }

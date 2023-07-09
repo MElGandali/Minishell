@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 23:15:46 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 14:25:44 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void    exec_cmd(t_parser *parser, int i)
     {
         execve((char const*)execpath, parser->comm[i].new_cmd, NULL);
         free(execpath);
-        // printf ("bash: %s:", strerror(errno));
-            //printf("bash: %s: command not found\n", parser->comm[i].new_cmd[0]);
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
         ft_putstr_fd(": command not found\n", 2);
@@ -134,13 +132,8 @@ void handle_cmd(t_parser *parser)
                 int terminal_fd = open("/dev/tty", O_WRONLY);
                 dup2(terminal_fd, 1);
                 close(terminal_fd);
-                }
-                waitpid(cid[0], &e_code, 0);
-                if (WIFSIGNALED(e_code))
-                    g_exit = WTERMSIG(e_code) + 128;
-                else if (WIFEXITED(e_code))
-                    g_exit = WEXITSTATUS(e_code);
             }
+        }
         else
         {
             fd_her = handle_heredoc(parser, i);

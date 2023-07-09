@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/05/23 17:14:45 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int split_spaces(t_lexer *lex)
     // {
     //     free (lex->line);
     //     free_double_array(lex->word);
-    //     printf("bash : syntax error near unexpected token1\n");
+    //     ft_printf("bash : syntax error near unexpected token1\n");
     //     return (-1);
     // }
     free (lex->line);

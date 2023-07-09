@@ -29,7 +29,8 @@ int dquote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("bash :  unexpected EOF while looking for matching\n");
+        ft_printf("bash :  unexpected EOF while looking for matching\n");
+        g_exit = 258;
         free(str);
         return (-1);
     }
@@ -52,7 +53,8 @@ int quote(char *str, int *i)
     }
     if (cnt == 0)
     {
-        printf("bash :  unexpected EOF while looking for matching\n");
+        ft_printf("bash :  unexpected EOF while looking for matching\n");
+        g_exit = 258;
         free(str);
         return (-1);
     }

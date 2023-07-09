@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:03:27 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 20:09:02 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev)
 //     }
 //     tmp1->all = ft_substr(env, 0, ft_strlen(env));
     
-//     printf ("%s\n", (ev)->all);
+//     ft_printf ("%s\n", (ev)->all);
 //     // tmp2->all = ft_substr(env, 0, ft_strlen(env));
 //     // tmp2->all = add_dquot(tmp2->all);
 //     // tmp2->all = ft_strjoin("declare -x ", tmp2->all);
@@ -141,12 +141,12 @@ void creating_new_env(t_lexer *lex, char **env)
     // fill_dt_utils("y=      World", tmp1, tmp2, 'e');
     // add_node(tmp1,&lex->env);
     //  t_env *x = lex->exp;
-    // printf ("%s", x->all);
+    // ft_printf ("%s", x->all);
     // x = x->next;
-    // printf ("%s", x->all);
+    // ft_printf ("%s", x->all);
     // while (x)
     // {
-    //     printf ("declare -x  %s=\"%s\"\n", x->key ,x->value);
+    //     ft_printf ("declare -x  %s=\"%s\"\n", x->key ,x->value);
     //     x = x->next;
     // }
     //  exit (0);

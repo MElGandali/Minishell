@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 22:58:09 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:50:40 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char    *get_env(t_parser *parser, char *str)
             return(env->value);
         env = env->next;
     }
-    return (0);
+    return (NULL);
 }
 
 void    builtin_commands(t_parser *parser, int i)

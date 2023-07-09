@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:27:03 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/22 15:49:38 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/08 23:51:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char* const    *find_execpath(t_parser *parser, int i)
     nb = 0;
     j = 0;
     pathenv = get_env(parser, "PATH");
+    if (pathenv == NULL)
+        return (NULL);
     pathname = malloc (sizeof(char *) * (path_count(pathenv, ':') + 1));
     if (!pathname)
         return (NULL);

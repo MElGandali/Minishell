@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 11:42:22 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/21 12:36:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int split_pipe_redir(t_lexer *lex)
 	j = 0;
 	// while (lex->token[i] != NULL)
 	// {
-	// 	printf ("%s\n", lex->token[i]);
+	// 	ft_printf ("%s\n", lex->token[i]);
 	// 	i++;
 	// }
 	// exit(1);

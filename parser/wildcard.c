@@ -131,7 +131,7 @@ int *find_first_list_patern(t_parser *parser, int *nb_w, char **patern)
             nb_w[j] = 1;
         else
             nb_w[j] = 0;
-        // printf ("%d %s\n", nb_w[j], entry->d_name);
+        // ft_printf ("%d %s\n", nb_w[j], entry->d_name);
         j++;
     }
     // free patern !!!!!!
@@ -271,7 +271,7 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
             if (check_valid_first(entry->d_name, patern[0]) == 1 && check_valid_last(entry->d_name, patern[lenght_patern(patern) - 1]) == 1 && ft_strlen(entry->d_name) >= ft_strlen(patern[0]) + ft_strlen(patern[lenght_patern(patern) - 1])) // ft_strcmp(patern_entry[0], patern[0]) == 0 && ft_strcmp(patern_entry[1], patern[1]) == 0)
             {
                 entry_center = ft_substr(entry->d_name, ft_strlen(patern[0]), ft_strlen(entry->d_name) - ft_strlen(patern[lenght_patern(patern) - 1]) - ft_strlen(patern[0])); // na9anh 3la hsab ftali mital minishell.c m*s*.c 11 - 2 = 9 ghadi dakhlna hta na9ta m3aha ohna mabghinahach
-                // printf ("%s %d %d\n", entry_center, ft_strlen(patern[lenght_patern(patern) - 1]), ft_strlen(entry->d_name));
+                // ft_printf ("%s %d %d\n", entry_center, ft_strlen(patern[lenght_patern(patern) - 1]), ft_strlen(entry->d_name));
                 i = 1;
                 while (i < lenght_patern(patern) - 1)
                 {
@@ -292,14 +292,14 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
             }
             else
                 nb_w[j] = 0;
-            //  printf ("%d %s\n", nb_w[j], entry->d_name);
+            //  ft_printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         else if (check_position_etoile(data, 'm') == 2)
         {
             if (check_valid_first(entry->d_name, patern[0]) == 1 && ft_strlen(patern[0]) < ft_strlen(entry->d_name))
             {
                 entry_center = ft_substr(entry->d_name, ft_strlen(patern[0]), ft_strlen(entry->d_name) - ft_strlen(patern[0])); // khasni nt2akad mn lenght
-                // printf ("%s\n", entry_center);
+                // ft_printf ("%s\n", entry_center);
                 i = 0;
                 while (i < lenght_patern(patern))
                 {
@@ -361,7 +361,7 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
             }
             if (i == lenght_patern(patern)) // hna khasak t2akad 3lch madrtch else !!!!!!!!
                 nb_w[j] = 1;
-            // printf ("%d %s\n", nb_w[j], entry->d_name);
+            // ft_printf ("%d %s\n", nb_w[j], entry->d_name);
         }
         j++;
     }
@@ -387,7 +387,7 @@ char **handal_quote(char **patern)
                 new_pa = ft_copier(patern[i][j], new_pa);
             j++;
         }
-        // printf ("%d %s\n", i, new_pa);
+        // ft_printf ("%d %s\n", i, new_pa);
         free(patern[i]);
         patern[i] = ft_strdup(new_pa);
         free(new_pa);
@@ -564,7 +564,7 @@ t_data *fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
     // int y = 0;
     // while (y < i)
     // {
-    //     printf("%d\n", nb_w[y]);
+    //     ft_printf("%d\n", nb_w[y]);
     //     y++;
     // }
     cmd->dt = cop_current_dt(cmd, j, nb_w, i);
@@ -583,7 +583,7 @@ void handal_wildcard(t_parser *parser, t_cmd *cmd)
 
     j = 0;
     i = 0;
-    // printf (" xxxx %d\n", current_nb_dt);
+    // ft_printf (" xxxx %d\n", current_nb_dt);
         while (j < cmd->dt_nb)
         {
             i = 0;
@@ -601,8 +601,8 @@ void handal_wildcard(t_parser *parser, t_cmd *cmd)
                 cmd->dt = fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, j); // freeeeeeeeeeeee nb_w 3ndek tansah yajadk hhhh
                 // int x = 0;
                 // while (x < 11)
-                //     printf ("%d\n", nb_w[x++]);
-                // printf("********************************************\n");
+                //     ft_printf ("%d\n", nb_w[x++]);
+                // ft_printf("********************************************\n");
             }
             j++;
         }

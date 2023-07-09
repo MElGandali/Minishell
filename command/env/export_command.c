@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/21 17:46:39 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int existing_key(t_env *exn, char *str)
 //     {
 //         if (ft_strcmp(tmp2->key, id) == 0)
 //             break;
-//     // printf ("%s %s\n", id, tmp2->key);
+//     // ft_printf ("%s %s\n", id, tmp2->key);
 //         tmp2 = tmp2->next;
 //     }
-//     // printf ("%s", tmp2->key);
+//     // ft_printf ("%s", tmp2->key);
 //     // free(id);
 //     // (void)str;
 //     // free(tmp2->value);
@@ -111,7 +111,7 @@ int existing_key(t_env *exn, char *str)
 //     {
 //         j = i;
 //         i = find_ed(exn, i, check);
-//         printf ("%d %d\n",j, i);
+//         ft_printf ("%d %d\n",j, i);
 //         if (check == 0)
 //         {
 //                 tmp1->key = ft_substr(exn, j, i - j);
@@ -182,11 +182,11 @@ void export_command(t_parser *parser, int i)
         while (exp)
         {
             if (check_dataenvexp(exp->all) == 0)
-                printf ("declare -x %s\n", exp->all);
+                ft_printf ("declare -x %s\n", exp->all);
             else if (check_dataenvexp(exp->all) == 1 && exp->value != NULL)
-                printf ("declare -x %s=\"%s\"\n", exp->key, exp->value);
+                ft_printf ("declare -x %s=\"%s\"\n", exp->key, exp->value);
             else if (check_dataenvexp(exp->all) == 1 && exp->value == NULL)
-                printf ("declare -x %s=\"\"\n", exp->key);
+                ft_printf ("declare -x %s=\"\"\n", exp->key);
             exp = exp->next;
         }
         g_exit = 0;
@@ -222,7 +222,7 @@ void export_command(t_parser *parser, int i)
             else 
             {   
                 g_exit = 1;
-                printf ("bash: export: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
+                ft_printf ("bash: export: `%s': not a valid identifier\n", parser->comm[i].new_cmd[j]);
             }
             j++;
         }
@@ -231,7 +231,7 @@ void export_command(t_parser *parser, int i)
     // exp = parser->lex->exp;
     // while (exp)
     // {
-    //     printf ("%s\n", )
+    //     ft_printf ("%s\n", )
     //     exp = exp->next;
     // }
 }
