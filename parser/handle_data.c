@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:06:11 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <stdio.h>
-#include <string.h>
 
 int  find_data_redir(int *name, char *data)
 {
@@ -46,14 +44,6 @@ int check_quote(char *data, int i)
 
 int ft_check_flag (char *data, int i)
 {
-    // while (data[i] != '\0' && (data[i] == '\'' || data[i] == '\"'))
-    // {
-    //     if (data[i] == '\'' || data[i] == '\"')
-    //         i = skip_quote(data, i);
-    //     i++;
-    // }
-    // if (data[i] == '\0')
-    //     return (0);
     if (check_quote(data, i) == 0)
         return 0;
     i = 0;
@@ -220,14 +210,10 @@ void fill_data(t_cmd comm)
     int i;
 
     i = 0;
-    // ft_printf ("%d\n", comm.dt_nb);
     while (i < comm.dt_nb)
     {
-        // ft_printf ("%s %d\n", comm.cmd[i], ft_strlen (comm.cmd[i]));
         comm.dt[i].data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
         comm.dt[i].copy_data = ft_substr(comm.cmd[i], 0, ft_strlen (comm.cmd[i]));
-        // ft_printf ("%s\n", comm.dt[i].copy_data );
-        // comm.dt[i].position = i;
         define_data(&comm ,comm.dt[i].data, i);
         if (i == 0 || (i > 0 && ft_strcmp("<<", comm.dt[i - 1].data) != 0))
             comm.dt[i].ex_dollar = check_ex_dollar(comm.dt[i].data);
@@ -240,8 +226,6 @@ void fill_data(t_cmd comm)
         }
         else   
             comm.dt[i].ex_dollar = 0;
-        // ft_printf ("%d\n", comm.dt[i].ex_dollar);
-        // ft_printf ("data %s position %d dfine %d\n", comm.dt[i].data,comm.dt[i].position, comm.dt[i].name);
         i++;
     }
     
@@ -365,16 +349,7 @@ char *copy_quote(char *data, int *i, char *new_data)
     }
     new_data = ft_copier('\'', new_data);
     return (new_data);
-    // ft_printf ("%s\n", *new_data);
-    // if (data[*i] == '\0')
-    //     (*i)--;
 }
-// char *copy_dquote (t_parser *parser, t_cmd *cmd, int i, int *j)
-// {
-//     char *new_data;
-
-   
-// }
 
 char *find_dollar_utils(t_parser *parser, char *data, int j, char e)
 {
@@ -442,44 +417,7 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
         if (cmd->dt[i].name != 10 && cmd->dt[i].name != 4
             && cmd->dt[i].name != 5 && cmd->dt[i].name != 6
             && cmd->dt[i].name != 7)
-        {     
-            // while (cmd->dt[i].data[j] != '\0')
-            // {
-            //     dquote = NULL;
-            //     if (cmd->dt[i].data[j] == '\'')
-            //         copy_quote(cmd->dt[i].data, &j, &new_data);
-            //     if (cmd->dt[i].data[j] == '\"')
-            //     {
-            //         dquote = ft_copier(cmd->dt[i].data[j], dquote);
-            //         j++; // squipe quote
-            //         while (cmd->dt[i].data[j] != '\"')
-            //             dquote = ft_copier(cmd->dt[i].data[j++], dquote);
-            //         dquote = ft_copier(cmd->dt[i].data[j], dquote);
-            //         check_dollar(parser, dquote, &new_data);
-            //     }
-            //     else  
-            //     {
-            //         if ( cmd->dt[i].data[j]== '$' && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '?')
-            //         {
-            //             if (cmd->dt[i].data[j] == ' ')
-            //                 new_data = ft_copier(cmd->dt[i].data[j + 1], new_data);
-            //             else if (cmd->dt[i].data[j + 1] == '_' || ft_isalnum(cmd->dt[i].data[j + 1]) == 1)
-            //                 expand_data(parser->lex->env, cmd->dt[i].data, &j, &new_data);
-            //             else if (!(cmd->dt[i].data[j + 1] == '_' 
-            //             || ft_isalnum(cmd->dt[i].data[j + 1]) == 1) 
-            //             && cmd->dt[i].data[j + 1] != '\0' && cmd->dt[i].data[j + 1] != '\''
-            //              && cmd->dt[i].data[j + 1] != '\"')  
-            //                 j++;
-            //             else if (cmd->dt[i].data[j + 1] != '\''
-            //              && cmd->dt[i].data[j + 1] != '\"') 
-            //                 new_data = ft_copier(cmd->dt[i].data[j], new_data);
-            //         }
-            //         else if (cmd->dt[i].data[j] != '\''
-            //             && cmd->dt[i].data[j] != '\"')
-            //             new_data = ft_copier(cmd->dt[i].data[j], new_data);
-            //     }            
-            //     j++;
-            // }
+        {
             new_data = find_dollar_utils(parser, cmd->dt[i].data, j, 'n');
             if (new_data == NULL)
             {
@@ -509,12 +447,7 @@ void    handle_data(t_parser *parser)
         handal_wildcard(parser, &parser->comm[i]);
         i++;
     }
-    
-    // while (parser->comm[i].cmd[j])
-    // {
-    //     free()
-    //     j++;
-    // }
+    // free_parser(parser);
     // expaind_dollar(parser);
     //----------------print data-----------------//
     // i = 0;

@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 18:13:31 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/10 14:38:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,6 @@ typedef struct s_define_data
 	t_dt state;
 	char *data;
 	char *copy_data;
-	// int position;
-	// char *name_file;
-	// char *delimiter;
 	int  ex_dollar;
 }   t_data;
 
