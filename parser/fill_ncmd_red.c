@@ -36,6 +36,7 @@ void fill_red(t_cmd *comm, int nb)
 {
     int i;
     int j;
+    int x;
     (void)comm;
     (void)nb;
 
@@ -54,7 +55,19 @@ void fill_red(t_cmd *comm, int nb)
             comm->red[j].ex_dollar = comm->dt[i].ex_dollar;
             comm->red[j].name = comm->dt[i].name;
             if (comm->dt[i].data != NULL)
-                comm->red[j].data = ft_strdup(comm->dt[i].data);
+            {
+                x= 0;
+                comm->red[j].data = NULL;
+                while (comm->dt[i].data[x] != '\0')
+                {
+                    if (comm->dt[i].data[x] == '\'' || comm->dt[i].data[x] == '\"')
+                       comm->red[j].data = if_quote_fill(comm->dt[i].data, &x, comm->red[j].data);
+                    else  
+                        comm->red[j].data = ft_copier(comm->dt[i].data[x], comm->red[j].data);
+                    x++;
+                }
+                // comm->red[j].data = ft_strdup(comm->dt[i].data);
+            }
             else  
                 comm->red[j].data = NULL;
             comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
@@ -263,6 +276,7 @@ void fill_newcmd_red(t_parser *parser)
         /**************print****************/
         // ft_printf ("khasha tamsah\n");
         // print(parser, parser->comm[i].nb_red, nb_newcmd, i);
+        // exit (0);
         /**************print****************/
         i++;
     }

@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 13:48:10 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:04:01 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int check_syntax_error (t_lexer *lex, int i)
         || (ft_strnstr(lex->token[i + 1], "<") == 0 && ft_strlen(lex->token[i + 1]) == 1)))
     {
         free_double_array(lex->token);
-        ft_printf("bash : syntax error \n");
-        g_exit = 258;
+        ft_printf("bash: syntax error\n");
+        g_exit = 2;
         return (-1);
     }
     return (0);
@@ -45,7 +45,7 @@ int redir_pipe_error_mult_arg(t_lexer *lex)
         {
             free_double_array(lex->token);
             ft_printf("bash : syntax error \n"); 
-            g_exit = 258;
+            g_exit = 2;
             return (-1);
         }
         i++;

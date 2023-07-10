@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:17:55 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/09 17:59:38 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void creat_add_node (t_parser *parser, int i, int j, char exv)
         fill_dt_utils(parser->comm[i].new_cmd[j], env, exp, 'x');
         add_node(exp, &parser->lex->exp);
         g_exit = 0;
-    }   
+    }
 }
 
 int check_exist_key(t_env *exn, char *key)
@@ -199,7 +199,6 @@ void export_command(t_parser *parser, int i)
             {
                 if (existing_key(parser->lex->exp, parser->comm[i].new_cmd[j]) == 1)
                 {
-                    
                     if (check_dataenvexp(parser->comm[i].new_cmd[j]) == 1)
                     {
                         key = ft_substr(parser->comm[i].new_cmd[j], 0, find_end_key(parser->comm[i].new_cmd[j]));
@@ -218,6 +217,9 @@ void export_command(t_parser *parser, int i)
                     else 
                         creat_add_node (parser,i, j, 'x');
                 }
+                free_double_array(parser->lex->ar_env);
+                ft_tran_env(parser->lex);
+                g_exit = 0;
             }
             else 
             {   

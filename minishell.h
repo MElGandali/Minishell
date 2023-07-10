@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:34 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:29:26 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_lexer
 {
 	t_env *env;
 	t_env *exp;
+	char **ar_env;
 	int i;
 	int j;
 	int start;
@@ -199,10 +200,12 @@ void	echo_command(char **argv);
 void	cd_command(t_parser *parser, char **argv);
 void	pwd_command(void);
 void	exit_command(char **argv);
-void	special_var(char **argv);
+char    *special_var(char **argv);
 void export_command(t_parser * parser, int i);
+void ft_tran_env(t_lexer *lex);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
 void env_command(t_parser *parser, int i);
+int check_valid_key(char *str);
 int find_ed (char *env, int i, int check);
 void unset_command(t_parser *parser);
 //-----------executor----------//

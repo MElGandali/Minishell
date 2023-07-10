@@ -6,30 +6,29 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:59:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 17:45:14 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 17:45:56 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-int    detect_flag(char **argv, int i)
+int    detect_flag(char *argv)
 {
     int j;
     int check;
-    
     j = 0;
     check = 0;
-    if (argv[i][j] == '-' && argv[i][j + 1] == 'n')
+    if (argv[j] == '-' && argv[j + 1] == 'n')
     {
         j++;
-        while (argv[i][j])
+        while (argv[j])
         {
-            if (argv[i][j] != 'n')
+            if (argv[j] != 'n')
             {
                 check = 0;
                 return (0);
             }
-            else if (argv[i][j] == 'n')
+            else if (argv[j] == 'n')
                 check = 1;
             j++;
         }
@@ -41,26 +40,32 @@ int    detect_flag(char **argv, int i)
 void   echo_command(char **argv)
 {
     int i;
+    char *newarg;
     
     i = 1;
+    newarg = NULL;
     if (argv[1] == NULL)
         ft_printf("\n");
     else   
     {
-        while (argv[i] && detect_flag(argv, i) == 1)
+        while (argv[i] && detect_flag(argv[i]) == 1)
             i++;
         while (argv[i])
         {
             if (ft_strnstr(argv[i], "$?") == 0 && argv[i])
-               special_var(argv);
-            if (ft_strcmp(argv[i], "$?") != 0)
+            {
+               newarg = special_var(argv);
+               ft_printf("%s", newarg);
+               free(newarg); 
+            }
+            else if (ft_strcmp(argv[i], "$?") != 0)
                 ft_printf("%s", argv[i]);
             if (argv[i + 1])
                 ft_printf(" ");
             i++;
         }
         g_exit = 0;
-        if (detect_flag(argv, 1) == 0)
+        if (detect_flag(argv[1]) == 0)
             ft_printf("\n");
     }
 }

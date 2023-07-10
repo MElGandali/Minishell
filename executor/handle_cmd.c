@@ -6,9 +6,10 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 17:06:34 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:23:08 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 
@@ -29,17 +30,33 @@ int    is_builtin(char **cmd)
         return (0);  
     return (1);
 }
+int check_path(char *command)
+{
+    int i;
+
+    i = 0;
+    while (command[i] != '\0')
+    {
+        if (command[i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
 
 void    exec_cmd(t_parser *parser, int i)
 {
     char *execpath;
     
-    execpath = (char*)find_execpath(parser, i);
+    if (check_path(parser->comm[i].new_cmd[0]) == 0)
+        execpath = (char*)find_execpath(parser, i);
+    else  
+        execpath = ft_strdup(parser->comm[i].new_cmd[0]);
     if (is_builtin(parser->comm[i].new_cmd) == 0)
         builtin_commands(parser, i);
     else
     {
-        execve((char const*)execpath, parser->comm[i].new_cmd, NULL);
+        execve((char const*)execpath, parser->comm[i].new_cmd, parser->lex->ar_env);
         free(execpath);
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
