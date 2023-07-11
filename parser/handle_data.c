@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 18:06:11 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 15:31:58 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
     i = 0;
     if (comm->dt[0].name == COMMAND && pos == 1)
     {
-        if (ft_check_flag (data, i) == 1)
-            comm->dt[pos].name = FLAG;
-        else if (data[0] == '-')
+        // if (ft_check_flag (data, i) == 1)
+        //     comm->dt[pos].name = FLAG;
+        if (data[0] == '-')
              comm->dt[pos].name = FLAG;
         else if (find_data_redir(&comm->dt[1].name, data) == 1)
             comm->dt[1].name = WORD;
@@ -155,8 +155,6 @@ int x(char *data, char c, int j)
     }
     return (0);
 }
-
-
 
 int check_ex_dollar(char *data)
 {
@@ -398,7 +396,8 @@ char *find_dollar_utils(t_parser *parser, char *data, int j, char e)
             else if (data[j] != '\''
                 && data[j] != '\"')
                 new_data = ft_copier(data[j], new_data);
-        }            
+        }  
+        free(dquote);          
         j++;
     }
     return (new_data);
@@ -430,6 +429,7 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
                 cmd->dt[i].data = ft_strdup(new_data);
             }
         }
+        free(new_data);
         i++;
     }
 }

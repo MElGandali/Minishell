@@ -16,24 +16,24 @@ void ft_calcule_etoile(char *data, int *i)
     }
 }
 
-DIR *opdir(t_parser *parser)
-{
-    DIR *OPENFILE;
-    t_env *env;
-    env = parser->lex->env;
-    while (env)
-    {
-        if (ft_strcmp("PWD", env->key) == 0)
-            break;
-        env = env->next;
-    }
-    if ((OPENFILE = opendir(env->value)) == NULL)
-    {
-        perror("opendir() error");
-        return (NULL);
-    }
-    return (OPENFILE);
-}
+// DIR *opdir(t_parser *parser)
+// {
+//     DIR *OPENFILE;
+//     t_env *env;
+//     env = parser->lex->env;
+//     while (env)
+//     {
+//         if (ft_strcmp("PWD", env->key) == 0)
+//             break;
+//         env = env->next;
+//     }
+//     if ((OPENFILE = opendir(env->value)) == NULL)
+//     {
+//         perror("opendir() error");
+//         return (NULL);
+//     }
+//     return (OPENFILE);
+// }
 
 // int ft_check_derectory(char *entry_name ,int j, DIR *OPENFILE, t_parser *parser) // kanat hnya j zayda 
 // {
