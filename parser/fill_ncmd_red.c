@@ -86,16 +86,6 @@ void fill_red(t_cmd *comm, int nb)
     // }
 }
 
-int check_quote_new(char *data, int i)
-{
-    // char c = data[i];
-    while (data[i] != '\0' && (data[i] == '\"' || data[i] == '\''))
-        i++;
-    if (data[i] == '\0')
-        return (1);
-    return (0);
-}
-
 int count_newcmd(char *data)
 {
     int i;
@@ -106,11 +96,7 @@ int count_newcmd(char *data)
     while (data[i] != '\0')
     {
         if (data[i] == '\"' || data[i] == '\'')
-        {
-            // if (check_quote_new(data, i) == 1)
-            //     nb++;
             i = skip_quote(data, i);
-        }
         if (data[i + 1] != '\0' && data[i] <= 32 && i > 0 && data[i - 1] != 32)
             nb++;
         i++;

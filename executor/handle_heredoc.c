@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 22:34:37 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 22:46:34 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ int here_doc(t_parser *parser, t_red *red)
         }
     }
     if (save_her != NULL)
+    {
         ft_putstr_fd(save_her, red->fd[1]);
+        free(save_her);
+    }
     close(red->fd[1]);
     return (red->fd[0]);
 }
@@ -125,11 +128,7 @@ int    handle_heredoc(t_parser *parser, int i)
         while (j < parser->comm->nb_red)
         {
             if (parser->comm[i].red[j].name == 6)
-            {
-                // if (j != count_heredoc( parser->comm, i))
-                //     close(fd_r);
-                fd_r = here_doc(parser, &parser->comm[i].red[j + 1]);
-            }    
+                fd_r = here_doc(parser, &parser->comm[i].red[j + 1]);  
             j = j + 2;
         }
     }

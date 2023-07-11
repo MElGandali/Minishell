@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 12:39:25 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:57:06 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,4 +238,5 @@ void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
 char *if_quote_fill(char *data, int *u, char *new_cmd);
 
 //-----------squipe quote----------//
+void rl_replace_line (const char *, int);
 #endif
