@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:32:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 00:01:03 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:05:13 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 
 void    executor(t_parser *parser)
 {
-
     handle_cmd(parser);
-
 }

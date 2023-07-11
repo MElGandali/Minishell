@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 18:32:07 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 23:08:19 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int    parser(t_lexer *lex)
     handle_data (&parser);
     fill_newcmd_red(&parser);
     executor(&parser);
+    free_parser(&parser);
     return (0);
 }

@@ -51,20 +51,11 @@ void fill_red(t_cmd *comm, int nb)
             comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
             comm->red[j++].data = ft_strdup(comm->dt[i++].data);
             comm->red[j].ex_dollar = comm->dt[i].ex_dollar;
-            // comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data); // star
             comm->red[j].name = comm->dt[i].name;
             if (comm->dt[i].data != NULL)
             {
                 x = 0;
-                // if (check_ambiguous(&comm->dt[j + 1].) == 1) // hnaaaaaa
-                //     comm->red[j].check_amb = 1;
-                // else  
-                //     comm->red[j].check_amb = 0;
                 comm->red[j].data = NULL;
-                // if (check_ambiguous(&comm->red[j + 1]) == 1)
-                //     comm->red[j].check_amb = 1;
-                // else  
-                //     comm->red[j].check_amb = 0;
                 while (comm->dt[i].data[x] != '\0')
                 {
                     if (comm->dt[i].data[x] == '\'' || comm->dt[i].data[x] == '\"')
@@ -78,6 +69,7 @@ void fill_red(t_cmd *comm, int nb)
             else  
                 comm->red[j].data = NULL;
             comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
+            // printf ("%s\n", comm->red[j].copy_data);
             j++;     
         }
         i++;
@@ -90,16 +82,6 @@ void fill_red(t_cmd *comm, int nb)
     // }
 }
 
-int check_quote_new(char *data, int i)
-{
-    // char c = data[i];
-    while (data[i] != '\0' && (data[i] == '\"' || data[i] == '\''))
-        i++;
-    if (data[i] == '\0')
-        return (1);
-    return (0);
-}
-
 int count_newcmd(char *data)
 {
     int i;
@@ -110,11 +92,7 @@ int count_newcmd(char *data)
     while (data[i] != '\0')
     {
         if (data[i] == '\"' || data[i] == '\'')
-        {
-            // if (check_quote_new(data, i) == 1)
-            //     nb++;
             i = skip_quote(data, i);
-        }
         if (data[i + 1] != '\0' && data[i] <= 32 && i > 0 && data[i - 1] != 32)
             nb++;
         i++;
@@ -201,7 +179,6 @@ void fill_newcmd (t_cmd *comm, int *j, int i)
             u++;
         }
     }
-    // ft_printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;   
 
 }
@@ -229,7 +206,6 @@ void fill_split_newcmd(t_cmd *comm, int *j, char *data)
             u++;
         }
     }
-    // ft_printf ("%s\n", comm->new_cmd[*j]);
     (*j)++;
 }
 
@@ -318,4 +294,5 @@ void fill_newcmd_red(t_parser *parser)
         /**************print****************/
         i++;
     }
+    // 
 }

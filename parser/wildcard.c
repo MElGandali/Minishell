@@ -88,15 +88,15 @@ int check_valid_first(char *entry_name, char *patern)
 {
     char *patern_entry;
 
-    patern_entry = ft_substr(entry_name, 0, ft_strlen(patern));
-    if (!patern_entry)
-        exit(1);
-    if (patern_entry[0] != '.' && ft_strcmp(patern_entry, patern) == 0)
-    {
-        free(patern_entry);
-        return (1);
-    }
-    free(patern_entry);
+    // patern_entry = ft_substr(entry_name, 0, ft_strlen(patern));
+    // if (!patern_entry)
+    //     exit(1);
+    // if (patern_entry[0] != '.' && ft_strcmp(patern_entry, patern) == 0)
+    // {
+    //     free(patern_entry);
+    //     return (1);
+    // }
+    // free(patern_entry);
     return (0);
 }
 
@@ -167,7 +167,6 @@ int *find_patern_one_etoile(t_parser *parser, int *nb_w, char c, char **patern)
     int j;
     DIR *OPENFILE;
     struct dirent *entry;
-    (void)parser;
 
     j = 0;
     OPENFILE = opendir(".");
@@ -256,7 +255,6 @@ int *find_mult_etoile(t_parser *parser, int *nb_w, char *data, char **patern)
     char *entry_center;
     DIR *OPENFILE;
     struct dirent *entry;
-    (void)parser;
 
     j = 0;
     i = 0;
@@ -426,24 +424,25 @@ int *check_exict_patern(t_parser *parser, char *data, int *nb_w, DIR *OPENFILE) 
         j++;
     }
     patern = ft_split(co_data, '\n', &nb_arg);
+    free(co_data);
     patern = handal_quote(patern);
     if (i == 1)
     {
         if (nb_arg == 1)
         {
-            if (check_position_etoile(data, 'o') == 1)
-                nb_w = find_patern_one_etoile(parser, nb_w, 'l', patern);
-            else if (check_position_etoile(data, 'o') == 0)
+            // if (check_position_etoile(data, 'o') == 1)
+            //     nb_w = find_patern_one_etoile(parser, nb_w, 'l', patern);
+            if (check_position_etoile(data, 'o') == 0)
                 nb_w = find_patern_one_etoile(parser, nb_w, 'f', patern);
         }
-        else if (nb_arg == 2)
-            nb_w = find_first_list_patern(parser, nb_w, patern);
-        else
-            nb_w = ft_tout_file(nb_w, OPENFILE, parser);
+        // else if (nb_arg == 2)
+        //     nb_w = find_first_list_patern(parser, nb_w, patern);
+        // else
+        //     nb_w = ft_tout_file(nb_w, OPENFILE, parser);
     }
-    else
-        nb_w = find_mult_etoile(parser, nb_w, data, patern);
-    free(co_data);
+    // else
+    //     nb_w = find_mult_etoile(parser, nb_w, data, patern);
+    free_double_array(patern);
     return (nb_w);
 }
 
@@ -474,8 +473,8 @@ t_data *cop_current_dt(t_cmd *cmd, int j, int *nb_w, int i)
             }
             k++;
         }
-        free(cmd->dt[j].data);
-        free(cmd->dt[j].copy_data);
+        // free(cmd->dt[j].data);
+        // free(cmd->dt[j].copy_data);
     }
     else if (nb == 0)
         return (cmd->dt);
@@ -514,7 +513,7 @@ t_data *fill_wildcard_data(t_parser *parser, t_cmd *cmd, int j, int *nb_w)
                 cmd->dt[x].copy_data =  ft_strdup(entry->d_name);
                 cmd->dt[x].ex_dollar = 0;
                 cmd->dt[x].name = 1;
-            } 
+            }
             x++;
         }
         i++;
@@ -523,7 +522,7 @@ t_data *fill_wildcard_data(t_parser *parser, t_cmd *cmd, int j, int *nb_w)
     return (cmd->dt);
 }
 
-t_data *fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
+void fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
 {
     DIR *OPENFILE;
     struct dirent *entry;
@@ -539,13 +538,13 @@ t_data *fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
     if (!nb_w)
         exit(1);
     nb_w = check_exict_patern(parser, data, nb_w, OPENFILE);
-    cmd->dt = cop_current_dt(cmd, j, nb_w, i);
-    if (count_nb_newdt(nb_w, i) != 0)
-    {
-        cmd->dt = fill_wildcard_data(parser, cmd, j, nb_w);// x = (cmd->dt_nb  - 1); //hna hnaya nb dt badi mn wahd oana baghi rad x l zero 3lach dart -2 omachi ghi wahad
-        cmd->dt_nb += count_nb_newdt(nb_w, i) - 1;
-    }
-    return (cmd->dt);
+    // cmd->dt = cop_current_dt(cmd, j, nb_w, i);
+    // if (count_nb_newdt(nb_w, i) != 0)
+    // {
+    //     cmd->dt = fill_wildcard_data(parser, cmd, j, nb_w);// x = (cmd->dt_nb  - 1); //hna hnaya nb dt badi mn wahd oana baghi rad x l zero 3lach dart -2 omachi ghi wahad
+    //     cmd->dt_nb += count_nb_newdt(nb_w, i) - 1;
+    // }
+    free(nb_w);
 }
 
 void handal_wildcard(t_parser *parser, t_cmd *cmd)
@@ -567,7 +566,7 @@ void handal_wildcard(t_parser *parser, t_cmd *cmd)
             i++;
         }
         if ( cmd->dt[j].data != NULL &&cmd->dt[j].data[i] == '*')
-            cmd->dt = fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, j); // freeeeeeeeeeeee nb_w 3ndek tansah yajadk hhhh
+            fill_wil_in_cmd(parser, cmd->dt[j].data, cmd, j); // freeeeeeeeeeeee nb_w 3ndek tansah yajadk hhhh
         j++;
     }
 }

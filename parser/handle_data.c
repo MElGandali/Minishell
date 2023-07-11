@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 18:31:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 22:11:16 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,12 +421,17 @@ void find_dollar(t_parser *parser, t_cmd *cmd)
             if (new_data == NULL)
             {
                 cmd->dt[i].name = WALLO;
+                free(cmd->dt[i].data);
+                free(cmd->dt[i].copy_data);
                 cmd->dt[i].data = NULL;
+                cmd->dt[i].copy_data = NULL;
             }
             else 
             {
                 free(cmd->dt[i].data);
+                free(cmd->dt[i].copy_data);
                 cmd->dt[i].data = ft_strdup(new_data);
+                cmd->dt[i].copy_data = ft_strdup(new_data);
             }
         }
         free(new_data);
@@ -447,7 +452,6 @@ void    handle_data(t_parser *parser)
         // handal_wildcard(parser, &parser->comm[i]);
         i++;
     }
-    // free_parser(parser);
     // expaind_dollar(parser);
     //----------------print data-----------------//
     // i = 0;

@@ -1,7 +1,0 @@
-echo a > $whitespace_left"foo"
-rm whitespacefoo
-/Users/mel-gand/Desktop/mini-ms-tester/tests/execution/no-PATH.txt
-/Users/mel-gand/Desktop/mini-ms-tester/tests/redirections/regular/18.txt
-/Users/mel-gand/Desktop/mini-ms-tester/tests/redirections/regular/19.txt
-/Users/mel-gand/Desktop/mini-ms-tester/tests/redirections/regular/20.txt
-/Users/mel-gand/Desktop/mini-ms-tester/tests/redirections/regular/4.txt

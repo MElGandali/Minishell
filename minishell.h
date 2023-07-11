@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 12:39:25 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 19:11:01 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ int    	handle_heredoc(t_parser *parser, int i);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
 int check_redirect(t_cmd *cmd, int fd_her);
-int check_ambiguous(t_red *red);
+int check_ambiguous( t_red*red);//t_red
 int open_redirect(t_cmd *cmd, int fd_her);
 
 
