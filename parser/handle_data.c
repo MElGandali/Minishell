@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 18:24:47 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 18:31:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void check_pos_one(t_cmd *comm, char *data, int pos)
     i = 0;
     if (comm->dt[0].name == COMMAND && pos == 1)
     {
-        if (ft_check_flag (data, i) == 1)
-            comm->dt[pos].name = FLAG;
-        else if (data[0] == '-')
+        // if (ft_check_flag (data, i) == 1)
+        //     comm->dt[pos].name = FLAG;
+        if (data[0] == '-')
              comm->dt[pos].name = FLAG;
         else if (find_data_redir(&comm->dt[1].name, data) == 1)
             comm->dt[1].name = WORD;
@@ -155,8 +155,6 @@ int x(char *data, char c, int j)
     }
     return (0);
 }
-
-
 
 int check_ex_dollar(char *data)
 {
@@ -449,7 +447,7 @@ void    handle_data(t_parser *parser)
         // handal_wildcard(parser, &parser->comm[i]);
         i++;
     }
-    free_parser(parser);
+    // free_parser(parser);
     // expaind_dollar(parser);
     //----------------print data-----------------//
     // i = 0;

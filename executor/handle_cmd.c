@@ -6,16 +6,12 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 13:11:42 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 18:28:28 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-
 #include"../minishell.h"
-#include <errno.h>
-#include <string.h>
-#include <sys/wait.h>
 
 int    is_builtin(char **cmd)
 {
@@ -34,6 +30,8 @@ int check_path(char *command)
     int i;
 
     i = 0;
+    if (command == NULL)
+        return (0);
     while (command[i] != '\0')
     {
         if (command[i] == '/')
@@ -46,7 +44,6 @@ int check_path(char *command)
 void    exec_cmd(t_parser *parser, int i)
 {
     char *execpath;
-    
     if (check_path(parser->comm[i].new_cmd[0]) == 0)
         execpath = (char*)find_execpath(parser, i);
     else  
@@ -56,10 +53,22 @@ void    exec_cmd(t_parser *parser, int i)
     else
     {
         execve((char const*)execpath, parser->comm[i].new_cmd, parser->lex->ar_env);
-        free(execpath);
+        if (execpath != NULL && execpath[0] == '/')
+        {
+            ft_putstr_fd("bash: ", 2);
+            ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
+            ft_putstr_fd(": ", 2);
+            ft_putstr_fd(strerror(errno), 2);
+            ft_putstr_fd("\n", 2);
+            free(execpath);
+            exit (127);
+        } 
         ft_putstr_fd("bash: ", 2);
         ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
-        ft_putstr_fd(": command not found\n", 2);
+        ft_putstr_fd(": ", 2);
+        ft_putstr_fd("command not found", 2);
+        ft_putstr_fd("\n", 2);
+        free(execpath);
         exit(127);
     }
 }
@@ -72,6 +81,7 @@ void handle_cmd(t_parser *parser)
     int fd_d;
     int fd_her;
     int e_code = 0;
+    int terminal_fd;
     
     i = 0;
     cid = malloc(sizeof (int) * parser->lex->pipe_nb);
@@ -107,15 +117,22 @@ void handle_cmd(t_parser *parser)
                     
                         if (parser->comm[i].nb_red > 0)
                             check_redirect(&parser->comm[i], fd_her);
-                        if (parser->comm[i].new_cmd != NULL)
+                        if (parser->comm[i].new_cmd[0] != NULL)
                         {
                             exec_cmd(parser, i);
                             if (is_builtin(parser->comm[i].new_cmd) == 0)
                                 exit(0);
                         }
                         else
-                            exit(0);
-                    
+                        {
+                            execve(NULL, parser->comm[i].new_cmd, parser->lex->ar_env);
+                            ft_putstr_fd("bash: ", 2);
+                            ft_putstr_fd(parser->comm[i].new_cmd[0], 2);
+                            // ft_putstr_fd(": ", 2);
+                            ft_putstr_fd("command not found", 2);
+                            ft_putstr_fd("\n", 2);
+                            exit(127);
+                        }
                 }
                 if (i > 0)
                     close(fd_d);
@@ -142,10 +159,10 @@ void handle_cmd(t_parser *parser)
             fd_her = handle_heredoc(parser, i);
             if (open_redirect(parser->comm, i) == 0)
             {
-                    if (parser->comm[0].nb_red > 0)
-                        check_redirect(&parser->comm[0], fd_her);
+                if (parser->comm[0].nb_red > 0)
+                    check_redirect(&parser->comm[0], fd_her);
                 builtin_commands(parser, i);
-                int terminal_fd = open("/dev/tty", O_WRONLY);
+                terminal_fd = open("/dev/tty", O_WRONLY);
                 dup2(terminal_fd, 1);
                 close(terminal_fd);
             }
@@ -153,23 +170,17 @@ void handle_cmd(t_parser *parser)
         else
         {
             fd_her = handle_heredoc(parser, i);
-            if (fd_her != 0)
-            {
-                // close(fd_her); //3lach dart hadi
-            }
             if (open_redirect(parser->comm, i) == 0)
             {
                 cid[0] = fork();
                 if (cid[0] == 0)
                 {
-                    // dup2(fd_her, 0); 3lach dart hadi
-                    // close (fd_her);
                     if (parser->comm[0].nb_red > 0)
                         check_redirect(&parser->comm[0], fd_her);
                     if (parser->comm[0].new_cmd != NULL)
                         exec_cmd(parser, 0);
                     else
-                        exit(0);
+                        exit (0);
                 }
                 waitpid(cid[0], &e_code, 0);
                 if (WIFSIGNALED(e_code))

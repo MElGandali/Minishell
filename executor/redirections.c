@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/11 18:17:58 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 18:29:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int redir_out(t_cmd *cmd, int i)
 {
     int fd;
     
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
-    {
-        ft_printf (" ambiguous redirect\n");
-        return (1);
-    }
     fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd < 0)
     {
@@ -45,11 +40,7 @@ int redir_out(t_cmd *cmd, int i)
 int dredir_out(t_cmd *cmd, int i)
 {
     int fd;
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
-    {
-        ft_printf (" ambiguous redirect\n");
-        return (1);
-    }
+    
     fd = open(cmd->red[i + 1].data, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (fd < 0)
     {
@@ -71,11 +62,7 @@ int dredir_out(t_cmd *cmd, int i)
 int redir_in(t_cmd *cmd, int i)
 {
     int fd;
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
-    {
-        ft_printf (" ambiguous redirect\n");
-        return (1);
-    }
+
     fd = open(cmd->red[i + 1].data, O_RDONLY , 0644);
     if (fd < 0)
     {
@@ -85,22 +72,15 @@ int redir_in(t_cmd *cmd, int i)
     }
     if (access(cmd->red[i + 1].data,F_OK | R_OK) == -1)
     {
-        printf ("xxx\n");
         g_exit = 1;
-        ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
+        ft_printf("bash: %s: %s\n",cmd->red[i + 1].data, strerror(errno));
         return (1);
     }
     dup2(fd, 0);
     close (fd);
     return (0);
 }
-// char *ft_ex_name_file(char *data)
-// {
-//     char **ex_data;
 
-    
-//     return (data);
-// }
 int check_redirect(t_cmd *cmd, int fd_her)
 {
     int i;

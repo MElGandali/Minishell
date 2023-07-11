@@ -6,12 +6,57 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:40:25 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:34:37 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-       
+
+int check_special_variable(char *input)
+{
+    int i;
+
+    i = 0;
+    while (input[i] != '\0')
+    {
+        if (input[i] == '$' && input[i + 1] == '?')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+char    *special_var_in_heredoc(char *input)
+{
+    char *newarg;
+    int arg_size;
+    int i;
+    int k;
+
+    i = 0;
+    k = 0;
+            if (check_special_variable(input) == 1)
+            {
+                arg_size = alloc_newarg(input);
+                newarg = ft_calloc(arg_size + 1, 1);
+                while (input[i])
+                { 
+                    if (input[i] == '$' && input[i + 1] == '?')
+                    {
+                        newarg = copy(newarg, ft_itoa(g_exit), &k);
+                        i++;
+                    }
+                    else
+                       newarg[k] = input[i]; 
+                    k++;
+                    i++;
+                }
+                newarg[k] = '\0';
+                free(input);
+            }
+            else
+                return (input);
+    return (newarg);
+}     
 int count_heredoc(t_cmd *comm, int i)
 {
     int j;
@@ -26,6 +71,8 @@ int count_heredoc(t_cmd *comm, int i)
     }
     return (pos);
 }
+
+
 int here_doc(t_parser *parser, t_red *red)
 {
     int i;
@@ -43,12 +90,16 @@ int here_doc(t_parser *parser, t_red *red)
     while (1)
     {
         input = readline("> ");
-        if (input != NULL || ft_strcmp(input, red->data) == 0)
+        if (input == NULL || ft_strcmp(input, red->data) == 0)
             break;
         else
         {
             if (red->ex_dollar == 2)
+            {
                 input = find_dollar_utils(parser, input, 0, 'e');
+            if (check_special_variable(input) == 1)
+                input = special_var_in_heredoc(input);
+            }
             save_her = ft_strjoin(save_her, input);
             save_her = ft_strjoin(save_her, "\n");
             free(input);
