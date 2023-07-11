@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/11 12:06:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 18:17:58 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int redir_in(t_cmd *cmd, int i)
     }
     if (access(cmd->red[i + 1].data,F_OK | R_OK) == -1)
     {
+        printf ("xxx\n");
         g_exit = 1;
         ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);

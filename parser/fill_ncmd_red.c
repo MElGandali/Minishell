@@ -57,11 +57,11 @@ void fill_red(t_cmd *comm, int nb)
             if (comm->dt[i].data != NULL)
             {
                 x = 0;
-                if (check_ambiguous(&comm->red[j + 1]) == 1)
-                    comm->red[j].check_amb = 1;
-                else  
-                    comm->red[j].check_amb = 0;
                 comm->red[j].data = NULL;
+                // if (check_ambiguous(&comm->red[j + 1]) == 1)
+                //     comm->red[j].check_amb = 1;
+                // else  
+                //     comm->red[j].check_amb = 0;
                 while (comm->dt[i].data[x] != '\0')
                 {
                     if (comm->dt[i].data[x] == '\'' || comm->dt[i].data[x] == '\"')
