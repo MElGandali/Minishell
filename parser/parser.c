@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:06:53 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int alloc_struct_cmd(t_lexer *lex, t_parser *parser)
     }
     parser->comm = malloc (sizeof(t_cmd) * lex->pipe_nb);
     if (!parser->comm)
+    {
+        free_double_array(lex->token);
         return (-1);
+    }
     return (0);
 }
 
@@ -44,7 +47,5 @@ int    parser(t_lexer *lex)
     handle_data (&parser);
     fill_newcmd_red(&parser);
     executor(&parser);
-    // ft_printf ("%s\n", parser.lex->env->all);
-    // free_parser(&parser);
     return (0);
 }

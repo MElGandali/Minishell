@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:54:38 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 15:33:23 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:21:47 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char    *special_var(char **argv)
     newarg = NULL;
     if (ft_strnstr(argv[0], "$?") == 0)
     {
+        g_exit = 2;
         ft_printf("bash: %d: command not found\n", g_exit);
-        g_exit = 127;
     }
     else 
     {

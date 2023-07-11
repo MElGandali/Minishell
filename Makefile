@@ -6,7 +6,7 @@
 #    By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/07 17:04:58 by mel-gand          #+#    #+#              #
-#    Updated: 2023/07/09 16:55:42 by mel-gand         ###   ########.fr        #
+#    Updated: 2023/07/10 18:12:18 by mel-gand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = Minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I./libf -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./libf -g #-fsanitize=address
 # LDFLAGS = -lreadline -L/Users/mel-gand/.brew/opt/readline/lib -I/Users/mel-gand/.brew/opt/readline/include
 RM = rm -rf
 SRC = minishell.c libf/ft_putstr_fd.c libf/ft_isprint.c libf/ft_strcmp.c libf/ft_atoi.c libf/ft_isalpha.c libf/ft_itoa.c libf/ft_split.c libf/ft_strlen.c libf/ft_substr.c libf/ft_strdup.c  libf/ft_isalnum.c libf/ft_strjoin.c libf/ft_calloc.c  libf/ft_bzero.c \

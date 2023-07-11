@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:01 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:53:29 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,6 @@ int split_spaces(t_lexer *lex)
     i++;
     }
     lex->word = ft_split(lex->line, '\n' , &lex->curr_wnb);
-    // last_wlen = ft_strlen(lex->word[lex->curr_wnb - 1]) - 1;
-    // if (lex->word[0][0] == '|' || lex->word[lex->curr_wnb - 1][last_wlen] == '|')
-    // {
-    //     free (lex->line);
-    //     free_double_array(lex->word);
-    //     ft_printf("bash : syntax error near unexpected token1\n");
-    //     return (-1);
-    // }
     free (lex->line);
     return (0);
 }

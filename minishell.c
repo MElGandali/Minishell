@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 12:12:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/10 18:33:22 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int ac, char **av, char **env)
     {
         lex.line = readline("bash$ ");
         if (!lex.line)
-            exit(0);
+            exit(g_exit);
         if (lex.line[0] != '\0')
             add_history(lex.line);
         all_work(&lex);

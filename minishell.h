@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 12:29:26 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:55:51 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,6 @@ typedef struct s_define_data
 	t_dt state;
 	char *data;
 	char *copy_data;
-	// int position;
-	// char *name_file;
-	// char *delimiter;
 	int  ex_dollar;
 }   t_data;
 
@@ -117,6 +114,7 @@ typedef  struct s_red{
     char *data;
 	char *copy_data;
     int  ex_dollar;
+	int  check_amb;
 	int *fd;
 } t_red;
 
@@ -201,6 +199,8 @@ void	cd_command(t_parser *parser, char **argv);
 void	pwd_command(void);
 void	exit_command(char **argv);
 char    *special_var(char **argv);
+int alloc_newarg(char *argv);
+char *copy(char *newarg, char *g_exit, int *idx);
 void export_command(t_parser * parser, int i);
 void ft_tran_env(t_lexer *lex);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
