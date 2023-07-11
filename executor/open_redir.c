@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 12:11:47 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char *expand_name_file(t_red *red, char **check_redirect)
 int check_ambiguous(t_red *red)
 {
     int i;
-    // int j;
     char **check_redirect;
     char *data;
     int check;
@@ -129,7 +128,9 @@ int open_redir_in(t_cmd *cmd, int i)
 {
     int fd;
     
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // {
+    if (cmd->red[i].check_amb == 1)
     {
         ft_printf (" ambiguous redirect\n");
         return (1);
@@ -155,7 +156,9 @@ int open_redir_in(t_cmd *cmd, int i)
 int open_dredir_out(t_cmd *cmd, int i)
 {
     int fd;
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // {
+    if (cmd->red[i].check_amb == 1)
     {
         ft_printf (" ambiguous redirect\n");
         return (1);
@@ -181,7 +184,9 @@ int open_redir_out(t_cmd *cmd, int i)
 {
     int fd;
     
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    // {
+    if (cmd->red[i].check_amb == 1)
     {
         ft_printf (" ambiguous redirect\n");
         return (1);

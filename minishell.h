@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 14:38:51 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 12:06:10 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef  struct s_red{
     char *data;
 	char *copy_data;
     int  ex_dollar;
+	int  check_amb;
 	int *fd;
 } t_red;
 

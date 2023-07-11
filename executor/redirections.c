@@ -6,127 +6,12 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 16:32:46 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 12:06:55 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishell.h"
-#include <string.h>
-#include <sys/fcntl.h>
-
-// int check_multi_arg(char **redirect)
-// {
-//     int i;
-//     int j;
-//     char *check_name;
-//     int check_null;
-//     int check_char;
-
-//     i = 0;
-//     check_null = 0;
-//     check_char = 0;
-//     while (redirect[i] != NULL)
-//     {
-//         j = 0;
-//         check_name = NULL;
-//         while (redirect[i][j] != '\0')
-//         {
-//             if (redirect[i][j] == '\'' || redirect[i][j] == '\"')
-//                 check_name = if_quote_fill(redirect[i], &j, check_name);
-//             else  
-//                 check_name = ft_copier(redirect[i][j], check_name);
-//             j++;
-//         }
-//         if (check_name != NULL)
-//             check_char++;
-//         // else   
-//         //     check_char++;
-//         // ft_printf ("%d \n", check_char);
-//         free(check_name);
-//         i++;
-//     }
-//     if (check_char == 0 || check_char > 1)
-//         return (1);
-//     return (0);
-// }
-
-// char *expand_name_file(t_red *red, char **check_redirect)
-// {
-//     int i;
-//     int j;
-//     char *new_name;
-
-//     i = 0;
-//     free(red->data);
-//     red->data = NULL;
-//     while (check_redirect[i] != NULL)
-//     {
-//         j = 0;
-//         new_name = NULL;
-//         while (check_redirect[i][j] != '\0')
-//         {
-//             if (check_redirect[i][j] == '\'' || check_redirect[i][j] == '\"')
-//                 new_name = if_quote_fill(check_redirect[i], &j, new_name);
-//             else    
-//                 new_name = ft_copier(check_redirect[i][j], new_name);
-//             j++;
-//         }
-//         red->data = ft_strjoin(red->data, new_name);
-//         // free (new_name); leaks check ...
-//         i++;
-//     }
-//     return (red->data);
-// }
-// int check_ambiguous(t_red *red)
-// {
-//     int i;
-//     // int j;
-//     char **check_redirect;
-//     char *data;
-//     int check;
-
-//     i = 0;
-//     data = NULL;
-//     if (red->data == NULL)
-//         return 1;
-//     if (red->data[i] == '\0')
-//         return (1);
-//     while(red->data[i] != '\0')
-//     {
-//         if (red->data[i] == '\"' || red->data[i] == '\'')
-//             i = skip_quote(red->data, i);
-//         else if (red->data[i] == ' ' || red->data[i] == '\t' || red->data[i] == '\n')
-//             red->data[i] = '\n';
-//         i++;
-//     }
-//     check_redirect = ft_split(red->data, '\n', &check);
-//     if (check == 0)
-//         return (1);
-//     else if (check > 1)
-//     {
-//         if (check_multi_arg(check_redirect) == 1)
-//             return (1);
-//     }
-//     else if (check == 1)
-//     {
-//         i = 0;
-//         while (check_redirect[0][i] != '\0')
-//         {
-//             if (ft_isprint(check_redirect[0][i]) == 1 && check_redirect[0][i] !='\"' 
-//                 && check_redirect[0][i] !='\'' && check_redirect[0][i] !=' ' &&
-//                 check_redirect[0][i] != '\t')
-//                 {
-//                     red->data = expand_name_file(red, check_redirect);
-//                     return (0);
-//                 }
-//             i++;
-//         }
-//         return (1);
-//     }
-//     red->data = expand_name_file(red, check_redirect);
-//     return (0);
-// }
 
 int redir_out(t_cmd *cmd, int i)
 {
