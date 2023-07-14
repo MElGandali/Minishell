@@ -47,6 +47,8 @@ void	ft_split_data(t_cmd *comm, int i, int *j)
 
 	c = 0;
 	k = 0;
+	printf ("%d", i);
+	exit (0);
 	while (comm->dt[i].data[c] != '\0')
 	{
 		if (comm->dt[i].data[c] == '\"' || comm->dt[i].data[c] == '\'')
@@ -79,6 +81,7 @@ void	fill_newcmd_utils(t_parser *parser, int i, int nb_newcmd)
 	}
 	else
 		parser->comm[i].new_cmd = NULL;
+	print(parser, parser->comm[i].nb_red, nb_newcmd, i);
 }
 
 void	fill_newcmd_red(t_parser *parser)

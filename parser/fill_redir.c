@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 21:33:06 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:28:51 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 12:30:43 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	fill_red_data(t_cmd *comm, int i, int j)
 	else
 		comm->red[j].data = NULL;
 	if (comm->dt[i].copy_data != NULL)
-    	comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
+    comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
 	else
 	 	comm->red[j].copy_data = NULL;
 }

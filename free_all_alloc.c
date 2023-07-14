@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_alloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:57 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/12 15:42:14 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:58:40 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_double_array(char **str)
 {
