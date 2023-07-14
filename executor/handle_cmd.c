@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:48:14 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:11:53 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	print_error(t_parser *parser, char *execpath, int i)
 	ft_putstr_fd("command not found\n", 2);
 	free(execpath);
 	free_parser(parser);
-	exit(127);
+	g_exit = 127;
+	exit(g_exit);
 }
 
 void	fd_error(t_parser *parser)

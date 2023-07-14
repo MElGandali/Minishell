@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:34:17 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:49:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 13:13:40 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	handle_data(t_parser *parser)
 		parser->comm[i].dt = malloc(sizeof(t_data) * parser->comm[i].dt_nb);
 		fill_data(parser->comm[i]);
 		find_dollar(parser, &parser->comm[i]);
-		// handal_wildcard(parser, &parser->comm[i]);
+		handal_wildcard(parser, &parser->comm[i]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 23:54:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:23:36 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 17:51:10 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ char	*save_data_her(t_parser *parser, t_red *red, char *save_her,
 	if (red->ex_dollar == 2)
 	{
 		input = find_dollar_utils(parser, input, 0, 'e');
-		if (check_special_variable(input) == 1)
+		if (input != NULL && check_special_variable(input) == 1)
 			input = special_var_in_heredoc(input);
 	}
-	save_her = ft_strjoin(save_her, input);
-	save_her = ft_strjoin(save_her, "\n");
-	free(input);
+	if (input != NULL)
+	{
+		save_her = ft_strjoin(save_her, input);
+		save_her = ft_strjoin(save_her, "\n");
+		free(input);
+	}
 	return (save_her);
 }
 

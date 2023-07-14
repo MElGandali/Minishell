@@ -1,4 +1,4 @@
-  /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   handle_one_cmd.c                                   :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:23:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 00:49:53 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:51:53 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ int	is_builtin(char **cmd)
 void	exec_cmd_builtin(t_parser *parser, int i, int fd_her)
 {
 	int	terminal_fd;
+	int	termin;
 
 	terminal_fd = 0;
+	termin = 0;
 	fd_her = handle_heredoc(parser, i);
 	if (open_redirect(parser->comm, i) == 0)
 	{
@@ -38,8 +40,11 @@ void	exec_cmd_builtin(t_parser *parser, int i, int fd_her)
 			check_redirect(&parser->comm[0], fd_her);
 		builtin_commands(parser, i);
 		terminal_fd = open("/dev/tty", O_WRONLY);
+		termin = open("/dev/tty", O_RDONLY);
 		dup2(terminal_fd, 1);
+		dup2(termin, 0);
 		close(terminal_fd);
+		close(termin);
 	}
 }
 

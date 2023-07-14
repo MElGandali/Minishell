@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:48:43 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 18:49:47 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char *expand_name_file(t_red *red, char **check_redirect)
     }
     return (red->data);
 }
+
 int check_ambiguous(t_red *red) 
 {
     int i;
@@ -184,6 +185,7 @@ int open_dredir_out(t_cmd *cmd, int i)
     close(fd); //
     return (0);
 }
+
 int open_redir_out(t_cmd *cmd, int i)
 {
     int fd;

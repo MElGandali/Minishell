@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_newcmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 21:37:35 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 12:51:10 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 19:01:35 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,10 @@ void	check_and_fill_newcmd(t_cmd *comm)
 		if (check_red(comm, i) == 0)
 		{
 			if (ft_check_split(comm->dt[i].data) == 1)
-			{
-				printf ("%s\n",comm->dt[i].data );
-				printf ("%s\n",comm->dt[i].copy_data );
-				// ft_split_data(comm, i, &j);
-			}
+				ft_split_data(comm, i, &j);
 			else
 				fill_newcmd(comm, &j, i);
 		}
-		printf ("%d\n", i);
 		i++;
 	}
 	comm->new_cmd[j] = NULL;
