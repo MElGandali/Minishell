@@ -6,16 +6,16 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:28:18 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/06/07 19:02:17 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:49:07 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned long 	ft_atoi(const char *str)
+unsigned long	ft_atoi(const char *str)
 {
-	int			i;
-	int			sign;
+	int					i;
+	int					sign;
 	unsigned long long	num;
 
 	i = 0;

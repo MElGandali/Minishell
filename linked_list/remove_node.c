@@ -6,59 +6,58 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 22:09:23 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/09 15:29:05 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:36:57 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
-void ft_var(t_var *var, t_env **head)
+void	ft_var(t_var *var, t_env **head)
 {
-    var->tmp = *head;
-    // varfree_node;
-    var->prev = NULL;
+	var->tmp = *head;
+	var->prev = NULL;
 }
 
-//t_env *remove_node(t_env **head, char *id)
-void remove_node(t_env **head, char *id)
+void	remove_node_utils(t_var *var, t_env **head)
 {
-    t_var var;
-   
-    var.tmp = *head;
-    var.prev = NULL;
-    while (var.tmp)
-    {
-        if (ft_strcmp(var.tmp->key , id) == 0)
-        {
-            if (var.prev)
-                var.prev->next = var.tmp->next;
-            else
-                *head = var.tmp->next;
-            var.free_node = var.tmp;
-            if (var.tmp->key != NULL)
-            {
-                free(var.tmp->key);
-                var.tmp->key = NULL;
-            }
-            if (var.tmp->value != NULL)
-            {
-                free(var.tmp->value);
-                var.tmp->value = NULL;
-            }
-            if (var.tmp->all != NULL)
-            {
-                free(var.tmp->all);
-                var.tmp->all = NULL;
-            }
-            var.tmp = var.tmp->next;
-            free(var.free_node);
-        }
-        else
-        {
-            var.prev = var.tmp;
-            var.tmp = var.tmp->next;
-        }
-    }
-    // ft_printf ("%s", head->all);
-    // return (*head);
+	if (var->prev)
+		var->prev->next = var->tmp->next;
+	else
+		*head = var->tmp->next;
+	var->free_node = var->tmp;
+	if (var->tmp->key != NULL)
+	{
+		free(var->tmp->key);
+		var->tmp->key = NULL;
+	}
+	if (var->tmp->value != NULL)
+	{
+		free(var->tmp->value);
+		var->tmp->value = NULL;
+	}
+	if (var->tmp->all != NULL)
+	{
+		free(var->tmp->all);
+		var->tmp->all = NULL;
+	}
+	var->tmp = var->tmp->next;
+	free(var->free_node);
+}
+
+void	remove_node(t_env **head, char *id)
+{
+	t_var	var;
+
+	var.tmp = *head;
+	var.prev = NULL;
+	while (var.tmp)
+	{
+		if (ft_strcmp(var.tmp->key, id) == 0)
+			remove_node_utils(&var, head);
+		else
+		{
+			var.prev = var.tmp;
+			var.tmp = var.tmp->next;
+		}
+	}
 }

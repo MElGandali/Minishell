@@ -6,30 +6,30 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:12:49 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 22:23:32 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:44:24 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int skip_quotes(char *line, int i)
+int	skip_quotes(char *line, int i)
 {
-    if (line[i] == '\"'/*34*/)
-    {
-        i++;
-        while (line[i] != '\"'/*34*/)
-            i++;
-    }
-    else if (line[i] == '\''/*39*/)
-    {
-        i++;
-        while (line[i] != '\''/*39*/)
-            i++;
-    }
-    return (i);
+	if (line[i] == '\"')
+	{
+		i++;
+		while (line[i] != '\"')
+			i++;
+	}
+	else if (line[i] == '\'')
+	{
+		i++;
+		while (line[i] != '\'')
+			i++;
+	}
+	return (i);
 }
 
-int ft_strnstr(char *h, char *n)
+int	ft_strnstr(char *h, char *n)
 {
 	int	i;
 	int	j;

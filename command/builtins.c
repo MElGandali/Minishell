@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:07:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 23:50:40 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:29:18 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void    builtin_commands(t_parser *parser, int i)
     else if (ft_strnstr(parser->comm->new_cmd[0], "env") == 0)
         env_command(parser, 0);
     else if (ft_strnstr(parser->comm->new_cmd[0], "exit") == 0)
-        exit_command(parser->comm->new_cmd);
+        exit_command(parser, parser->comm->new_cmd);
 }

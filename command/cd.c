@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/12 13:27:49 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:47:14 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	cd_command(t_parser *parser, char **argv)
             ft_printf("bash: cd: OLDPWD not set\n");
             g_exit = 1;
         }
-        chdir(homedir);
-        update_env(parser, "PWD");
+        else 
+        {
+            chdir(homedir);
+            update_env(parser, "PWD");
+        }
     }
     else if (argv[1] == NULL)
     {
@@ -42,8 +45,11 @@ void	cd_command(t_parser *parser, char **argv)
             ft_printf("bash: cd: HOME not set\n");
             g_exit = 1;
         }
-        chdir(homedir);
-        update_env(parser, "PWD");
+        else 
+        {
+            chdir(homedir);
+            update_env(parser, "PWD");
+        }
     }
     else
     {

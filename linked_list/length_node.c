@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   length_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:42:26 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/16 15:46:06 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:27:19 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int length(t_env *env)
+int	length(t_env *env)
 {
-    int i;
-    t_env *tmp;
+	int		i;
+	t_env	*tmp;
 
-    i = 0;
-    tmp = env;
-    while (tmp)
-    {
-        i++;
-        tmp = tmp->next;
-    }
-    return (i);
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }

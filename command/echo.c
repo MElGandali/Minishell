@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 19:59:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 21:17:23 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/11 23:08:28 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void   echo_command(char **argv)
             {
                newarg = special_var(argv);
                ft_printf("%s", newarg);
-               free(newarg); 
+               free(newarg);
             }
             else if (ft_strcmp(argv[i], "$?") != 0)
                 ft_printf("%s", argv[i]);
