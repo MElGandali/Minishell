@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:32:31 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:39:45 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int check_ambiguous(t_red *red)
     int check;
 
     i = 0;
+    // printf ("%s", red->data);
     if (red->data == NULL)
         return 1;
     if (red->data[i] == '\0')
