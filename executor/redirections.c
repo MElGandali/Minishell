@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:31:38 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/11 16:16:16 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 01:29:34 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ int redir_out(t_cmd *cmd, int i)
         g_exit = 1;
         ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return(1);
-        // exit (1);
     }
     if (access(cmd->red[i + 1].data, F_OK | W_OK) == -1)
     {
         g_exit = 1;
         ft_printf("bash: %s: %s",cmd->red[i + 1].data, strerror(errno));
         return (1);
-        // exit (1);
     }
     dup2(fd, 1);
     close(fd);

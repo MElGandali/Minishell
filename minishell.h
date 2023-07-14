@@ -6,9 +6,10 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 19:57:06 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 01:22:29 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -187,7 +188,12 @@ int redir_pipe_error_mult_arg(t_lexer *lex);
 //-----------parsing-----------//
 int		parser(t_lexer *lex);
 void	fill_command (t_parser *parser);
-// void    define_data (t_parser *parser);
+int		count_red(t_cmd *comm);
+void	fill_red(t_cmd *comm, int nb);
+int		check_red(t_cmd *comm, int i);
+int		count_newcmd(char *data);
+void	check_and_fill_newcmd(t_cmd *comm);
+void	ft_split_data(t_cmd *comm, int i, int *j);
 void	handle_data(t_parser *parser);
 
 //-------command/builtins------//
@@ -197,38 +203,59 @@ void    update_env(t_parser *parser,char *var);
 void	echo_command(char **argv);
 void	cd_command(t_parser *parser, char **argv);
 void	pwd_command(void);
-void	exit_command(char **argv);
+void	exit_command(t_parser *parser, char **argv);
 char    *special_var(char **argv);
-int alloc_newarg(char *argv);
-char *copy(char *newarg, char *g_exit, int *idx);
-void export_command(t_parser * parser, int i);
-void ft_tran_env(t_lexer *lex);
+int		alloc_newarg(char *argv);
+char	*copy(char *newarg, char *g_exit, int *idx);
+void	export_command(t_parser * parser, int i);
+void	ft_tran_env(t_lexer *lex);
 void    fill_dt_utils(char *env, t_env *tmp1, t_env *tmp2, char ev);
-void env_command(t_parser *parser, int i);
-int check_valid_key(char *str);
-int find_ed (char *env, int i, int check);
-void unset_command(t_parser *parser);
+void	env_command(t_parser *parser, int i);
+int		check_valid_key(char *str);
+int		find_ed (char *env, int i, int check);
+void	unset_command(t_parser *parser);
 //-----------executor----------//
 void    	executor(t_parser *parser);
 void		handle_cmd(t_parser *parser);
-int    	handle_heredoc(t_parser *parser, int i);
+int			is_builtin(char **cmd);
+void		exec_cmd_in_pipe(t_parser *parser,int *cid, int i, int fd_her);
+void		exec_one_cmd(t_parser *parser, int *cid, int i, int fd_her);
+void		print_error(t_parser *parser, char *execpath, int i);
+void		fd_error(t_parser *parser);
+void		dup_and_close(t_parser *parser, int fd_in, int fd_out, int i);
+void		waitchild_and_save_exit(int *cid, int i);
+int			handle_heredoc(t_parser *parser, int i);
+char		*special_var_in_heredoc(char *input);
+int			check_special_variable(char *input);
 char* const	*find_execpath(t_parser *parser, int i);
 void		exec_cmd(t_parser *parser, int i);
-int check_redirect(t_cmd *cmd, int fd_her);
-int check_ambiguous(t_red *red);
-int open_redirect(t_cmd *cmd, int fd_her);
+int			check_redirect(t_cmd *cmd, int fd_her);
+int			check_ambiguous( t_red*red);
+int			open_redirect(t_cmd *cmd, int fd_her);
 
 
-int    parser(t_lexer *lex);
-void    fill_command (t_parser *parser);
-void fill_newcmd_red(t_parser *parser);
-// void    define_data (t_parser *parser);
-void    handle_data(t_parser *parser);
-char *find_dollar_utils(t_parser *parser, char *data, int j, char e);
-int check_valid(char *data, int i);
-char *ft_copier(char add, char *new_data);
-int check_quote(char *data, int i);
-void handal_wildcard(t_parser *parser, t_cmd *cmd);
+int		parser(t_lexer *lex);
+void	fill_command (t_parser *parser);
+void	fill_newcmd_red(t_parser *parser);
+void	define_data(t_cmd *comm, char *data, int pos);
+int		find_data_redir(int *name, char *data);
+void	check_pos_one(t_cmd *comm, char *data, int pos);
+void	handle_data(t_parser *parser);
+char	*copy_quote(char *data, int *i, char *new_data);
+void	fill_data(t_cmd comm);
+int		check_ex_dollar(char *data);
+int		check_if_dollar_expand(char *data, char c, int j);
+int		check_valid(char *data, int i);
+int		ft_check_expand_delimiter(char *delimiter);
+void	find_dollar(t_parser *parser, t_cmd *cmd);
+char	*find_dollar_utils(t_parser *parser, char *data, int j, char e);
+void	check_dollar(t_parser *parser, char *dquote, char **new_data);
+void	expand_data (t_env *env, char *data, int *j, char **new_data);
+int		check_exit(t_env *env, char *envmnt, char **new_data);
+int		check_valid(char *data, int i);
+char	*ft_copier(char add, char *new_data);
+int		check_quote(char *data, int i);
+void	handal_wildcard(t_parser *parser, t_cmd *cmd);
 
 
 void free_parser(t_parser *parser);

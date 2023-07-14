@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   creat_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 11:06:35 by maddou            #+#    #+#             */
-/*   Updated: 2023/06/06 10:40:55 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:26:32 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_env *creat_node(char *data)
+t_env	*creat_node(char *data)
 {
-    t_env *head;
+	t_env	*head;
 
-    head = malloc(sizeof(t_env));
-    head->all = data;
-    head->next = NULL;
-    return (head);
+	head = malloc(sizeof(t_env));
+	head->all = data;
+	head->next = NULL;
+	return (head);
 }

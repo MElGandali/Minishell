@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                           :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 22:55:34 by mel-gand          #+#    #+#             */
-/*   Updated: 2022/10/25 22:56:28 by mel-gand         ###   ########.fr       */
+/*   Created: 2023/07/12 17:06:48 by mel-gand          #+#    #+#             */
+/*   Updated: 2023/07/12 17:07:47 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ft_printf_H
-# define ft_printf_H
-
-// LIBRARIES
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdarg.h>
 # include <unistd.h>
-
-//PROTOTYPES
 
 int	ft_printf(const char *str, ...);
 int	ft_printchar(char c);

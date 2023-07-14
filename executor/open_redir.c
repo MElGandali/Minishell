@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 17:12:46 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/14 01:24:38 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int check_multi_arg(char **redirect)
     return (0);
 }
 
-char *expand_name_file(t_red *red, char **check_redirect)
+char *expand_name_file(t_red *red, char **check_redirect) 
 {
     int i;
     int j;
@@ -78,15 +78,13 @@ char *expand_name_file(t_red *red, char **check_redirect)
     }
     return (red->data);
 }
-int check_ambiguous(t_red *red)
+int check_ambiguous(t_red *red) 
 {
     int i;
     char **check_redirect;
-    char *data;
     int check;
 
     i = 0;
-    data = NULL;
     if (red->data == NULL)
         return 1;
     if (red->data[i] == '\0')
@@ -105,7 +103,10 @@ int check_ambiguous(t_red *red)
     else if (check > 1)
     {
         if (check_multi_arg(check_redirect) == 1)
+        {
+            free_double_array(check_redirect);
             return (1);
+        }
     }
     else if (check == 1)
     {
@@ -117,20 +118,23 @@ int check_ambiguous(t_red *red)
                 check_redirect[0][i] != '\t')
                 {
                     red->data = expand_name_file(red, check_redirect);
+                    free_double_array(check_redirect);
                     return (0);
                 }
             i++;
         }
+        free_double_array(check_redirect);
         return (1);
     }
     red->data = expand_name_file(red, check_redirect);
+    free_double_array(check_redirect);
     return (0);
 }
 
 int open_redir_in(t_cmd *cmd, int i)
 {
     int fd;
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    if (check_ambiguous(&cmd->red[i + 1]) == 1) 
     {
     // if (cmd->red[i].check_amb == 1)
     // {
@@ -158,7 +162,7 @@ int open_redir_in(t_cmd *cmd, int i)
 int open_dredir_out(t_cmd *cmd, int i)
 {
     int fd;
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    if (check_ambiguous(&cmd->red[i + 1]) == 1) //
     {
     // if (cmd->red[i].check_amb == 1)
     // {
@@ -185,7 +189,7 @@ int open_redir_out(t_cmd *cmd, int i)
 {
     int fd;
     
-    if (check_ambiguous(&cmd->red[i + 1]) == 1)
+    if (check_ambiguous(&cmd->red[i + 1]) == 1) //
     {
     // if (cmd->red[i].check_amb == 1)
     // {

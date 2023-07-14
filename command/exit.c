@@ -6,13 +6,13 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:16:16 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/09 17:17:24 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:09:21 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../minishell.h"
 
-void    exit_cases(char **argv)
+void    exit_cases(t_parser *parser, char **argv)
 {
     int i;
     int ch;
@@ -20,7 +20,10 @@ void    exit_cases(char **argv)
     i = 0;
     ch = 0;
     if (argv[1] == NULL)
+    {
+        free_parser(parser);
         exit(g_exit);
+    }
     while (argv[1][i])
     {
         if (ft_isalpha(argv[1][i]) != 0)
@@ -34,6 +37,7 @@ void    exit_cases(char **argv)
     {
         ft_printf("bash: exit: %s: numeric argument required\n", argv[1]);
         g_exit = 255;
+        free_parser(parser);
         exit(255);
     }
     if (argv[2])
@@ -43,7 +47,7 @@ void    exit_cases(char **argv)
     }
 }
 
-void    exit_command(char **argv)
+void    exit_command(t_parser *parser, char **argv)
 {
     long long int status;
     int i;
@@ -52,11 +56,12 @@ void    exit_command(char **argv)
     i = 0;
     ch = 0;
     
-    exit_cases(argv);
+    exit_cases(parser, argv);
     if (g_exit != 1)
     {    
         status = ft_atoi(argv[1]);
         g_exit = status;
+        free_parser(parser);
         exit (status);
     }
 }
