@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 11:59:10 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 23:29:24 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,4 +299,19 @@ void initialization_data_cmd(char *entry_d_name, t_cmd *cmd, int j);
 t_data *fill_wildcard_data(t_cmd *cmd, int j, int *nb_w);
 //-----------------wildcard-------------------//
 void rl_replace_line (const char *, int);
+
+//---------------amb_open_file-------------//
+int	check_ambiguous(t_red *red);
+int	check_empty(char *copy_data);
+int	check_multi(char **check_redirect);
+int	check_multi_arg(char **redirect);
+char	*fill_check_name(char **redirect, char *check_name, int i, int j);
+int	new_data(char **check_redirect, t_red *red);
+char	*expand_name_file(t_red *red, char **check_redirect);
+void	new_data_after_check_am(char **check_redirect, t_red *red);
+char	*fill_new_name(char **check_redirect, int j, int i);
+char	*split_data(char *copy_data);
+int	check_nb_redirect(int check, t_red *red, char **check_redirect);
+void	print_ambiguous_error(void);
+//---------------amb_open_file-------------//
 #endif

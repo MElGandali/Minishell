@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:33:42 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 01:53:44 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 17:27:13 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ int	main(int ac, char **av, char **env)
 	creating_new_env(&lex, env);
 	while (1)
 	{
+		// printf("yyyy\n");
 		lex.line = readline("bash$ ");
 		// if (lex.line == NULL)
 		// 	ft_printf("exit\n");
 		if (!lex.line)
+		{
+		// printf ("yyyy\n");
 			exit(g_exit);
+		}
 		if (lex.line[0] != '\0')
 			add_history(lex.line);
 		all_work(&lex);

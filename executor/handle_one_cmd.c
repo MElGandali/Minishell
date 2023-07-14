@@ -26,21 +26,26 @@ int	is_builtin(char **cmd)
 	return (1);
 }
 
-void	exec_cmd_builtin(t_parser *parser, int i, int fd_her)
+void    exec_cmd_builtin(t_parser *parser, int i, int fd_her)
 {
-	int	terminal_fd;
+    int    terminal_fd;
+    int    termin;
 
-	terminal_fd = 0;
-	fd_her = handle_heredoc(parser, i);
-	if (open_redirect(parser->comm, i) == 0)
-	{
-		if (parser->comm[0].nb_red > 0)
-			check_redirect(&parser->comm[0], fd_her);
-		builtin_commands(parser, i);
-		terminal_fd = open("/dev/tty", O_WRONLY);
-		dup2(terminal_fd, 1);
-		close(terminal_fd);
-	}
+    terminal_fd = 0;
+    termin = 0;
+    fd_her = handle_heredoc(parser, i);
+    if (open_redirect(parser->comm, i) == 0)
+    {
+        if (parser->comm[0].nb_red > 0)
+            check_redirect(&parser->comm[0], fd_her);
+        builtin_commands(parser, i);
+        terminal_fd = open("/dev/tty", O_WRONLY);
+        // termin = open("/dev/tty", O_RDONLY);
+        dup2(terminal_fd, 1);
+        // dup2(termin, 0);
+        close(terminal_fd);
+        // close(termin);
+    }
 }
 
 void	exec_cmd_not_builtin(t_parser *parser, int *cid, int i, int fd_her)

@@ -47,20 +47,24 @@ void	ft_split_data(t_cmd *comm, int i, int *j)
 
 	c = 0;
 	k = 0;
-	printf ("%d", i);
-	exit (0);
+	// printf ("%d", i);
 	while (comm->dt[i].data[c] != '\0')
 	{
 		if (comm->dt[i].data[c] == '\"' || comm->dt[i].data[c] == '\'')
-			i = skip_quote(comm->dt[i].data, i);
+			c = skip_quote(comm->dt[i].data, c);
 		else if (comm->dt[i].data[c] == ' ' || comm->dt[i].data[c] == '\t'
 			|| comm->dt[i].data[c] == '\n')
 			comm->dt[i].data[c] = '\n';
 		c++;
 	}
 	split_data = ft_split(comm->dt[i].data, '\n', &word_nb);
+	// while (split_data[h] != NULL)
+	// 	printf ("%s\n", split_data[h++]);
+	// printf ("%d\n", *j);
 	while (split_data[k] != NULL)
 		fill_split_newcmd(comm, j, split_data[k++]);
+	// printf ("%d", *j);
+	// exit (0);
 }
 
 void	fill_newcmd_utils(t_parser *parser, int i, int nb_newcmd)
@@ -81,7 +85,7 @@ void	fill_newcmd_utils(t_parser *parser, int i, int nb_newcmd)
 	}
 	else
 		parser->comm[i].new_cmd = NULL;
-	print(parser, parser->comm[i].nb_red, nb_newcmd, i);
+	// print(parser, parser->comm[i].nb_red, nb_newcmd, i);
 }
 
 void	fill_newcmd_red(t_parser *parser)
