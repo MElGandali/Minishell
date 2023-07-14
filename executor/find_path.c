@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 18:27:03 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/08 23:51:15 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/12 13:00:16 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char* const    *find_execpath(t_parser *parser, int i)
     {
         pathname[j] = ft_strjoin(pathname[j], "/");
         pathname[j] = ft_strjoin(pathname[j], parser->comm[i].new_cmd[0]);
-        if ((access(pathname[j], X_OK)== 0))
+        if ((access(pathname[j], X_OK | F_OK)== 0))
             break;
         j++;
     }

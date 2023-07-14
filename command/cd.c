@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/10 22:40:11 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/12 13:27:49 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include"../minishell.h"
+#include <string.h>
 
 void	cd_command(t_parser *parser, char **argv)
 {
@@ -51,7 +52,8 @@ void	cd_command(t_parser *parser, char **argv)
         {
             ft_putstr_fd("bash: ", 2);
             ft_putstr_fd(argv[1], 2);
-            ft_putstr_fd(": No such file or directory\n", 2);
+            ft_putchar_fd(' ', 2);
+            perror(NULL);
             g_exit = 1;
         }
         else

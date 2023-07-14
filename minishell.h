@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 17:12:52 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 19:11:01 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:21:11 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct s_commands
 	t_data *dt;
 	int ext_dollar;
 	int i;
-	// char **split_data;
 	int nb_red;
     char **new_cmd;
     t_red *red;
@@ -136,6 +135,7 @@ typedef struct s_parser
 {
 	t_cmd *comm;
 	t_lexer *lex;
+	int nb_arg;
 }   t_parser;
 
 //------------------start linked--------------//
@@ -238,4 +238,37 @@ void print(t_parser *parser, int nb_red, int nb_newcmd, int i);
 char *if_quote_fill(char *data, int *u, char *new_cmd);
 
 //-----------squipe quote----------//
+
+//-----------------wildcard-------------------//
+
+//--------------utils-----------//
+void ft_calcule_etoile(char *data, int *i);
+int check_position_etoile(char *data, char c);
+int check_valid_first(char *entry_name, char *patern);
+int check_valid_last(char *entry_name, char *patern);
+int lenght_patern(char **patern);
+//--------------utils-----------//
+int *check_exict_patern(t_parser *parser, char *data, int *nb_w, DIR *OPENFILE) ;
+int count_nb_newdt(int *nb_w, int i);
+//--------find_nw_one_arg-------//
+int *find_number_w_one_arg(char *data, int *nb_w, char **patern);
+int *find_patern_one_etoile(int *nb_w, char c, char **patern);
+void initialization_new_dt(int j, int k, t_data *new_dt, t_cmd *cmd);
+t_data *cop_current_dt(t_cmd *cmd, int j, int *nb_w, int i);
+//--------find_nw_one_arg-------//
+int *find_number_w_mult_arg(t_parser *parser, int *nb_w, char **patern, int nb_arg);
+//--------wildcard_position-------//
+int *findnbw_in_fl(char *entry_center, char **patern, int *nb_w, int j);
+int *findnbw_in_f(char *entry_center, char **patern, int *nb_w, int j);
+int *findnbw_in_l(char *entry_center, char **patern, int *nb_w, int j);
+int *findnbw_in(char *entry_center, char **patern, int *nb_w, int j);
+//--------wildcard_position-------//
+char *find_entry_center(char *entry_name, char *patern, char k);
+int find_begining_patern(char *entry_name, char *patern, int *i, int *j);
+int *find_mult_etoile(int *nb_w, char *data, char **patern, DIR *OPENFILE);
+int *ft_tout_file(int *nb_w, DIR *OPENFILE, t_parser *parser);
+
+void initialization_data_cmd(char *entry_d_name, t_cmd *cmd, int j);
+t_data *fill_wildcard_data(t_cmd *cmd, int j, int *nb_w);
+//-----------------wildcard-------------------//
 #endif

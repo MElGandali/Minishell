@@ -68,7 +68,10 @@ void fill_red(t_cmd *comm, int nb)
             }
             else  
                 comm->red[j].data = NULL;
-            comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
+            if (comm->dt[i].copy_data != NULL)
+                comm->red[j].copy_data = ft_strdup(comm->dt[i].copy_data);
+            else   
+                comm->red[j].copy_data = NULL;
             // printf ("%s\n", comm->red[j].copy_data);
             j++;     
         }

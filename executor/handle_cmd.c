@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 22:42:36 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/11 23:21:29 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,6 @@ void handle_cmd(t_parser *parser)
                     g_exit = WEXITSTATUS(e_code);
             }
         }
+        free(cid);
     }
 }

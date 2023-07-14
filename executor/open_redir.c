@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:32:14 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 22:58:48 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:32:31 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,9 @@ int check_ambiguous(t_red *red)
 int open_redir_in(t_cmd *cmd, int i)
 {
     int fd;
+    
     if (check_ambiguous(&cmd->red[i + 1]) == 1) 
     {
-    // if (cmd->red[i].check_amb == 1)
-    // {
-
         ft_printf ("bash: ambiguous redirect\n");
         g_exit = 1;
         return (1);
@@ -155,7 +153,7 @@ int open_redir_in(t_cmd *cmd, int i)
         close(fd);
         return (1);
     }
-    close(fd); //
+    close(fd);
     return (0);
 }
 

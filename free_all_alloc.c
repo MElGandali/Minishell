@@ -6,7 +6,7 @@
 /*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:57 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/11 23:07:31 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/12 18:11:51 by maddou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void free_parser(t_parser *parser)
 
 	i = 0;
     j = 0;
+    
 	while (i < parser->lex->pipe_nb)
     {
         free_double_array(parser->comm[i].cmd);
