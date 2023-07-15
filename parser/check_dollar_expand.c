@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 14:41:21 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/13 18:14:27 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:12:33 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,17 @@ void	check_dollar(t_parser *parser, char *dquote, char **new_data)
 {
 	int	i;
 
-	i = 0;
-	while (dquote[i] != '\0')
+	i = -1;
+	while (dquote[++i] != '\0')
 	{
-		if (dquote[i] == '$' && dquote[i + 1] != '?')
+		if (dquote[i] == '$')
 		{
-			if (dquote[i + 1] == ' ')
+			if (dquote[i + 1] == '?')
+			{
+				*new_data = copier_exit_status(*new_data);
+				i++;
+			}
+			else if (dquote[i + 1] == ' ')
 				*new_data = ft_copier(dquote[i], *new_data);
 			else if (dquote[i + 1] == '_' || ft_isalnum(dquote[i + 1]) == 1)
 				expand_data(parser->lex->env, dquote, &i, new_data);
@@ -105,6 +110,5 @@ void	check_dollar(t_parser *parser, char *dquote, char **new_data)
 		}
 		else
 			*new_data = ft_copier(dquote[i], *new_data);
-		i++;
 	}
 }

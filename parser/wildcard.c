@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:41:18 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/14 00:22:04 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/15 00:15:32 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*find_entry_center(char *entry_name, char *patern, char k)
 	int		c;
 
 	i = 0;
+	entry_center = NULL;
 	while (entry_name[i] != '\0')
 	{
 		if (entry_name[i] == patern[0])
@@ -51,9 +52,7 @@ char	*find_entry_center(char *entry_name, char *patern, char k)
 		i++;
 	}
 	if (patern[j] == '\0' && (k == 'p' || k == 'l'))
-	{
 		entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - c));
-	}
 	else if (patern[j] == '\0' && (k == 'f' || k == 'n'))
 		entry_center = ft_substr(entry_name, c, (ft_strlen(entry_name) - c));
 	free(entry_name);
@@ -83,6 +82,8 @@ void	fill_wil_in_cmd(t_parser *parser, char *data, t_cmd *cmd, int j)
 	int				*nb_w;
 
 	i = 0;
+	openfile = NULL;
+	entry = NULL;
 	i = calcule_number_word_in_entry_dirent(openfile, entry, i);
 	nb_w = malloc(sizeof(int *) * i);
 	if (!nb_w)

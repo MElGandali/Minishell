@@ -6,11 +6,12 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:47:44 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 15:11:53 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 17:39:40 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <sys/wait.h>
 
 void	print_error(t_parser *parser, char *execpath, int i)
 {
@@ -64,6 +65,8 @@ void	handle_cmd(t_parser *parser)
 	int	fd_her;
 
 	i = 0;
+	fd_her = 0;
+	parser->fd_d = 0;
 	cid = malloc(sizeof(int) * parser->lex->pipe_nb);
 	if (parser->lex->pipe_nb > 1)
 	{

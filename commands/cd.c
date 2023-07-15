@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 18:53:39 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 14:38:29 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 16:38:33 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	cd_command(t_parser *parser, char **argv)
 		if (chdir(argv[1]) != 0)
 		{
 			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(argv[1], 2);
-			ft_putchar_fd(' ', 2);
 			perror(NULL);
 			g_exit = 1;
 		}

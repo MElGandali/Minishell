@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_exict_patern.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:13:36 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/14 01:21:23 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/15 00:06:24 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-typedef struct s_init
-{
-	DIR				*openfile;
-	struct dirent	*entry;
-	int				i;
-	int				check;
-	int				x;
-}					t_init;
-
-void	initialization_data_cmd(char *entry_d_name, t_cmd *cmd, int j)
-{
-	cmd->dt[j].data = ft_strdup(entry_d_name);
-	cmd->dt[j].copy_data = ft_strdup(entry_d_name);
-	cmd->dt[j].ex_dollar = 0;
-	cmd->dt[j].name = 1;
-}
 
 void	initialization(t_init *init, t_cmd *cmd)
 {

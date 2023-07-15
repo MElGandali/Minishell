@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 14:21:20 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 22:52:35 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 17:20:18 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 char	*expand_dollar(t_parser *parser, char *data, char *new_data, int *j)
 {
-	if (data[*j] == '$' && data[*j + 1] != '\0' && data[*j + 1] != '?')
+	if (data[*j] == '$' && data[*j + 1] != '\0')
 	{
-		if (data[*j] == ' ')
+		if (data[*j + 1] == '?')
+		{
+			new_data = copier_exit_status(new_data);
+			(*j)++;
+		}
+		else if (data[*j] == ' ')
 			new_data = ft_copier(data[*j + 1], new_data);
 		else if (data[*j + 1] == '_' || ft_isalnum(data[*j + 1]) == 1)
 			expand_data(parser->lex->env, data, j, &new_data);
@@ -48,9 +53,7 @@ char	*find_dollar_utils(t_parser *parser, char *data, int j, char e)
 	char	*dquote;
 
 	new_data = NULL;
-	if (data == NULL)
-		return (data);
-	while (data[j] != '\0')
+	while (data != NULL && data[j] != '\0')
 	{
 		dquote = NULL;
 		if (e == 'n' && data[j] == '\'')

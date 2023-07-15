@@ -6,11 +6,12 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:23:32 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 18:51:53 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 17:36:39 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <signal.h>
 
 int	is_builtin(char **cmd)
 {
@@ -28,23 +29,23 @@ int	is_builtin(char **cmd)
 
 void	exec_cmd_builtin(t_parser *parser, int i, int fd_her)
 {
-	int	terminal_fd;
-	int	termin;
+	int	std_in;
+	int	std_out;
 
-	terminal_fd = 0;
-	termin = 0;
+	std_out = 0;
+	std_in = 0;
 	fd_her = handle_heredoc(parser, i);
 	if (open_redirect(parser->comm, i) == 0)
 	{
 		if (parser->comm[0].nb_red > 0)
 			check_redirect(&parser->comm[0], fd_her);
 		builtin_commands(parser, i);
-		terminal_fd = open("/dev/tty", O_WRONLY);
-		termin = open("/dev/tty", O_RDONLY);
-		dup2(terminal_fd, 1);
-		dup2(termin, 0);
-		close(terminal_fd);
-		close(termin);
+		std_out = open("/dev/tty", O_WRONLY);
+		std_in = open("/dev/tty", O_RDONLY);
+		dup2(std_out, 1);
+		dup2(std_in, 0);
+		close(std_out);
+		close(std_in);
 	}
 }
 
@@ -56,6 +57,8 @@ void	exec_cmd_not_builtin(t_parser *parser, int *cid, int i, int fd_her)
 		cid[0] = fork();
 		if (cid[0] == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (parser->comm[0].nb_red > 0)
 				check_redirect(&parser->comm[0], fd_her);
 			if (parser->comm[0].new_cmd != NULL)

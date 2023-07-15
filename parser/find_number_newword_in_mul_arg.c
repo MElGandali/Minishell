@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   find_number_newword_in_mul_arg.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maddou <maddou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:51:15 by maddou            #+#    #+#             */
-/*   Updated: 2023/07/13 23:40:34 by maddou           ###   ########.fr       */
+/*   Updated: 2023/07/15 18:13:29 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*copier_exit_status(char *new_data)
+{
+	int		i;
+	char	*g_exit_char;
+
+	g_exit_char = ft_itoa(g_exit);
+	i = 0;
+	while (g_exit_char[i] != '\0')
+	{
+		new_data = ft_copier(g_exit_char[i], new_data);
+		i++;
+	}
+	return (new_data);
+}
 
 int	*ft_tout_file(int *nb_w, DIR *openfile, t_parser *parser)
 {
@@ -67,6 +82,7 @@ int	*find_number_w_mult_arg(t_parser *parser, int *nb_w, char **patern,
 {
 	DIR	*openfile;
 
+	openfile = NULL;
 	if (nb_arg == 2)
 		nb_w = find_first_list_patern(parser, nb_w, patern);
 	else

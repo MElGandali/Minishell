@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:23:31 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 16:24:12 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:16:06 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	unset_cmd_utils(t_parser *parser, int u, int v)
 
 void	unset_command(t_parser *parser)
 {
-	int	i;
-	int	j;
 	int	u;
 	int	v;
 

@@ -6,11 +6,19 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:36:07 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/12 20:20:58 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:06:15 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	initialization_data_cmd(char *entry_d_name, t_cmd *cmd, int j)
+{
+	cmd->dt[j].data = ft_strdup(entry_d_name);
+	cmd->dt[j].copy_data = ft_strdup(entry_d_name);
+	cmd->dt[j].ex_dollar = 0;
+	cmd->dt[j].name = 1;
+}
 
 int	alloc_struct_cmd(t_lexer *lex, t_parser *parser)
 {

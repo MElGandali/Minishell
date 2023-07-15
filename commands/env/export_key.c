@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 18:34:19 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 18:44:26 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:11:44 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int	existing_key(t_env *exn, char *str)
 		}
 		tmp1 = tmp1->next;
 	}
+	free(key);
 	return (0);
 }

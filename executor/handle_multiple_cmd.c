@@ -6,7 +6,7 @@
 /*   By: mel-gand <mel-gand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 23:34:55 by mel-gand          #+#    #+#             */
-/*   Updated: 2023/07/14 23:39:24 by mel-gand         ###   ########.fr       */
+/*   Updated: 2023/07/15 18:58:16 by mel-gand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	exec_cmd(t_parser *parser, int i)
 	{
 		execve((char const *)execpath, parser->comm[i].new_cmd,
 			parser->lex->ar_env);
-		if (execpath != NULL && execpath[0] == '/')
-			print_error(parser, execpath, i);
 		print_error(parser, execpath, i);
 	}
 }
@@ -71,7 +69,6 @@ void	exec_cmd_in_pipe_utils(t_parser *parser, int i, int fd_her)
 void	exec_cmd_in_pipe(t_parser *parser, int *cid, int i, int fd_her)
 {
 	int	fd[2];
-	int	fd_d;
 
 	if (open_redirect(parser->comm, i) == 0)
 	{
@@ -85,12 +82,14 @@ void	exec_cmd_in_pipe(t_parser *parser, int *cid, int i, int fd_her)
 		cid[i] = fork();
 		if (cid[i] == 0)
 		{
-			dup_and_close(parser, fd_d, fd[1], i);
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			dup_and_close(parser, parser->fd_d, fd[1], i);
 			exec_cmd_in_pipe_utils(parser, i, fd_her);
 		}
 		if (i > 0)
-			close(fd_d);
-		fd_d = fd[0];
+			close(parser->fd_d);
+		parser->fd_d = fd[0];
 		close(fd[1]);
 	}
 }
